@@ -10,6 +10,7 @@ export default {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     volume: { control: { type: "range", min: 0, max: 1, step: 0.01 } },
+    paused: { control: { type: "boolean", defaultValue: false } },
   },
 } as ComponentMeta<typeof Player>;
 

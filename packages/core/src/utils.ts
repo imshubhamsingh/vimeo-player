@@ -10,6 +10,7 @@ export type VimeoPlayerOptions = Omit<Options, "id"> & {
   showByline?: boolean;
   start?: number;
   volume?: number;
+  paused?: boolean;
 };
 
 // Empty function
