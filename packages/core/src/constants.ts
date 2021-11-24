@@ -1,31 +1,31 @@
 // https://github.com/vimeo/player.js/#events
 export const VIMEO_PLAYER_EVENTS = {
-  play: "onPlay",
-  pause: "onPause",
-  ended: "onEnd",
-  timeupdate: "onTimeUpdate",
-  progress: "onProgress",
-  seeked: "onSeeked",
-  texttrackchange: "onTextTrackChange",
   cuechange: "onCueChange",
   cuepoint: "onCuePoint",
-  volumechange: "onVolumeChange",
-  playbackratechange: "onPlaybackRateChange",
-  error: "onError",
-  loaded: "onLoaded",
-  resize: "onResize",
+  ended: "onEnd",
   enterpictureinpicture: "onEnterPictureinPicture",
+  error: "onError",
   leavepictureinpicture: "onLeavePictureinPicture",
-  /****** custom *******/
+  loaded: "onLoaded",
+  pause: "onPause",
+  play: "onPlay",
+  playbackratechange: "onPlaybackRateChange",
+  progress: "onProgress",
   ready: "onReady",
+  resize: "onResize",
+  seeked: "onSeeked",
+  texttrackchange: "onTextTrackChange",
+  timeupdate: "onTimeUpdate",
+  volumechange: "onVolumeChange",
 };
 
 // https://github.com/vimeo/player.js/#methods
 export const VIMEO_CONFIGS = {
-  COLOR: "color",
   AUTO_PAUSE: "autopause",
-  VOLUME: "volume",
+  COLOR: "color",
   LOOP: "loop",
+  MUTED: "muted",
   PAUSED: "paused",
   VIDEO: "video",
+  VOLUME: "volume",
 };

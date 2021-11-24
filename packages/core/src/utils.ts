@@ -9,6 +9,7 @@ export type VimeoPlayerOptions = Omit<Options, "id"> & {
   showPortrait?: boolean;
   showByline?: boolean;
   start?: number;
+  volume?: number;
 };
 
 // Empty function

@@ -15,6 +15,7 @@ export type { VimeoPlayerOptions };
 
 type UpdateOptions = {
   start?: number;
+  volume?: number;
 };
 
 /**
@@ -53,7 +54,7 @@ class VimeoPlayer {
     element: HTMLIFrameElement | HTMLElement | string,
     options?: Options
   ) {
-    this.#player = new Proxy(new OgPlayer(element, options), {});
+    this.#player = new OgPlayer(element, options);
   }
 
   /**
@@ -88,6 +89,7 @@ class VimeoPlayer {
    * It updates video configs
    */
   update(name: string, value: any, options: UpdateOptions = {}) {
+    console.log("[[ UPDATE ]]", name, value);
     switch (name) {
       // pause and unpause video
       case VIMEO_CONFIGS.PAUSED: {
@@ -132,6 +134,11 @@ class VimeoPlayer {
       // update video volume
       case VIMEO_CONFIGS.VOLUME: {
         this.#player.setVolume(value);
+        break;
+      }
+      // mute or umute video
+      case VIMEO_CONFIGS.MUTED: {
+        this.#player.setVolume(value ? 0 : options.volume);
         break;
       }
       default:

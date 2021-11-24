@@ -7,7 +7,22 @@ export interface IPlayerProps extends VimeoPlayerOptions {
 
 class Player extends React.Component<IPlayerProps> {
   static displayName = "Player";
-  static defaultProps = {};
+  static defaultProps = {
+    autopause: true,
+    autoplay: false,
+    background: false,
+    controls: false,
+    dnt: false,
+    loop: false,
+    muted: false,
+    // quality: "auto",
+    responsive: true,
+    showByline: true,
+    showPortrait: true,
+    showTitle: true,
+    speed: 1,
+    volume: 1,
+  };
 
   node?: HTMLElement;
   player?: VimeoPlayer;
@@ -27,12 +42,20 @@ class Player extends React.Component<IPlayerProps> {
     prevState: Readonly<{}>,
     snapshot?: any
   ): void {
-    Object.keys(VimeoPlayer.config)
+    console.log(
+      Object.values(VimeoPlayer.config)
+        //@ts-ignore TODO check how tslint error can be fix
+        .filter((name) => this.props[name] !== prevProps[name])
+    );
+    Object.values(VimeoPlayer.config)
       //@ts-ignore TODO check how tslint error can be fix
       .filter((name) => this.props[name] !== prevProps[name])
       .map((name) =>
         //@ts-ignore TODO check how tslint error can be fix
-        this.player.update(name, this.props[name], { start: this.props.start })
+        this.player.update(name, this.props[name], {
+          start: this.props.start,
+          volume: this.props.volume,
+        })
       );
   }
 
