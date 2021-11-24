@@ -16,4 +16,16 @@ export const VIMEO_PLAYER_EVENTS = {
   resize: "onResize",
   enterpictureinpicture: "onEnterPictureinPicture",
   leavepictureinpicture: "onLeavePictureinPicture",
+  /****** custom *******/
+  ready: "onReady",
+};
+
+// https://github.com/vimeo/player.js/#methods
+export const VIMEO_CONFIGS = {
+  COLOR: "color",
+  AUTO_PAUSE: "autopause",
+  VOLUME: "volume",
+  LOOP: "loop",
+  PAUSED: "paused",
+  VIDEO: "video",
 };
