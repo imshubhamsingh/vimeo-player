@@ -1,0 +1,24 @@
+node_modules
+*.log
+.idea
+*.iml
+*.sw*
+npm-shrinkwrap.json
+dist
+.tern-port
+*.DS_Store
+.cache
+coverage/
+build
+/**/LICENSE
+package-lock.json
+.nvmrc
+
+
+# Yarn stuff
+/**/.yarn/*
+!/**/.yarn/releases
+!/**/.yarn/plugins
+!/**/.yarn/sdks
+!/**/.yarn/versions
+/**/.pnp.*

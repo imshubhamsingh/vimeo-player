@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "name": "@vimeo-player/root",
+  "description": "Unoffical UI wrappers for all popular frontend frameworks and libs",
+  "workspaces": [
+    "packages/*"
+  ]
+}

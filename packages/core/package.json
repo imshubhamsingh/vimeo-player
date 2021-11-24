@@ -1,0 +1,15 @@
+{
+  "name": "@vimeo-player/core",
+  "version": "1.0.0",
+  "private": true,
+  "description": "vimeo player core",
+  "main": "src/player.ts",
+  "author": "Shubham Singh",
+  "license": "MIT",
+  "dependencies": {
+    "@vimeo/player": "^2.16.2"
+  },
+  "devDependencies": {
+    "@types/vimeo__player": "^2.10.1"
+  }
+}
