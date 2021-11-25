@@ -1,6 +1,5 @@
 // vendor lib
-import OgPlayer from "@vimeo/player";
-import type { Options, VimeoPromise } from "@vimeo/player";
+import OgPlayer, { Options, VimeoPromise } from "@vimeo/player";
 
 // custom
 import {
@@ -34,7 +33,7 @@ class VimeoPlayer {
   /**
    * Vimeo player proxied instance
    */
-  #player: OgPlayer;
+  _player: OgPlayer;
 
   /**
    * Parse framework props to vimeo's player initial options
@@ -63,14 +62,14 @@ class VimeoPlayer {
     element: HTMLIFrameElement | HTMLElement | string,
     options?: Options
   ) {
-    this.#player = new OgPlayer(element, options);
+    this._player = new OgPlayer(element, options);
   }
 
   /**
    * It returns vimeo player instance
    */
   get instance(): OgPlayer {
-    return this.#player;
+    return this._player;
   }
 
   /**
@@ -114,11 +113,11 @@ class VimeoPlayer {
     switch (name) {
       // pause and unpause video
       case VIMEO_CONFIGS.PAUSED: {
-        this.#player.getPaused().then((paused) => {
+        this._player.getPaused().then((paused) => {
           if (value && !paused) {
-            this.#player.pause();
+            this._player.pause();
           } else if (!value && paused) {
-            this.#player.play();
+            this._player.play();
           }
         });
         break;
@@ -126,50 +125,50 @@ class VimeoPlayer {
       // update video id and load from starting time value
       case VIMEO_CONFIGS.VIDEO: {
         if (value) {
-          const loaded = this.#player.loadVideo(value);
+          const loaded = this._player.loadVideo(value);
           if (typeof options.start === "number") {
             loaded.then(() => {
-              this.#player.setCurrentTime(options.start);
+              this._player.setCurrentTime(options.start as number);
             });
           }
         } else {
-          this.#player.unload();
+          this._player.unload();
         }
         break;
       }
       // updates color
       case VIMEO_CONFIGS.COLOR: {
-        this.#player.setColor(value);
+        this._player.setColor(value);
         break;
       }
       // set auto pause
       case VIMEO_CONFIGS.AUTO_PAUSE: {
-        this.#player.setAutopause(value);
+        this._player.setAutopause(value);
         break;
       }
       // update loop setting
       case VIMEO_CONFIGS.LOOP: {
-        this.#player.setLoop(value);
+        this._player.setLoop(value);
         break;
       }
       // update video volume
       case VIMEO_CONFIGS.VOLUME: {
-        this.#player.setVolume(value);
+        this._player.setVolume(value);
         break;
       }
       // mute or umute video
       case VIMEO_CONFIGS.MUTED: {
-        this.#player.setVolume(value ? 0 : options.volume);
+        this._player.setVolume(value ? 0 : (options.volume as number));
         break;
       }
       case VIMEO_CONFIGS.HEIGHT: {
         //@ts-ignore missing in type
-        this.#player.height = value;
+        this._player.height = value;
         break;
       }
       case VIMEO_CONFIGS.WIDTH: {
         //@ts-ignore missing in type
-        this.#player.width = value;
+        this._player.width = value;
         break;
       }
       default:
@@ -182,7 +181,7 @@ class VimeoPlayer {
    */
   addEventHandlers(handlers: EventHandlersObj) {
     Object.entries(VIMEO_PLAYER_EVENTS).forEach(([event, handlerName]) => {
-      this.#player.on(event, (event) => {
+      this._player.on(event, (event) => {
         const eventHandlers = handlers[handlerName];
         eventHandlers?.(event);
       });

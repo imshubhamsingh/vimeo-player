@@ -6,10 +6,11 @@
   "main": "src/player.ts",
   "author": "Shubham Singh",
   "license": "MIT",
-  "dependencies": {
+  "peerDependencies": {
     "@vimeo/player": "^2.16.2"
   },
   "devDependencies": {
-    "@types/vimeo__player": "^2.10.1"
+    "@types/vimeo__player": "^2.10.1",
+    "@vimeo/player": "^2.16.2"
   }
 }
