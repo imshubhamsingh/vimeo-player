@@ -105,6 +105,7 @@ Player.defaultProps = {
   showTitle: true,
   speed: true,
   volume: 1,
+  language: "en",
 };
 
 export default Player;

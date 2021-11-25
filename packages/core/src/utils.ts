@@ -3,7 +3,13 @@ import { VIMEO_PLAYER_EVENTS } from "./constants";
 
 export type EventHandlersObj = { [key: string]: EventCallback };
 
-export type VimeoPlayerOptions = Omit<Options, "id" | "title"> & {
+type callbackParams = {
+  duration: number;
+  percent: number;
+  seconds: number;
+};
+
+export type VimeoPlayerOptions = Omit<Options, "id" | "title" | "texttrack"> & {
   video: string;
   showTitle?: boolean;
   showPortrait?: boolean;
@@ -13,6 +19,35 @@ export type VimeoPlayerOptions = Omit<Options, "id" | "title"> & {
   paused?: boolean;
   height?: number;
   width?: number;
+  language?: string;
+  /**
+   * Triggered any time the video playback reaches the end. Note: when loop is set to true, the ended event will not fire.
+   */
+  onEnd?: (props: callbackParams) => void;
+  /**
+   * Triggered when video playback is initiated.
+   */
+  onPlay?: (props: callbackParams) => void;
+  /**
+   * Triggered when the video pauses.
+   */
+  onPause?: (props: callbackParams) => void;
+  /**
+   * Triggered as the currentTime of the video updates. It generally fires every 250ms, but it may vary depending on the browser.
+   */
+  onTimeUpdate?: (props: callbackParams) => void;
+  /**
+   * Triggered when the player seeks to a specific time. `onTimeupdate` props will also be fired at the same time.
+   */
+  onSeeked?: (props: callbackParams) => void;
+  /**
+   * Triggered when the active text track (captions/subtitles) changes. The values will be null if text tracks are turned off.
+   */
+  onTextTrackChange?: (props: {
+    kind: string;
+    label: string;
+    language: string;
+  }) => void;
 };
 
 // Empty function
@@ -39,6 +74,7 @@ export function getInitialPlayerOptions(obj: VimeoPlayerOptions): Options {
     responsive: obj.responsive,
     dnt: obj.dnt,
     speed: obj.speed,
+    texttrack: obj.language,
   };
 }
 
