@@ -29,7 +29,7 @@ export type ImperativeHandle = {
 /**
  * Vimeo core wrapper for vimeo player
  */
-class VimeoPlayer {
+export class VimeoPlayer {
   /**
    * Vimeo player proxied instance
    */
@@ -188,5 +188,3 @@ class VimeoPlayer {
     });
   }
 }
-
-export default VimeoPlayer;

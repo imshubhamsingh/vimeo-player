@@ -1,5 +1,6 @@
 import * as React from "react";
-import VimeoPlayer, {
+import {
+  VimeoPlayer,
   ImperativeHandle,
   VimeoPlayerOptions,
 } from "@vimeo-player/core";
@@ -28,8 +29,8 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
     height,
     width,
   } = props;
-  const container = React.useRef<HTMLElement>();
-  const player = React.useRef<VimeoPlayer>(null);
+  const container = React.useRef<HTMLElement | null>(null);
+  const player = React.useRef<VimeoPlayer | null>(null);
   const mounted = React.useRef<boolean>(false);
 
   const prevProps = React.useRef({
@@ -43,14 +44,16 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
   });
 
   React.useEffect(() => {
-    player.current = VimeoPlayer.create(
-      container.current,
-      VimeoPlayer.getInitialOptions(props),
-      VimeoPlayer.getEventHandlers(props)
-    );
+    if (container.current) {
+      player.current = VimeoPlayer.create(
+        container.current,
+        VimeoPlayer.getInitialOptions(props),
+        VimeoPlayer.getEventHandlers(props)
+      );
+    }
 
     return () => {
-      player.current.instance.destroy();
+      player.current?.instance.destroy();
       player.current = null;
       container.current = null;
     };
@@ -78,7 +81,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
 
   React.useImperativeHandle(
     ref,
-    () => VimeoPlayer.imperativeHandle(player.current),
+    () => VimeoPlayer.imperativeHandle(player.current as VimeoPlayer),
     []
   );
 
@@ -108,4 +111,4 @@ Player.defaultProps = {
   language: "en",
 };
 
-export default Player;
+export { Player };

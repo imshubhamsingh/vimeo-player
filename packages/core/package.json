@@ -2,9 +2,11 @@
   "name": "@vimeo-player/core",
   "version": "1.0.0",
   "private": true,
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "typings": "dist/index.d.ts",
   "description": "vimeo player core",
-  "main": "src/player.ts",
-  "author": "Shubham Singh",
+  "author": "Shubham Singh <hello@shubham.sh>",
   "license": "MIT",
   "peerDependencies": {
     "@vimeo/player": "^2.16.2"
@@ -12,5 +14,8 @@
   "devDependencies": {
     "@types/vimeo__player": "^2.10.1",
     "@vimeo/player": "^2.16.2"
+  },
+  "scripts": {
+    "build": "rollup --c ./rollup.config.js --environment production"
   }
 }
