@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "description": "vimeo player unofficial react wrapper",
   "main": "dist/index.js",
-  "module": "dist/isndex.esm.js",
+  "module": "dist/index.esm.js",
   "typings": "dist/index.d.ts",
   "author": "Shubham Singh <hello@shubham.sh>",
   "license": "MIT",
   "sideEffects": false,
   "dependencies": {
-    "@vimeo-player/core": "workspace:^"
+    "@vimeo-player/core": "^0.0.0"
   },
   "peerDependencies": {
     "@vimeo/player": "^2.16.2",

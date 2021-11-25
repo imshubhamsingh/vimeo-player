@@ -12,8 +12,10 @@ coverage/
 build
 /**/LICENSE
 package-lock.json
-.nvmrc
 
+# Yalc
+yalc.lock
+.yalc
 
 # Yarn stuff
 /**/.yarn/*

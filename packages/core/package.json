@@ -17,5 +17,11 @@
   },
   "scripts": {
     "build": "rollup --c ./rollup.config.js --environment development"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@vimeo-player/react": "^0.0.0"
   }
 }
