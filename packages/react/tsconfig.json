@@ -3,7 +3,6 @@
   "compilerOptions": {
     "outDir": "./dist",
     "types": ["node", "react"],
-    "declaration": true,
     "declarationDir": "./dist/dts"
   },
   "include": ["./src/**/*"],

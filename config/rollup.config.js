@@ -11,7 +11,7 @@ import dts from "rollup-plugin-dts";
 const isProduction = (env) => env === "production";
 
 export const configuration = (options) => {
-  const { input, pkg, path } = options;
+  const { input, pkg, path, typeFileName } = options;
   console.log(__dirname)
   /**
    * @type {import('rollup').RollupOptions}
@@ -65,7 +65,7 @@ export const configuration = (options) => {
 
     const types = {
       // path to your declaration files root
-      input: "./dist/dts/player.d.ts",
+      input: `./dist/dts/${typeFileName}.d.ts`,
       output: [{ file: "./dist/index.d.ts", format: "es" }],
       plugins: [
         dts(),

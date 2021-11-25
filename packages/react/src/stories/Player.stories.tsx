@@ -73,8 +73,9 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Player> = (args) => {
-  const ref = React.useRef<ImperativeHandle>();
-  async function seek(value) {
+  const ref = React.useRef<ImperativeHandle>(null);
+  async function seek(value: number) {
+    if (!ref.current) return;
     const totalTime = await ref.current.getDuration();
     const getCurrentTime = await ref.current.getCurrentTime();
     ref.current.seekTo(

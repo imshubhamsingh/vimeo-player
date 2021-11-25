@@ -1,6 +1,6 @@
 {
   "name": "@vimeo-player/react",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "vimeo player unofficial react wrapper",
   "main": "dist/index.js",
   "module": "dist/isndex.esm.js",
@@ -27,5 +27,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "build": "rollup --c ./rollup.config.js --environment production"
-  }
+  },
+  "file": [
+    "dist"
+  ]
 }

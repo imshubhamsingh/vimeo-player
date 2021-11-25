@@ -81,7 +81,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
           //@ts-ignore TODO check how tslint error can be fix
           prevProps.current[name] = props[name];
           //@ts-ignore TODO check how tslint error can be fix
-          player.current.update(name, props[name], {
+          player.current?.update(name, props[name], {
             start: start,
             volume: volume,
           });
