@@ -3,7 +3,7 @@ import { VIMEO_PLAYER_EVENTS } from "./constants";
 
 export type EventHandlersObj = { [key: string]: EventCallback };
 
-export type VimeoPlayerOptions = Omit<Options, "id"> & {
+export type VimeoPlayerOptions = Omit<Options, "id" | "title"> & {
   video: string;
   showTitle?: boolean;
   showPortrait?: boolean;
@@ -11,6 +11,8 @@ export type VimeoPlayerOptions = Omit<Options, "id"> & {
   start?: number;
   volume?: number;
   paused?: boolean;
+  height?: number;
+  width?: number;
 };
 
 // Empty function

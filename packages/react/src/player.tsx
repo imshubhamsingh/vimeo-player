@@ -1,87 +1,110 @@
 import * as React from "react";
-import VimeoPlayer, { VimeoPlayerOptions } from "@vimeo-player/core";
+import VimeoPlayer, {
+  ImperativeHandle,
+  VimeoPlayerOptions,
+} from "@vimeo-player/core";
 
-export interface IPlayerProps extends VimeoPlayerOptions {
-  as?: keyof JSX.IntrinsicElements;
+export interface PlayerProps extends VimeoPlayerOptions {
+  as?: keyof JSX.IntrinsicElements | "div";
+  id?: string;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
-class Player extends React.Component<IPlayerProps> {
-  static displayName = "Player";
-  static defaultProps = {
-    autopause: true,
-    autoplay: false,
-    background: false,
-    controls: false,
-    dnt: false,
-    loop: false,
-    muted: false,
-    // quality: "auto",
-    responsive: true,
-    showByline: true,
-    showPortrait: true,
-    showTitle: true,
-    speed: 1,
-    volume: 1,
-  };
+const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
+  const {
+    as = "div",
+    start,
+    volume,
+    autopause,
+    color,
+    loop,
+    muted,
+    paused,
+    video,
+    id,
+    className,
+    style,
+    height,
+    width,
+  } = props;
+  const container = React.useRef<HTMLElement>();
+  const player = React.useRef<VimeoPlayer>(null);
+  const mounted = React.useRef<boolean>(false);
 
-  node?: HTMLElement;
-  player?: VimeoPlayer;
+  const prevProps = React.useRef({
+    autopause,
+    color,
+    loop,
+    muted,
+    paused,
+    video,
+    volume,
+  });
 
-  componentDidMount(): void {
-    if (this.node) {
-      this.player = VimeoPlayer.create(
-        this.node,
-        VimeoPlayer.getInitialOptions(this.props),
-        VimeoPlayer.getEventHandlers(this.props)
-      );
-    }
-  }
+  React.useEffect(() => {
+    player.current = VimeoPlayer.create(
+      container.current,
+      VimeoPlayer.getInitialOptions(props),
+      VimeoPlayer.getEventHandlers(props)
+    );
 
-  componentDidUpdate(
-    prevProps: Readonly<IPlayerProps>,
-    prevState: Readonly<{}>,
-    snapshot?: any
-  ): void {
-    console.log(
+    return () => {
+      player.current.instance.destroy();
+      player.current = null;
+      container.current = null;
+    };
+  }, []);
+
+  // componentDidUpdate Equivalent
+  React.useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+    } else {
       Object.values(VimeoPlayer.config)
         //@ts-ignore TODO check how tslint error can be fix
-        .filter((name) => this.props[name] !== prevProps[name])
-    );
-    Object.values(VimeoPlayer.config)
-      //@ts-ignore TODO check how tslint error can be fix
-      .filter((name) => this.props[name] !== prevProps[name])
-      .map((name) =>
-        //@ts-ignore TODO check how tslint error can be fix
-        this.player.update(name, this.props[name], {
-          start: this.props.start,
-          volume: this.props.volume,
-        })
-      );
-  }
+        .filter((name) => props[name] !== prevProps.current[name])
+        .map((name) => {
+          //@ts-ignore TODO check how tslint error can be fix
+          prevProps.current[name] = props[name];
+          //@ts-ignore TODO check how tslint error can be fix
+          player.current.update(name, props[name], {
+            start: start,
+            volume: volume,
+          });
+        });
+    }
+  }, [autopause, color, loop, muted, paused, video, volume, height, width]);
 
-  componentWillUnmount(): void {
-    /**
-     * clean up
-     */
-    this.player.instance.destroy();
-    this.player = null;
-    this.node = null;
-  }
+  React.useImperativeHandle(
+    ref,
+    () => VimeoPlayer.imperativeHandle(player.current),
+    []
+  );
 
-  /**
-   * Callback Ref which also instantiate vimeo player
-   */
-  handleNode = (node?: HTMLElement | null) => {
-    this.node = node ? node : null;
-  };
+  return React.createElement(as, {
+    ref: container,
+    className,
+    id,
+    style,
+  });
+});
 
-  render(): React.ReactNode {
-    const { children, as, ...props } = this.props;
-    return React.createElement(as || "div", {
-      ref: this.handleNode,
-      ...props,
-    });
-  }
-}
+Player.defaultProps = {
+  autopause: true,
+  autoplay: false,
+  background: false,
+  controls: false,
+  dnt: false,
+  loop: false,
+  muted: false,
+  // If responsive is set to true, height and width is not respected
+  responsive: true,
+  showByline: true,
+  showPortrait: true,
+  showTitle: true,
+  speed: true,
+  volume: 1,
+};
 
 export default Player;

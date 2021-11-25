@@ -1,6 +1,6 @@
 // vendor lib
 import OgPlayer from "@vimeo/player";
-import type { Options } from "@vimeo/player";
+import type { Options, VimeoPromise } from "@vimeo/player";
 
 // custom
 import {
@@ -16,6 +16,15 @@ export type { VimeoPlayerOptions };
 type UpdateOptions = {
   start?: number;
   volume?: number;
+};
+
+export type ImperativeHandle = {
+  getDuration: () => VimeoPromise<number, Error>;
+  getCurrentTime: () => VimeoPromise<number, Error>;
+  isMuted: () => VimeoPromise<boolean, Error>;
+  getVolume: () => VimeoPromise<number, Error>;
+  getPlaybackRate: () => VimeoPromise<number, Error>;
+  seekTo: (seconds: number) => VimeoPromise<number, RangeError | Error>;
 };
 
 /**
@@ -85,11 +94,23 @@ class VimeoPlayer {
     return player;
   }
 
+  static imperativeHandle(vimeoPlayer: VimeoPlayer): ImperativeHandle {
+    const player = vimeoPlayer.instance;
+    return {
+      getDuration: () => player.getDuration(),
+      getCurrentTime: () => player.getCurrentTime(),
+      isMuted: () => player.getMuted(),
+      getVolume: () => player.getVolume(),
+      getPlaybackRate: () => player.getPlaybackRate(),
+      seekTo: (seconds: number) => player.setCurrentTime(seconds),
+    };
+  }
+
   /**
    * It updates video configs
    */
   update(name: string, value: any, options: UpdateOptions = {}) {
-    console.log("[[ UPDATE ]]", name, value);
+    console.log("[[ UPDATED ]]", name, value);
     switch (name) {
       // pause and unpause video
       case VIMEO_CONFIGS.PAUSED: {
@@ -139,6 +160,16 @@ class VimeoPlayer {
       // mute or umute video
       case VIMEO_CONFIGS.MUTED: {
         this.#player.setVolume(value ? 0 : options.volume);
+        break;
+      }
+      case VIMEO_CONFIGS.HEIGHT: {
+        //@ts-ignore missing in type
+        this.#player.height = value;
+        break;
+      }
+      case VIMEO_CONFIGS.WIDTH: {
+        //@ts-ignore missing in type
+        this.#player.width = value;
         break;
       }
       default:

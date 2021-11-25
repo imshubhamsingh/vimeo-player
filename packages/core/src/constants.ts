@@ -28,4 +28,6 @@ export const VIMEO_CONFIGS = {
   PAUSED: "paused",
   VIDEO: "video",
   VOLUME: "volume",
+  HEIGHT: "height",
+  WIDTH: "width",
 };
