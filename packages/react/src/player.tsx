@@ -54,6 +54,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
           VimeoPlayer.getInitialOptions(props),
           VimeoPlayer.getEventHandlers(props)
         );
+        // Player loaded
         setLoaded(true);
       }
     }
