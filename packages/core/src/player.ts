@@ -76,7 +76,7 @@ export class VimeoPlayer {
    * It creats vimeo player instance and adds
    * event handler to it if available.
    */
-  static create(
+  static async create(
     element: HTMLIFrameElement | HTMLElement | string,
     options: Options = {},
     eventHandlers: EventHandlersObj = {}
@@ -86,7 +86,7 @@ export class VimeoPlayer {
     // add player handler
     player.addEventHandlers(eventHandlers);
     // Check if player is ready or there is some error
-    player.instance
+    await player.instance
       .ready()
       .then(() => eventHandlers?.onReady(player.instance))
       .catch((err) => eventHandlers?.onError(err));
@@ -94,14 +94,13 @@ export class VimeoPlayer {
   }
 
   static imperativeHandle(vimeoPlayer: VimeoPlayer): ImperativeHandle {
-    const player = vimeoPlayer.instance;
     return {
-      getDuration: () => player.getDuration(),
-      getCurrentTime: () => player.getCurrentTime(),
-      isMuted: () => player.getMuted(),
-      getVolume: () => player.getVolume(),
-      getPlaybackRate: () => player.getPlaybackRate(),
-      seekTo: (seconds: number) => player.setCurrentTime(seconds),
+      getDuration: () => vimeoPlayer.instance.getDuration(),
+      getCurrentTime: () => vimeoPlayer.instance.getCurrentTime(),
+      isMuted: () => vimeoPlayer.instance.getMuted(),
+      getVolume: () => vimeoPlayer.instance.getVolume(),
+      getPlaybackRate: () => vimeoPlayer.instance.getPlaybackRate(),
+      seekTo: (seconds: number) => vimeoPlayer.instance.setCurrentTime(seconds),
     };
   }
 

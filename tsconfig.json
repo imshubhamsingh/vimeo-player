@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
     "module": "esnext",
-    "target": "ES5",
+    "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "skipLibCheck": true,
     "noEmit": true,
     "jsx": "react-jsx",
     "sourceMap": false,
+    "declaration": true,
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
     "strict": true,

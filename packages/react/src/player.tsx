@@ -12,6 +12,8 @@ export interface PlayerProps extends VimeoPlayerOptions {
   style?: React.CSSProperties;
 }
 
+export type { ImperativeHandle };
+
 const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
   const {
     as = "div",
@@ -32,6 +34,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
   const container = React.useRef<HTMLElement | null>(null);
   const player = React.useRef<VimeoPlayer | null>(null);
   const mounted = React.useRef<boolean>(false);
+  const [loaded, setLoaded] = React.useState(false);
 
   const prevProps = React.useRef({
     autopause,
@@ -44,13 +47,17 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
   });
 
   React.useEffect(() => {
-    if (container.current) {
-      player.current = VimeoPlayer.create(
-        container.current,
-        VimeoPlayer.getInitialOptions(props),
-        VimeoPlayer.getEventHandlers(props)
-      );
+    async function getPlayerInstance() {
+      if (container.current) {
+        player.current = await VimeoPlayer.create(
+          container.current,
+          VimeoPlayer.getInitialOptions(props),
+          VimeoPlayer.getEventHandlers(props)
+        );
+        setLoaded(true);
+      }
     }
+    getPlayerInstance();
 
     return () => {
       player.current?.instance.destroy();
@@ -82,7 +89,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
   React.useImperativeHandle(
     ref,
     () => VimeoPlayer.imperativeHandle(player.current as VimeoPlayer),
-    []
+    [loaded]
   );
 
   return React.createElement(as, {

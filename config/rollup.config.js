@@ -2,6 +2,7 @@ import typescript from "@rollup/plugin-typescript";
 import { resolve as resolvePath } from "path";
 import resolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
+import commonjs from '@rollup/plugin-commonjs';
 import externals from "rollup-plugin-node-externals";
 import del from "rollup-plugin-delete";
 import { terser } from "rollup-plugin-terser";
@@ -11,6 +12,7 @@ const isProduction = (env) => env === "production";
 
 export const configuration = (options) => {
   const { input, pkg, path } = options;
+  console.log(__dirname)
   /**
    * @type {import('rollup').RollupOptions}
    */
@@ -26,19 +28,8 @@ export const configuration = (options) => {
         },
         {
           dir: "./",
-          format: "commonjs",
+          format: "cjs",
           entryFileNames: pkg.main,
-        },
-        {
-          dir: "./",
-          format: "commonjs",
-          entryFileNames: pkg.main,
-        },
-        {
-          dir: "./",
-          format: "umd",
-          name: pkg.name,
-          entryFileNames: pkg.unpkg,
         },
       ],
       external: Object.keys(pkg.peerDependencies),
@@ -51,12 +42,13 @@ export const configuration = (options) => {
         resolve({
           extensions: [".js", ".ts", ".tsx"],
         }),
+        commonjs(),
         typescript({
           tsconfig: options.tsconfig,
         }),
         babel({
           babelHelpers: "runtime",
-          configFile: "./babel.config.js",
+          configFile: "../../babel.config.js",
         }),
         ...(isProduction(process.env.NODE_ENV)
           ? [
