@@ -30,4 +30,5 @@ export const VIMEO_CONFIGS = {
   VOLUME: "volume",
   HEIGHT: "height",
   WIDTH: "width",
+  QUALITY: "quality",
 };

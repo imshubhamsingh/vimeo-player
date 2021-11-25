@@ -30,11 +30,12 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
     style,
     height,
     width,
+    quality,
   } = props;
   const container = React.useRef<HTMLElement | null>(null);
   const player = React.useRef<VimeoPlayer | null>(null);
   const mounted = React.useRef<boolean>(false);
-  const [loaded, setLoaded] = React.useState(false);
+  const [loaded, setLoaded] = React.useState<boolean>(false);
 
   const prevProps = React.useRef({
     autopause,
@@ -44,6 +45,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
     paused,
     video,
     volume,
+    quality,
   });
 
   React.useEffect(() => {
@@ -85,7 +87,18 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
           });
         });
     }
-  }, [autopause, color, loop, muted, paused, video, volume, height, width]);
+  }, [
+    autopause,
+    color,
+    loop,
+    muted,
+    paused,
+    video,
+    volume,
+    height,
+    width,
+    quality,
+  ]);
 
   React.useImperativeHandle(
     ref,

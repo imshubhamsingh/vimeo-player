@@ -1,5 +1,5 @@
 // vendor lib
-import OgPlayer, { Options, VimeoPromise } from "@vimeo/player";
+import Player, { Options, VimeoPromise } from "@vimeo/player";
 
 // custom
 import {
@@ -33,7 +33,7 @@ export class VimeoPlayer {
   /**
    * Vimeo player proxied instance
    */
-  _player: OgPlayer;
+  _player: Player;
 
   /**
    * Parse framework props to vimeo's player initial options
@@ -62,13 +62,13 @@ export class VimeoPlayer {
     element: HTMLIFrameElement | HTMLElement | string,
     options?: Options
   ) {
-    this._player = new OgPlayer(element, options);
+    this._player = new Player(element, options);
   }
 
   /**
    * It returns vimeo player instance
    */
-  get instance(): OgPlayer {
+  get instance(): Player {
     return this._player;
   }
 
@@ -168,6 +168,11 @@ export class VimeoPlayer {
       case VIMEO_CONFIGS.WIDTH: {
         //@ts-ignore missing in type
         this._player.width = value;
+        break;
+      }
+      case VIMEO_CONFIGS.QUALITY: {
+        //@ts-ignore TODO: inform team about missing type
+        this._player.setQuality(value);
         break;
       }
       default:

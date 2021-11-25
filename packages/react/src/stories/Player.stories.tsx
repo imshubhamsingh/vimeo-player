@@ -13,6 +13,10 @@ export default {
     volume: { control: { type: "range", min: 0, max: 1, step: 0.01 } },
     paused: { control: { type: "boolean", defaultValue: false } },
     color: { control: { type: "color" } },
+    quality: {
+      options: ["4K", "2K", "1080p", "720p", "540p", "360p", "240p"],
+      control: { type: "radio" },
+    },
     onCueChange: {
       action: "cuechange",
     },
@@ -70,18 +74,80 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Player> = (args) => {
   const ref = React.useRef<ImperativeHandle>();
-  React.useEffect(() => {
-    console.log(ref.current);
-    setTimeout(() => {
-      ref.current.seekTo(20);
-    }, 5000);
-  }, []);
-  return <Player {...args} ref={ref} />;
+  async function seek(value) {
+    const totalTime = await ref.current.getDuration();
+    const getCurrentTime = await ref.current.getCurrentTime();
+    ref.current.seekTo(
+      Math.min(Math.max(getCurrentTime + value, 0), totalTime)
+    );
+  }
+  return (
+    <>
+      <Player {...args} ref={ref} />
+      <div
+        style={{
+          display: "flex",
+          marginTop: 16,
+          justifyContent: "space-evenly",
+        }}
+      >
+        <button onClick={() => seek(-10)}>-10s ⏪</button>
+        <button onClick={() => seek(-5)}>-5s ◀️</button>
+        <button onClick={() => seek(5)}>+5s ▶️</button>
+        <button onClick={() => seek(10)}>+10s ⏩</button>
+      </div>
+    </>
+  );
 };
 
 export const TestPlayer = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 TestPlayer.args = {
-  video: "649442299",
+  video: "323783503",
   muted: true,
+  quality: "360p",
+};
+
+TestPlayer.parameters = {
+  docs: {
+    source: {
+      code: `
+function Container() {
+  // player ref
+  const ref = React.useRef();
+  // video id
+  const [videoId, setVideoId] = React.useState("20890937");
+  // control paused state
+  const [paused, setPaused] = React.useState(false);
+  // control muted
+  const [muted, setMuted] = React.useState(false);
+
+  async function seek(value) {
+    const totalTime = await ref.current.getDuration();
+    const getCurrentTime = await ref.current.getCurrentTime();
+    await ref.current.seekTo(
+      Math.min(Math.max(getCurrentTime + value, 0), totalTime)
+    );
+  }
+
+  return (
+    <>
+      <Player 
+        video={videoId} 
+        paused={paused} 
+        muted={muted}
+        ref={ref} 
+      />
+      <div>
+        <button onClick={() => seek(-10)}>-10s ⏪</button>
+        <button onClick={() => seek(-5)}>-5s ◀️</button>
+        <button onClick={() => seek(5)}>+5s ▶️</button>
+        <button onClick={() => seek(10)}>+10s ⏩</button>
+      </div>
+    </>
+  );
+}
+`,
+    },
+  },
 };

@@ -1,4 +1,4 @@
-import type { EventCallback, Options } from "@vimeo/player";
+import type { EventCallback, Options, VimeoVideoQuality } from "@vimeo/player";
 import { VIMEO_PLAYER_EVENTS } from "./constants";
 
 export type EventHandlersObj = { [key: string]: EventCallback };
@@ -9,7 +9,10 @@ type callbackParams = {
   seconds: number;
 };
 
-export type VimeoPlayerOptions = Omit<Options, "id" | "title" | "texttrack"> & {
+export type VimeoPlayerOptions = Omit<
+  Options,
+  "id" | "title" | "texttrack" | "quality"
+> & {
   video: string;
   showTitle?: boolean;
   showPortrait?: boolean;
@@ -20,6 +23,11 @@ export type VimeoPlayerOptions = Omit<Options, "id" | "title" | "texttrack"> & {
   height?: number;
   width?: number;
   language?: string;
+  /**
+   * Quality of the video can be set if it is enabled for the video by Vimeo Plus member and higher.
+   * More details: https://vimeo.zendesk.com/hc/en-us/articles/224983008-Setting-default-quality-for-embedded-videos
+   */
+  quality?: VimeoVideoQuality;
   /**
    * Triggered any time the video playback reaches the end. Note: when loop is set to true, the ended event will not fire.
    */

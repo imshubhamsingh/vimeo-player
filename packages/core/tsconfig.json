@@ -5,5 +5,5 @@
     "declarationDir": "./dist/dts"
   },
   "include": ["./src/**/*"],
-  "exclude": ["./src/**/*.test.*", "./**/*.stories.*"]
+  "exclude": ["./src/**/*.test.*"]
 }
