@@ -6,9 +6,21 @@ import {
 } from "@vimeo-player/core";
 
 export interface PlayerProps extends VimeoPlayerOptions {
+  /**
+   * Parent HTML Element tag name
+   */
   as?: keyof JSX.IntrinsicElements | "div";
+  /**
+   * id selector
+   */
   id?: string;
+  /**
+   * classname selector
+   */
   className?: string;
+  /**
+   * React CSS object
+   */
   style?: React.CSSProperties;
 }
 

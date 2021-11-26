@@ -72,7 +72,11 @@ export default {
 } as ComponentMeta<typeof Player>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Player> = (args) => {
+const Template: ComponentStory<typeof Player> = ({
+  //@ts-ignore
+  hideControls = false,
+  ...args
+}) => {
   const ref = React.useRef<ImperativeHandle>(null);
   async function seek(value: number) {
     if (!ref.current) return;
@@ -92,10 +96,14 @@ const Template: ComponentStory<typeof Player> = (args) => {
           justifyContent: "space-evenly",
         }}
       >
-        <button onClick={() => seek(-10)}>-10s ⏪</button>
-        <button onClick={() => seek(-5)}>-5s ◀️</button>
-        <button onClick={() => seek(5)}>+5s ▶️</button>
-        <button onClick={() => seek(10)}>+10s ⏩</button>
+        {!hideControls && (
+          <>
+            <button onClick={() => seek(-10)}>-10s ⏪</button>
+            <button onClick={() => seek(-5)}>-5s ◀️</button>
+            <button onClick={() => seek(5)}>+5s ▶️</button>
+            <button onClick={() => seek(10)}>+10s ⏩</button>
+          </>
+        )}
       </div>
     </>
   );
@@ -150,6 +158,34 @@ function Container() {
   );
 }
 `,
+    },
+  },
+};
+
+export const LoopCoverPlayer = Template.bind({});
+
+LoopCoverPlayer.args = {
+  video: "59777392",
+  loop: true,
+  background: true,
+  //
+  hideControls: true,
+};
+
+LoopCoverPlayer.parameters = {
+  controls: { disabled: true },
+  docs: {
+    description: {
+      story: "This is usefull when using vimeo videos as cover",
+    },
+    source: {
+      code: `
+<Player 
+  video={videoId} 
+  loop={true} 
+  background={true}
+/>
+    `,
     },
   },
 };
