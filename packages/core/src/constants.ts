@@ -1,7 +1,8 @@
 // https://github.com/vimeo/player.js/#events
 export const VIMEO_PLAYER_EVENTS = {
-  cuechange: "onCueChange",
-  cuepoint: "onCuePoint",
+  //TODO: streamline api for CUE POINTs
+  // cuechange: "onCueChange",
+  // cuepoint: "onCuePoint",
   ended: "onEnd",
   enterpictureinpicture: "onEnterPictureinPicture",
   error: "onError",
@@ -17,6 +18,8 @@ export const VIMEO_PLAYER_EVENTS = {
   texttrackchange: "onTextTrackChange",
   timeupdate: "onTimeUpdate",
   volumechange: "onVolumeChange",
+  bufferstart: "onBufferStart",
+  bufferend: "onBufferEnd",
 };
 
 // https://github.com/vimeo/player.js/#methods

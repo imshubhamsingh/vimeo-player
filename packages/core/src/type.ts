@@ -23,7 +23,7 @@ export type callbackParams = {
   seconds: number;
 };
 
-export type VimeoPlayerOptions = {
+type VimeoPlayerProperties = {
   /**
    * Vimeo video id or url with hash if its private.
    */
@@ -32,7 +32,13 @@ export type VimeoPlayerOptions = {
    * Controls whether to show tile of video.
    */
   showTitle?: boolean;
+  /**
+   * Show video in protrait mode.
+   */
   showPortrait?: boolean;
+  /**
+   * Show Bylines
+   */
   showByline?: boolean;
   /**
    * Controls Start timev of video.
@@ -116,6 +122,9 @@ export type VimeoPlayerOptions = {
    * it will be overridden.
    */
   color?: string;
+};
+
+type VimeoPlayerEventHandlers = {
   /**
    * Triggered any time the video playback reaches the end. Note: when loop is set to true, the ended event will not fire.
    */
@@ -148,7 +157,27 @@ export type VimeoPlayerOptions = {
    * Called when vimeo player is loaded
    */
   onReady?: (player: Player) => void;
+  /**
+   * Triggers when the video is loading. The params indicates how much data is loaded
+   * in buffer. This is not equivalent to `onTimeUpdate` which shows current time.
+   */
+  onProgress?: (props: callbackParams) => void;
+  /**
+   * Called when vimeo player is resized via height and width props.
+   */
+  onResize?: (props: { videoWidth: number; videoHeight: number }) => void;
+  /**
+   * Triggere when buffer starts in player
+   */
+  onBufferStart?: () => void;
+  /**
+   * Triggers when buffer end in player
+   */
+  onBufferEnd?: () => void;
 };
+
+export type VimeoPlayerOptions = VimeoPlayerProperties &
+  VimeoPlayerEventHandlers;
 
 export type UpdateOptions = {
   /**

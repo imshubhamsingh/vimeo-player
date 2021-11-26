@@ -189,3 +189,10 @@ LoopCoverPlayer.parameters = {
     },
   },
 };
+
+export const VerticalPlayer = Template.bind({});
+
+VerticalPlayer.args = {
+  video: "351594821",
+  hideControls: true,
+};
