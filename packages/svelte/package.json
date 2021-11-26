@@ -1,0 +1,36 @@
+{
+  "name": "@vimeo-player/svelte",
+  "version": "0.0.0",
+  "description": "vimeo player unofficial svelte wrapper",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "typings": "dist/index.d.ts",
+  "author": "Shubham Singh <hello@shubham.sh>",
+  "license": "MIT",
+  "sideEffects": false,
+  "devDependencies": {
+    "@vimeo-player/core": "*"
+  },
+  "peerDependencies": {
+    "@vimeo/player": "^2.16.2",
+    "@vimeo-player/core": "^0.0.0",
+    "react": ">= 16.8.0"
+  },
+  "homepage": "https://github.com/imshubhamsingh/vimeo-player#readme",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imshubhamsingh/vimeo-player.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/imshubhamsingh/vimeo-player/issues"
+  }
+}

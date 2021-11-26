@@ -8,7 +8,7 @@
   "description": "vimeo player core",
   "author": "Shubham Singh <hello@shubham.sh>",
   "license": "MIT",
-  "peerDependencies": {
+  "dependencies": {
     "@vimeo/player": "^2.16.2"
   },
   "devDependencies": {
