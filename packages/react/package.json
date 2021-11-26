@@ -21,13 +21,24 @@
     "@vimeo-player/core": "^0.0.0",
     "react": ">= 16.8.0"
   },
+  "homepage": "https://github.com/imshubhamsingh/vimeo-player#readme",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imshubhamsingh/vimeo-player.git"
+  },
   "scripts": {
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "build": "rollup --c ./rollup.config.js --environment production",
     "build:dev": "rollup --c ./rollup.config.js --environment development"
   },
-  "file": [
-    "dist"
-  ]
+  "bugs": {
+    "url": "https://github.com/imshubhamsingh/vimeo-player/issues"
+  }
 }

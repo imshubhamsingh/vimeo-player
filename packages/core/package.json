@@ -15,12 +15,23 @@
     "@types/vimeo__player": "^2.10.1",
     "@vimeo/player": "^2.16.2"
   },
+  "homepage": "https://github.com/imshubhamsingh/vimeo-player#readme",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imshubhamsingh/vimeo-player.git"
+  },
   "scripts": {
     "build": "rollup --c ./rollup.config.js --environment production",
     "build:dev": "rollup --c ./rollup.config.js --environment development",
     "yalc:publish": "yarn publish"
   },
-  "files": [
-    "dist"
-  ]
+  "bugs": {
+    "url": "https://github.com/imshubhamsingh/vimeo-player/issues"
+  }
 }
