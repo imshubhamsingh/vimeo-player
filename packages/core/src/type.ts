@@ -9,25 +9,57 @@ import type {
 export type EventHandlersObj = { [key: string]: EventCallback };
 
 export type callbackParams = {
+  /**
+   * Totol duration of video
+   */
   duration: number;
+  /**
+   * Percentage of video completed based on current time
+   */
   percent: number;
+  /**
+   * Current time of video in seconds
+   */
   seconds: number;
 };
 
-export type VimeoPlayerOptions = Omit<
-  Options,
-  "id" | "title" | "texttrack" | "quality"
-> & {
+export type VimeoPlayerOptions = {
+  /**
+   * Vimeo video id or url with hash if its private.
+   */
   video: string;
+  /**
+   * Controls whether to show tile of video.
+   */
   showTitle?: boolean;
   showPortrait?: boolean;
   showByline?: boolean;
+  /**
+   * Controls Start timev of video.
+   */
   start?: number;
+  /**
+   * Controls the volume of video.
+   */
   volume?: number;
+  /**
+   * Controls the pause function of video.
+   */
   paused?: boolean;
+  /**
+   * Height of Video iframe. Aspect ratio is mantained. If `responsive` is set to true, height value
+   * is not respected. Also for arbitrary values Aspect ratio is mantained.
+   */
   height?: number;
+  /**
+   * Width of Video iframe. If `responsive` is set to true, width value
+   * is not respected. Also for arbitrary values Aspect ratio is mantained.
+   */
   width?: number;
-  language?: string;
+  /**
+   * Controls the language of text track captions/subtitle
+   */
+  language?: "en" | "es" | "fr" | "jp" | "ko" | "de";
   /**
    * Automatically start playback of the video. Ensure that `muted` is set to true for it to work.
    * This is done to meet browser's auto play policy.
@@ -35,10 +67,55 @@ export type VimeoPlayerOptions = Omit<
    */
   autoplay?: boolean;
   /**
+   * Pauses the video when other players are running. Usefull when more than one player
+   * are running.
+   */
+  autopause?: boolean;
+  /**
+   * Enables player background mode, that hides player controls, autoplays and loop
+   * functionality. Userfull when showing vimeo videos as cover or background.
+   */
+  background?: false;
+  /**
+   * Loops the video when it reaches the end. If this is set to true;
+   * `onEnd` will not be ever called.
+   */
+  loop?: boolean;
+  /**
+   * Mutes the video. If you set autoplay to `true`; ensure muted is also set to `true`.
+   */
+  muted?: boolean;
+  /**
    * Quality of the video can be set if it is enabled for the video by Vimeo Plus member and higher.
    * More details: https://vimeo.zendesk.com/hc/en-us/articles/224983008-Setting-default-quality-for-embedded-videos
    */
   quality?: VimeoVideoQuality;
+  /**
+   * Plays video in inline mode.
+   */
+  playsinline?: boolean;
+  /**
+   * Control the visibility of speed control in player. To use this feature, video owner mush be PRO or above user.
+   */
+  speed?: boolean;
+  /**
+   * Blokd yhr player from tracking any video watch. Helpfull when dealing with
+   * security regulation like GDPR etc.
+   */
+  dnt?: boolean;
+  /**
+   * Rezies the player container accoding to parent container.
+   */
+  responsive?: boolean;
+  /**
+   * Hide all element in player. Available to PRO and above users.
+   */
+  controls?: boolean;
+  /**
+   * Control the color of video color. If color is already set in preferences,
+   * it will be overridden.
+   */
+  color?: string;
   /**
    * Triggered any time the video playback reaches the end. Note: when loop is set to true, the ended event will not fire.
    */
@@ -74,7 +151,13 @@ export type VimeoPlayerOptions = Omit<
 };
 
 export type UpdateOptions = {
+  /**
+   * start time of the video
+   */
   start?: number;
+  /**
+   * current volume of video
+   */
   volume?: number;
 };
 

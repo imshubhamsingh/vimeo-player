@@ -95,7 +95,11 @@ export class VimeoPlayer {
   /**
    * It updates video configs
    */
-  update(name: string, value: any, options: UpdateOptions = {}) {
+  update(
+    name: keyof typeof VIMEO_CONFIGS,
+    value: any,
+    options: UpdateOptions = {}
+  ) {
     console.log("[[ UPDATED ]]", name, value);
     switch (name) {
       // pause and unpause video
