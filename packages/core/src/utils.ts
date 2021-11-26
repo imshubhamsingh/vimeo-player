@@ -1,6 +1,6 @@
 import type { Options } from "@vimeo/player";
 import { VIMEO_PLAYER_EVENTS } from "./constants";
-import { EventHandlersObj, VimeoPlayerOptions } from "./type";
+import { EventHandlersObj, PlayerOptions, VimeoPlayerOptions } from "./type";
 
 // Empty function
 const noop = () => {};
@@ -8,7 +8,9 @@ const noop = () => {};
 /**
  * It forms Vimeo player options params
  */
-export function getInitialPlayerOptions(obj: VimeoPlayerOptions): Options {
+export function getInitialPlayerOptions(
+  obj: VimeoPlayerOptions
+): PlayerOptions {
   return {
     id: +obj.video,
     width: obj.width,
@@ -27,6 +29,8 @@ export function getInitialPlayerOptions(obj: VimeoPlayerOptions): Options {
     dnt: obj.dnt,
     speed: obj.speed,
     texttrack: obj.language,
+    volume: obj.volume,
+    start: obj.start,
   };
 }
 

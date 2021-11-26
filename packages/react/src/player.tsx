@@ -48,7 +48,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
   const player = React.useRef<VimeoPlayer | null>(null);
   const mounted = React.useRef<boolean>(false);
   const [loaded, setLoaded] = React.useState<boolean>(false);
-  console.log(props);
+
   const prevProps = React.useRef({
     autopause,
     color,
@@ -70,6 +70,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
         );
         // Player loaded
         setLoaded(true);
+        if (player.current) props?.onReady?.(player.current.instance);
       }
     }
     getPlayerInstance();

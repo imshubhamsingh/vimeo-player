@@ -115,7 +115,7 @@ TestPlayer.args = {
   video: "323783503",
   muted: true,
   quality: "360p",
-  autoplay: true,
+  // autoplay: true,
 };
 
 TestPlayer.parameters = {
@@ -168,6 +168,7 @@ LoopCoverPlayer.args = {
   video: "59777392",
   loop: true,
   background: true,
+  volume: 0,
   //
   hideControls: true,
 };
@@ -195,4 +196,93 @@ export const VerticalPlayer = Template.bind({});
 VerticalPlayer.args = {
   video: "351594821",
   hideControls: true,
+};
+
+export const CuePoints: ComponentStory<typeof Player> = ({ ...args }) => {
+  const ref = React.useRef<ImperativeHandle>(null);
+  const [playerReady, setPlayerReady] = React.useState(false);
+  React.useEffect(() => {
+    (async () => {
+      if (!playerReady) return;
+      const totalTime = await ref.current.getDuration();
+      const cuePoints = 6;
+      Array(6)
+        .fill(1)
+        .map((el, idx) =>
+          ref.current.addCuePoint((totalTime / cuePoints) * idx, {
+            reached: idx,
+            message: `you have watch ${((idx / cuePoints) * 100).toFixed(
+              2
+            )}% of video`,
+          })
+        );
+    })();
+  }, [playerReady]);
+  return (
+    <>
+      <Player
+        {...args}
+        ref={ref}
+        onCuePoint={(props) => console.log(props)}
+        onReady={() => setPlayerReady(true)}
+      />
+    </>
+  );
+};
+
+CuePoints.args = {
+  video: "279121663",
+  showByline: false,
+  showTitle: false,
+  volume: 0,
+  showPortrait: false,
+};
+
+CuePoints.parameters = {
+  controls: { disabled: true },
+  docs: {
+    description: {
+      story: "This is usefull for adding cue points",
+    },
+    source: {
+      code: `
+function Container() {
+  const ref = React.useRef<ImperativeHandle>(null);
+  const [playerReady, setPlayerReady] = React.useState(false);
+  const [videoId, setVideoId] = React.useState("xxxxxxxxx");
+
+  React.useEffect(() => {
+    (async () => {
+      if (!playerReady) return; // Player not loaded still
+      // ... player loaded
+      const totalTime = await ref.current.getDuration();
+      // Adding 6 cues here
+      const cuePoints = 6;
+      Array(6)
+        .fill(1)
+        .map((el, idx) =>
+          ref.current.addCuePoint((totalTime / cuePoints) * idx, {
+            reached: idx,
+            message: \`you have watch \${((idx / cuePoints) * 100).toFixed(
+              2
+            )}% of video\`,
+          })
+        );
+    })();
+  }, [playerReady]);
+  return (
+    <>
+      <Player
+        video={videoId}
+        ref={ref}
+        onCuePoint={(props) => console.log(props)}
+        // wait till the video is loaded to add cues
+        onReady={() => setPlayerReady(true)}
+      />
+    </>
+  );
+}
+    `,
+    },
+  },
 };

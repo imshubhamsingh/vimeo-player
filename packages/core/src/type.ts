@@ -25,21 +25,26 @@ export type callbackParams = {
   seconds: number;
 };
 
+export type PlayerOptions = Options & {
+  volume?: number;
+  start?: number;
+};
+
 type VimeoPlayerProperties = {
   /**
    * Vimeo video id or url with hash if its private.
    */
   video: string;
   /**
-   * Controls whether to show tile of video.
+   * Show tile of video.
    */
   showTitle?: boolean;
   /**
-   * Show video in protrait mode.
+   * Show user's profile pic beside title
    */
   showPortrait?: boolean;
   /**
-   * Show Bylines
+   * Show Bylines (Owner info) below video title
    */
   showByline?: boolean;
   /**
@@ -83,7 +88,7 @@ type VimeoPlayerProperties = {
    * Enables player background mode, that hides player controls, autoplays and loop
    * functionality. Userfull when showing vimeo videos as cover or background.
    */
-  background?: false;
+  background?: boolean;
   /**
    * Loops the video when it reaches the end. If this is set to true;
    * `onEnd` will not be ever called.
@@ -107,7 +112,7 @@ type VimeoPlayerProperties = {
    */
   speed?: boolean;
   /**
-   * Blokd yhr player from tracking any video watch. Helpfull when dealing with
+   * Blokd your player from tracking any video watch. Helpfull when dealing with
    * security regulation like GDPR etc.
    */
   dnt?: boolean;

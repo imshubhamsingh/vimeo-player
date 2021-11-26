@@ -10,6 +10,7 @@ import type {
   VimeoPlayerOptions,
   UpdateOptions,
   ImperativeHandle,
+  PlayerOptions,
 } from "./type";
 
 export type { VimeoPlayerOptions, ImperativeHandle };
@@ -66,7 +67,7 @@ export class VimeoPlayer {
    */
   static async create(
     element: HTMLIFrameElement | HTMLElement | string,
-    options: Options = {},
+    options: PlayerOptions = {},
     eventHandlers: EventHandlersObj = {}
   ) {
     // create instance
@@ -74,10 +75,18 @@ export class VimeoPlayer {
     // add player handler
     player.addEventHandlers(eventHandlers);
     // Check if player is ready or there is some error
-    await player.instance
-      .ready()
-      .then(() => eventHandlers?.onReady(player.instance))
-      .catch((err) => eventHandlers?.onError(err));
+    await player.instance.ready().catch((err) => eventHandlers?.onError(err));
+
+    // add default volume
+    if (typeof options.volume === "number") {
+      player.update(VIMEO_CONFIGS.VOLUME, options.volume);
+    }
+
+    // add default start time
+    if (typeof options.start === "number") {
+      player.instance.setCurrentTime(options.start);
+    }
+
     return player;
   }
 
@@ -97,11 +106,7 @@ export class VimeoPlayer {
   /**
    * It updates video configs
    */
-  update(
-    name: keyof typeof VIMEO_CONFIGS,
-    value: any,
-    options: UpdateOptions = {}
-  ) {
+  update(name: string, value: any, options: UpdateOptions = {}) {
     console.log("[[ UPDATED ]]", name, value);
     switch (name) {
       // pause and unpause video
