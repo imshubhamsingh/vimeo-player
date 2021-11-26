@@ -1,5 +1,5 @@
 // vendor lib
-import Player, { Options } from "@vimeo/player";
+import Player, { Options, VimeoCuePointData } from "@vimeo/player";
 
 // custom
 import { getInitialPlayerOptions, getPlayerEventHandlers } from "./utils";
@@ -89,6 +89,8 @@ export class VimeoPlayer {
       getVolume: () => vimeoPlayer.instance.getVolume(),
       getPlaybackRate: () => vimeoPlayer.instance.getPlaybackRate(),
       seekTo: (seconds: number) => vimeoPlayer.instance.setCurrentTime(seconds),
+      addCuePoint: (time: number, data: VimeoCuePointData) =>
+        vimeoPlayer.instance.addCuePoint(time, data),
     };
   }
 

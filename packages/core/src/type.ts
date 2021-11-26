@@ -4,6 +4,8 @@ import type {
   VimeoVideoQuality,
   VimeoPromise,
   Player,
+  VimeoCuePointData,
+  UnsupportedError,
 } from "@vimeo/player";
 
 export type EventHandlersObj = { [key: string]: EventCallback };
@@ -174,6 +176,14 @@ type VimeoPlayerEventHandlers = {
    * Triggers when buffer end in player
    */
   onBufferEnd?: () => void;
+  /**
+   * Triggered when the current time hits a registered cue point.
+   */
+  onCuePoint?: (props: {
+    time: number;
+    data: VimeoCuePointData;
+    id: string;
+  }) => void;
 };
 
 export type VimeoPlayerOptions = VimeoPlayerProperties &
@@ -218,4 +228,11 @@ export type ImperativeHandle = {
    * Setting the current time before playback has started will cause playback to start.
    */
   seekTo: (seconds: number) => VimeoPromise<number, RangeError | Error>;
+  /**
+   * Adds cue points in video timeline, and recieve data back in onCuePoint callback.
+   */
+  addCuePoint: (
+    time: number,
+    data: VimeoCuePointData
+  ) => VimeoPromise<string, UnsupportedError | Error | RangeError>;
 };

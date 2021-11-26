@@ -2,7 +2,7 @@
 export const VIMEO_PLAYER_EVENTS = {
   //TODO: streamline api for CUE POINTs
   // cuechange: "onCueChange",
-  // cuepoint: "onCuePoint",
+  cuepoint: "onCuePoint",
   ended: "onEnd",
   enterpictureinpicture: "onEnterPictureinPicture",
   error: "onError",
