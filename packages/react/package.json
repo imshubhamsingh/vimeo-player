@@ -26,7 +26,8 @@
   "scripts": {
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "build": "rollup --c ./rollup.config.js --environment production"
+    "build": "rollup --c ./rollup.config.js --environment production",
+    "build:dev": "rollup --c ./rollup.config.js --environment development"
   },
   "file": [
     "dist"

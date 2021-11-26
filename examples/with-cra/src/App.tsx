@@ -7,7 +7,7 @@ function App() {
   // player ref
   const ref = React.useRef<ImperativeHandle>(null);
   // video id
-  const [videoId, setVideoId] = React.useState("115783408");
+  const [videoId, setVideoId] = React.useState("323783503");
   // control paused state
   const [paused, setPaused] = React.useState(false);
   // control muted
@@ -23,27 +23,43 @@ function App() {
   }
   return (
     <div className="App">
-      <header className="App-header">
+      <div className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <div>
+          <Player
+            video={videoId}
+            ref={ref}
+            autoplay={true}
+            autopause={true}
+            className="vid"
+            background={false}
+            controls={false}
+            dnt={false}
+            language="en"
+            loop={false}
+            muted={true}
+            speed={true}
+            quality={"360p"}
+            responsive={true}
+            showByline={true}
+            showPortrait={true}
+            showTitle={true}
+            onReady={() => {
+              console.log("ready");
+            }}
+            onPlay={() => console.log("playing")}
+            onPause={() => console.log("paused")}
+          />
+          <div>
+            <button onClick={() => seek(-10)}>-10s ⏪</button>
+            <button onClick={() => seek(-5)}>-5s ◀️</button>
+            <button onClick={() => seek(5)}>+5s ▶️</button>
+            <button onClick={() => seek(10)}>+10s ⏩</button>
+          </div>
+        </div>
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-      </header>
-      <div>
-        <Player
-          video={videoId}
-          paused={paused}
-          muted={muted}
-          ref={ref}
-          autoplay={true}
-          autopause={false}
-        />
-        <div>
-          <button onClick={() => seek(-10)}>-10s ⏪</button>
-          <button onClick={() => seek(-5)}>-5s ◀️</button>
-          <button onClick={() => seek(5)}>+5s ▶️</button>
-          <button onClick={() => seek(10)}>+10s ⏩</button>
-        </div>
       </div>
     </div>
   );

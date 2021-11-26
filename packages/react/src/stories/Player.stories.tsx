@@ -107,6 +107,7 @@ TestPlayer.args = {
   video: "323783503",
   muted: true,
   quality: "360p",
+  autoplay: true,
 };
 
 TestPlayer.parameters = {

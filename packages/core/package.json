@@ -16,12 +16,10 @@
     "@vimeo/player": "^2.16.2"
   },
   "scripts": {
-    "build": "rollup --c ./rollup.config.js --environment development"
+    "build": "rollup --c ./rollup.config.js --environment production",
+    "build:dev": "rollup --c ./rollup.config.js --environment development"
   },
   "files": [
     "dist"
-  ],
-  "dependencies": {
-    "@vimeo-player/react": "^0.0.0"
-  }
+  ]
 }

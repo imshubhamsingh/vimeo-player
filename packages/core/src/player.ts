@@ -1,30 +1,18 @@
 // vendor lib
-import Player, { Options, VimeoPromise } from "@vimeo/player";
+import Player, { Options } from "@vimeo/player";
 
 // custom
-import {
-  getInitialPlayerOptions,
-  getPlayerEventHandlers,
-  EventHandlersObj,
-  VimeoPlayerOptions,
-} from "./utils";
+import { getInitialPlayerOptions, getPlayerEventHandlers } from "./utils";
 import { VIMEO_CONFIGS, VIMEO_PLAYER_EVENTS } from "./constants";
 
-export type { VimeoPlayerOptions };
+import type {
+  EventHandlersObj,
+  VimeoPlayerOptions,
+  UpdateOptions,
+  ImperativeHandle,
+} from "./type";
 
-type UpdateOptions = {
-  start?: number;
-  volume?: number;
-};
-
-export type ImperativeHandle = {
-  getDuration: () => VimeoPromise<number, Error>;
-  getCurrentTime: () => VimeoPromise<number, Error>;
-  isMuted: () => VimeoPromise<boolean, Error>;
-  getVolume: () => VimeoPromise<number, Error>;
-  getPlaybackRate: () => VimeoPromise<number, Error>;
-  seekTo: (seconds: number) => VimeoPromise<number, RangeError | Error>;
-};
+export type { VimeoPlayerOptions, ImperativeHandle };
 
 /**
  * Vimeo core wrapper for vimeo player

@@ -36,7 +36,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
   const player = React.useRef<VimeoPlayer | null>(null);
   const mounted = React.useRef<boolean>(false);
   const [loaded, setLoaded] = React.useState<boolean>(false);
-
+  console.log(props);
   const prevProps = React.useRef({
     autopause,
     color,
@@ -74,6 +74,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
     if (!mounted.current) {
       mounted.current = true;
     } else {
+      console.log("video props change");
       Object.values(VimeoPlayer.config)
         //@ts-ignore TODO check how tslint error can be fix
         .filter((name) => props[name] !== prevProps.current[name])

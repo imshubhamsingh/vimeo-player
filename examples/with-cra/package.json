@@ -10,7 +10,6 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "@vimeo-player/react": "file:.yalc/@vimeo-player/react",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "latest",
@@ -21,7 +20,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "yalc:link": "yalc add @vimeo-player/core && yalc add @vimeo-player/react",
+    "yalc:unlink": "yalc remove @vimeo-player/core && yalc remove @vimeo-player/react"
   },
   "eslintConfig": {
     "extends": [
