@@ -17,7 +17,8 @@
   },
   "scripts": {
     "build": "rollup --c ./rollup.config.js --environment production",
-    "build:dev": "rollup --c ./rollup.config.js --environment development"
+    "build:dev": "rollup --c ./rollup.config.js --environment development",
+    "yalc:publish": "yarn publish"
   },
   "files": [
     "dist"
