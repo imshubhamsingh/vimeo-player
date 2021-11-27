@@ -14,7 +14,7 @@ The goal of this project is as follow:
 - [ ] To explore various usecase handled by vimeo embede player.
 - [ ] To learn and see what all new frameworks provide and possibilities.
 - [ ] Learn more about iframe and its limitations on both web and mobile.
-- [ ] Learn more about maintaining mono repos.
+- [ ] Learn more about maintaining fully typed mono repo.
 - [ ] Explore a new framework for tooling and build process. Such as pnpm etc.
 
 ## Developing
