@@ -1,11 +1,3 @@
-# `@vimeo-player/svelte`
+# @vimeo-player/svelte
 
-> TODO: description
-
-## Usage
-
-```
-const svelte = require('@vimeo-player/svelte');
-
-// TODO: DEMONSTRATE API
-```
+`@vimeo-player/svelte` is unoffical wrapper for Vimeo player using it player sdk. This package contains the Svelte bindings that wrap around `@vimeo-player/core`.
