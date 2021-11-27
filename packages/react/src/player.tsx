@@ -1,37 +1,37 @@
-import * as React from "react";
 import {
-  VimeoPlayer,
   ImperativeHandle,
+  VimeoPlayer,
   VimeoPlayerOptions,
-} from "@vimeo-player/core";
+} from '@vimeo-player/core'
+import * as React from 'react'
 
 export interface PlayerProps extends VimeoPlayerOptions {
   /**
    * Parent HTML Element tag name
    */
-  as?: keyof JSX.IntrinsicElements | "div";
+  as?: keyof JSX.IntrinsicElements | 'div'
   /**
    * id selector
    */
-  id?: string;
+  id?: string
   /**
    * classname selector
    */
-  className?: string;
+  className?: string
   /**
    * React CSS object
    */
-  style?: React.CSSProperties;
+  style?: React.CSSProperties
 }
 
-export type { ImperativeHandle };
+export type { ImperativeHandle }
 
 /**
  * React Wrapper for Vimeo player using @vimeo/player
  */
 const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
   const {
-    as = "div",
+    as = 'div',
     start,
     volume,
     autopause,
@@ -46,11 +46,11 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
     height,
     width,
     quality,
-  } = props;
-  const container = React.useRef<HTMLElement | null>(null);
-  const player = React.useRef<VimeoPlayer | null>(null);
-  const mounted = React.useRef<boolean>(false);
-  const [loaded, setLoaded] = React.useState<boolean>(false);
+  } = props
+  const container = React.useRef<HTMLElement | null>(null)
+  const player = React.useRef<VimeoPlayer | null>(null)
+  const mounted = React.useRef<boolean>(false)
+  const [loaded, setLoaded] = React.useState<boolean>(false)
 
   const prevProps = React.useRef({
     autopause,
@@ -61,7 +61,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
     video,
     volume,
     quality,
-  });
+  })
 
   React.useEffect(() => {
     async function getPlayerInstance() {
@@ -70,39 +70,45 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
           container.current,
           VimeoPlayer.getInitialOptions(props),
           VimeoPlayer.getEventHandlers(props)
-        );
+        )
         // Player loaded
-        setLoaded(true);
-        if (player.current) props?.onReady?.(player.current.instance);
+        setLoaded(true)
+        if (player.current) props?.onReady?.(player.current.instance)
       }
     }
-    getPlayerInstance();
+    getPlayerInstance()
 
     return () => {
-      player.current?.instance.destroy();
-      player.current = null;
-      container.current = null;
-    };
-  }, []);
+      player.current?.instance.destroy()
+      player.current = null
+      container.current = null
+    }
+  }, [])
 
   // componentDidUpdate Equivalent
   React.useEffect(() => {
     if (!mounted.current) {
-      mounted.current = true;
+      mounted.current = true
     } else {
-      console.log("video props change");
       Object.values(VimeoPlayer.config)
-        //@ts-ignore TODO check how tslint error can be fix
-        .filter((name) => props[name] !== prevProps.current[name])
-        .map((name) => {
+        .filter(
+          (name: string) =>
+            props[name as keyof typeof prevProps.current] !==
+            prevProps.current[name as keyof typeof prevProps.current]
+        )
+        .forEach((name: string) => {
           //@ts-ignore TODO check how tslint error can be fix
-          prevProps.current[name] = props[name];
-          //@ts-ignore TODO check how tslint error can be fix
-          player.current?.update(name, props[name], {
-            start: start,
-            volume: volume,
-          });
-        });
+          prevProps.current[name] =
+            props[name as keyof typeof prevProps.current]
+          player.current?.update(
+            name,
+            props[name as keyof typeof prevProps.current],
+            {
+              start: start,
+              volume: volume,
+            }
+          )
+        })
     }
   }, [
     autopause,
@@ -115,22 +121,22 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
     height,
     width,
     quality,
-  ]);
+  ])
 
   // Handler which can be used outside of component
   React.useImperativeHandle(
     ref,
     () => VimeoPlayer.imperativeHandle(player.current as VimeoPlayer),
     [loaded]
-  );
+  )
 
   return React.createElement(as, {
     ref: container,
     className,
     id,
     style,
-  });
-});
+  })
+})
 
 Player.defaultProps = {
   autopause: true,
@@ -146,7 +152,7 @@ Player.defaultProps = {
   showTitle: true,
   speed: true,
   volume: 1,
-  language: "en",
-};
+  language: 'en',
+}
 
-export { Player };
+export { Player }

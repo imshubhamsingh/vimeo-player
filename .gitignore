@@ -10,7 +10,6 @@ dist
 .cache
 coverage/
 build
-/**/LICENSE
 package-lock.json
 
 # Yalc
