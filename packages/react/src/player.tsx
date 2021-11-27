@@ -26,6 +26,9 @@ export interface PlayerProps extends VimeoPlayerOptions {
 
 export type { ImperativeHandle };
 
+/**
+ * React Wrapper for Vimeo player using @vimeo/player
+ */
 const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
   const {
     as = "div",
@@ -114,6 +117,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
     quality,
   ]);
 
+  // Handler which can be used outside of component
   React.useImperativeHandle(
     ref,
     () => VimeoPlayer.imperativeHandle(player.current as VimeoPlayer),
@@ -136,7 +140,6 @@ Player.defaultProps = {
   dnt: false,
   loop: false,
   muted: false,
-  // If responsive is set to true, height and width is not respected
   responsive: true,
   showByline: true,
   showPortrait: true,
