@@ -1,5 +1,7 @@
 // https://github.com/vimeo/player.js/#events
 export const VIMEO_PLAYER_EVENTS = {
+  bufferend: 'onBufferEnd',
+  bufferstart: 'onBufferStart',
   //TODO: streamline api for CUE POINTs
   // cuechange: "onCueChange",
   // TODO: chapter changes
@@ -17,11 +19,9 @@ export const VIMEO_PLAYER_EVENTS = {
   ready: 'onReady',
   resize: 'onResize',
   seeked: 'onSeeked',
+  texttrackchange: 'onTextTrackChange',
   timeupdate: 'onTimeUpdate',
   volumechange: 'onVolumeChange',
-  bufferstart: 'onBufferStart',
-  bufferend: 'onBufferEnd',
-  texttrackchange: 'onLanguageChange',
 }
 
 // https://github.com/vimeo/player.js/#methods

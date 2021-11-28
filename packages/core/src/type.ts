@@ -15,6 +15,9 @@ export type EventHandlersObj = { [key: string]: EventCallback }
  */
 export type VimeoSupportedLanguages = 'en' | 'es' | 'fr' | 'jp' | 'ko' | 'de'
 
+/**
+ * Callback that gives video time details
+ */
 export type callbackParams = {
   /**
    * Totol duration of video
@@ -35,7 +38,7 @@ export type PlayerOptions = Options & {
   start?: number
 }
 
-type VimeoPlayerProperties = {
+export type VimeoPlayerProperties = {
   /**
    * Vimeo video id or url with hash if its private.
    */
@@ -77,7 +80,7 @@ type VimeoPlayerProperties = {
   /**
    * Controls the language of text track captions/subtitle
    */
-  language?: VimeoSupportedLanguages
+  texttrack?: VimeoSupportedLanguages
   /**
    * Automatically start playback of the video. Ensure that `muted` is set to true for it to work.
    * This is done to meet browser's auto play policy.
@@ -117,7 +120,7 @@ type VimeoPlayerProperties = {
    */
   speed?: boolean
   /**
-   * Blokd your player from tracking any video watch. Helpfull when dealing with
+   * Block your player from tracking any video watch. Helpfull when dealing with
    * security regulation like GDPR etc.
    */
   dnt?: boolean
@@ -136,45 +139,18 @@ type VimeoPlayerProperties = {
   color?: string
 }
 
-type VimeoPlayerEventHandlers = {
+export type VimeoPlayerEvents = {
+  ended: callbackParams
+  play: callbackParams
+  pause: callbackParams
+  timeupdate: callbackParams
+  seeked: callbackParams
   /**
-   * Triggered any time the video playback reaches the end. Note: when loop is set to true, the ended event will not fire.
+   * Vimeo player instance given by `@vimeo/player`
    */
-  onEnd?: (props: callbackParams) => void
-  /**
-   * Triggered when video playback is initiated.
-   */
-  onPlay?: (props: callbackParams) => void
-  /**
-   * Triggered when the video pauses.
-   */
-  onPause?: (props: callbackParams) => void
-  /**
-   * Triggered as the currentTime of the video updates. It generally fires every 250ms, but it may vary depending on the browser.
-   */
-  onTimeUpdate?: (props: callbackParams) => void
-  /**
-   * Triggered when the player seeks to a specific time. `onTimeupdate` props will also be fired at the same time.
-   */
-  onSeeked?: (props: callbackParams) => void
-  /**
-   * Called when vimeo player is loaded
-   */
-  onReady?: (
-    /**
-     * Vimeo player instance given by `@vimeo/player`
-     */
-    player: Player
-  ) => void
-  /**
-   * Triggers when the video is loading. The params indicates how much data is loaded
-   * in buffer. This is not equivalent to `onTimeUpdate` which shows current time.
-   */
-  onProgress?: (props: callbackParams) => void
-  /**
-   * Called when vimeo player is resized via height and width props.
-   */
-  onResize?: (props: {
+  ready: Player
+  progress: callbackParams
+  resize: {
     /**
      * Video new width in px.
      */
@@ -183,19 +159,10 @@ type VimeoPlayerEventHandlers = {
      * Video new height in px.
      */
     videoHeight: number
-  }) => void
-  /**
-   * Triggere when buffer starts in player
-   */
-  onBufferStart?: () => void
-  /**
-   * Triggers when buffer end in player
-   */
-  onBufferEnd?: () => void
-  /**
-   * Triggered when the current time hits a registered cue point.
-   */
-  onCuePoint?: (props: {
+  }
+  bufferend: void
+  bufferstart: void
+  cuepoint: {
     /**
      * Current time in seconds.
      */
@@ -208,56 +175,35 @@ type VimeoPlayerEventHandlers = {
      * Cue id
      */
     id: string
-  }) => void
-  /**
-   * Triggered when the playback rate of the video in the player changes.
-   *
-   * NOTE: The ability to change rate can be disabled by the creator and the
-   * event will not fire for those videos.
-   */
-  onPlaybackRateChange?: (props: {
+  }
+  playbackratechange: {
     /**
      * The player playback rate which scales from 0.5 to 2.
      */
     playbackRate: number
-  }) => void
-  /**
-   * Triggered when the volume in the player changes.
-   * NOTE: Some devices do not support setting the volume of
-   * the video independently from the system volume, so this event
-   * will never fire on those devices.
-   */
-  onVolumeChange?: (props: {
+  }
+  volumechange: {
     /**
      * The value is between 0 and 1 included.
      */
     volume: number
-  }) => void
-  /**
-   * Triggered when the active text track (captions/subtitles) changes.
-   * The values will be null if text tracks are turned off.
-   */
-  onLanguageChange?: (
-    props: {
-      /**
-       * Text track type
-       */
-      kind: 'caption' | 'subtitle'
-      /**
-       * Language + Kind
-       * @example "English CC"
-       */
-      label: string
-      /**
-       * It depends on the languages suported by the video.
-       */
-      language: VimeoSupportedLanguages
-    } | null
-  ) => void
-  /**
-   *
-   */
-  onChapterChange?: (props: {
+  }
+  texttrackchange: {
+    /**
+     * Text track type
+     */
+    kind: 'caption' | 'subtitle'
+    /**
+     * Language + Kind
+     * @example "English CC"
+     */
+    label: string
+    /**
+     * It depends on the languages suported by the video.
+     */
+    language: VimeoSupportedLanguages
+  } | null
+  chapterchange: {
     /**
      * Start time of chapter in seconds.
      */
@@ -271,7 +217,80 @@ type VimeoPlayerEventHandlers = {
      * of all the chapters. It starts at 1.
      */
     index: number
-  }) => void
+  }
+}
+
+export type VimeoPlayerEventHandlers = {
+  /**
+   * Triggered any time the video playback reaches the end. Note: when loop is set to true, the ended event will not fire.
+   */
+  onEnd?: (props: VimeoPlayerEvents['ended']) => void
+  /**
+   * Triggered when video playback is initiated.
+   */
+  onPlay?: (props: VimeoPlayerEvents['play']) => void
+  /**
+   * Triggered when the video pauses.
+   */
+  onPause?: (props: VimeoPlayerEvents['pause']) => void
+  /**
+   * Triggered as the currentTime of the video updates. It generally fires every 250ms, but it may vary depending on the browser.
+   */
+  onTimeUpdate?: (props: VimeoPlayerEvents['timeupdate']) => void
+  /**
+   * Triggered when the player seeks to a specific time. `onTimeupdate` props will also be fired at the same time.
+   */
+  onSeeked?: (props: VimeoPlayerEvents['seeked']) => void
+  /**
+   * Called when vimeo player is loaded
+   */
+  onReady?: (player: VimeoPlayerEvents['ready']) => void
+  /**
+   * Triggers when the video is loading. The params indicates how much data is loaded
+   * in buffer. This is not equivalent to `onTimeUpdate` which shows current time.
+   */
+  onProgress?: (props: VimeoPlayerEvents['progress']) => void
+  /**
+   * Called when vimeo player is resized via height and width props.
+   */
+  onResize?: (props: VimeoPlayerEvents['resize']) => void
+  /**
+   * Triggere when buffer starts in player
+   */
+  onBufferStart?: () => void
+  /**
+   * Triggers when buffer end in player
+   */
+  onBufferEnd?: () => void
+  /**
+   * Triggered when the current time hits a registered cue point.
+   */
+  onCuePoint?: (props: VimeoPlayerEvents['cuepoint']) => void
+  /**
+   * Triggered when the playback rate of the video in the player changes.
+   *
+   * NOTE: The ability to change rate can be disabled by the creator and the
+   * event will not fire for those videos.
+   */
+  onPlaybackRateChange?: (
+    props: VimeoPlayerEvents['playbackratechange']
+  ) => void
+  /**
+   * Triggered when the volume in the player changes.
+   * NOTE: Some devices do not support setting the volume of
+   * the video independently from the system volume, so this event
+   * will never fire on those devices.
+   */
+  onVolumeChange?: (props: VimeoPlayerEvents['volumechange']) => void
+  /**
+   * Triggered when the active text track (captions/subtitles) changes.
+   * The values will be null if text tracks are turned off.
+   */
+  onTextTrackChange?: (props: VimeoPlayerEvents['texttrackchange']) => void
+  /**
+   *
+   */
+  onChapterChange?: (props: VimeoPlayerEvents['chapterchange']) => void
 }
 
 export type VimeoPlayerOptions = VimeoPlayerProperties &

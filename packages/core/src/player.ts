@@ -7,12 +7,19 @@ import type {
   ImperativeHandle,
   PlayerOptions,
   UpdateOptions,
+  VimeoPlayerEvents,
   VimeoPlayerOptions,
+  VimeoPlayerProperties,
 } from './type'
 // custom
 import { getInitialPlayerOptions, getPlayerEventHandlers } from './utils'
 
-export type { ImperativeHandle, VimeoPlayerOptions }
+export type {
+  ImperativeHandle,
+  VimeoPlayerEvents,
+  VimeoPlayerOptions,
+  VimeoPlayerProperties,
+}
 
 export { VIMEO_PLAYER_EVENTS }
 
