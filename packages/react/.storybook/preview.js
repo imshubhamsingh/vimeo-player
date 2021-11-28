@@ -1,3 +1,3 @@
-import { parameter as DefaultParameters } from '../../../config/.storybook/preview'
+import { parameter as DefaultParameters } from '../../../config/storybook/preview'
 
 export const parameter = DefaultParameters

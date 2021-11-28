@@ -1,1 +1,1 @@
-import '../../../config/.storybook/manager'
+import '../../../config/storybook/manager'

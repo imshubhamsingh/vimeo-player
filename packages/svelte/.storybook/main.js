@@ -1,4 +1,4 @@
-const { addons } = require('../../../config/.storybook/main')
+const { addons } = require('../../../config/storybook/main')
 
 module.exports = {
   webpackFinal: async (config) => {

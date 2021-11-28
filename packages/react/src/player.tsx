@@ -148,11 +148,11 @@ Player.defaultProps = {
   muted: false,
   responsive: true,
   showByline: true,
-  showPortrait: true,
+  showPortrait: false,
   showTitle: true,
   speed: true,
   volume: 1,
-  language: 'en',
+  texttrack: 'en',
 }
 
 export { Player }
