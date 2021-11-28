@@ -218,6 +218,28 @@ export type VimeoPlayerEvents = {
      */
     index: number
   }
+  error: {
+    /**
+     * Error name
+     */
+    name: string
+    /**
+     * Error message
+     */
+    message: string
+    /**
+     * Method due to which error occured
+     */
+    method: string
+  }
+  loaded: {
+    /**
+     * New video id
+     */
+    id: string
+  }
+  enterpictureinpicture: void
+  leavepictureinpicture: void
 }
 
 export type VimeoPlayerEventHandlers = {
@@ -288,9 +310,25 @@ export type VimeoPlayerEventHandlers = {
    */
   onTextTrackChange?: (props: VimeoPlayerEvents['texttrackchange']) => void
   /**
-   *
+   * Triggred when chapter is changed.
    */
   onChapterChange?: (props: VimeoPlayerEvents['chapterchange']) => void
+  /**
+   * Triggered when some kind of error is generated in the player.
+   */
+  onError?: (props: VimeoPlayerEvents['error']) => void
+  /**
+   * Triggered when a new video is loaded in the player.
+   */
+  onLoaded?: (props: VimeoPlayerEvents['loaded']) => void
+  /**
+   *Triggered when the player enters picture-in-picture.
+   */
+  onEnterPictureInPicture?: () => void
+  /**
+   * Triggered when the player leaves picture-in-picture.
+   */
+  onLeavePictureInPicture?: () => void
 }
 
 export type VimeoPlayerOptions = VimeoPlayerProperties &
