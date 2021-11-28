@@ -7,7 +7,7 @@ The unofficial wrapper for vimeo player for frontend framework and lib.
 I joined Vimeo recently (Sept 2021). I was playing around with its player and getting to know its products and ecosystem. And I found that it has something called [player sdk](https://github.com/vimeo/player.js) that allows one to interact with and control an embedded Vimeo player.
 This is written in pure vanilla js, which is excellent as anyone can use it on the web irrespective of frontend technologies.
 
-In the past couple of years, I think its the ages of the framework we live in. It revolves around React, Svelte, Vue, etc. Morden day UI is being written with these so-called frameworks and lib, whether on the web or mobile to save time and to remove repetitive imperative logic. Eventually, people have to write wrappers around the vanilla library to get it work with their framework and to match a certain level of decleration. For example, many Vimeo embed player wrappers are scattered around various repos with varying logic and support. `vimeo-player` is just a project I wanted to do for multiple reasons. Some might say its an overkill. But I'm OK with it.
+In the past couple of years, Frontend ecosystem has changed so much that it's no longer just about HTML, CSS, JS. I think its the ages of the framework we live in especially for frontend devs. It revolves around React, Svelte, Vue, etc. Morden day UI is being written with these so-called frameworks and lib, whether on the web or mobile to save time and to remove repetitive imperative logic. Eventually, people have to write wrappers around the vanilla library to get it work with their framework and to match a certain level of decleration. For example, many Vimeo embed player wrappers are scattered around various repos with varying logic and support. `vimeo-player` is just a project I wanted to do for multiple reasons. Some might say its an overkill. But I'm OK with it.
 
 The goal of this project is as follow:
 
@@ -34,7 +34,7 @@ pnpm install
 ## TODO
 
 - [x] React.js
-- [ ] Svelte.js
+- [x] Svelte.js
 - [ ] Vue.js
 - [ ] React Native
 - [ ] Flutter
