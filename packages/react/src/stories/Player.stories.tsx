@@ -167,7 +167,7 @@ LoopCoverPlayer.args = {
   loop: true,
   background: true,
   volume: 0,
-  //
+  //@ts-ignore
   hideControls: true,
 }
 
@@ -193,6 +193,7 @@ export const VerticalPlayer = Template.bind({})
 
 VerticalPlayer.args = {
   video: '351594821',
+  //@ts-ignore
   hideControls: true,
 }
 
@@ -202,12 +203,12 @@ export const CuePoints: ComponentStory<typeof Player> = ({ ...args }) => {
   React.useEffect(() => {
     ;(async () => {
       if (!playerReady) return
-      const totalTime = await ref.current.getDuration()
+      const totalTime = (await ref.current?.getDuration()) || 0
       const cuePoints = 6
       Array(6)
         .fill(1)
         .map((el, idx) =>
-          ref.current.addCuePoint((totalTime / cuePoints) * idx, {
+          ref.current?.addCuePoint((totalTime / cuePoints) * idx, {
             reached: idx,
             message: `you have watch ${((idx / cuePoints) * 100).toFixed(
               2

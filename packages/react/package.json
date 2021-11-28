@@ -9,12 +9,7 @@
   "license": "MIT",
   "sideEffects": false,
   "devDependencies": {
-    "@mdx-js/react": "^1.6.22",
     "@vimeo-player/core": "*",
-    "@storybook/addon-actions": "^6.3.12",
-    "@storybook/addon-docs": "^6.3.12",
-    "@storybook/addon-essentials": "^6.3.12",
-    "@storybook/addon-links": "^6.3.12",
     "@storybook/react": "^6.3.12"
   },
   "peerDependencies": {
@@ -36,7 +31,9 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "build": "rollup --c ./rollup.config.js --environment production",
-    "build:dev": "rollup --c ./rollup.config.js --environment development"
+    "build:dev": "rollup --c ./rollup.config.js --environment development",
+    "fix": "pnpx eslint --fix \"src/**/*.{js,svelte}\"",
+    "format": "pnpx prettier --write \"src/**/*.{js,svelte}\""
   },
   "bugs": {
     "url": "https://github.com/imshubhamsingh/vimeo-player/issues"

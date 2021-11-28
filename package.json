@@ -6,9 +6,7 @@
     "packages/*"
   ],
   "scripts": {
-    "install:all": "pnpm recursive install",
-    "build:core": "pnpm run workspace @vimeo-player/core build",
-    "build:react": "pnpm run workspace @vimeo-player/react build"
+    "install:all": "pnpm recursive install"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
@@ -26,6 +24,10 @@
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-node-resolve": "^13.0.6",
     "@rollup/plugin-typescript": "^8.3.0",
+    "@storybook/addon-actions": "^6.3.12",
+    "@storybook/addon-docs": "^6.3.12",
+    "@storybook/addon-essentials": "^6.3.12",
+    "@storybook/addon-links": "^6.3.12",
     "@types/react": "^17.0.36",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
