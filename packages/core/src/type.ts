@@ -1,11 +1,11 @@
 import type {
   EventCallback,
   Options,
-  VimeoVideoQuality,
-  VimeoPromise,
   Player,
-  VimeoCuePointData,
   UnsupportedError,
+  VimeoCuePointData,
+  VimeoPromise,
+  VimeoVideoQuality,
 } from '@vimeo/player'
 
 export type EventHandlersObj = { [key: string]: EventCallback }

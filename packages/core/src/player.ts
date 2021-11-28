@@ -1,19 +1,20 @@
 // vendor lib
-import Player, { Options, VimeoCuePointData } from "@vimeo/player";
+import Player, { Options, VimeoCuePointData } from '@vimeo/player'
 
-// custom
-import { getInitialPlayerOptions, getPlayerEventHandlers } from "./utils";
-import { VIMEO_CONFIGS, VIMEO_PLAYER_EVENTS } from "./constants";
-
+import { VIMEO_CONFIGS, VIMEO_PLAYER_EVENTS } from './constants'
 import type {
   EventHandlersObj,
-  VimeoPlayerOptions,
-  UpdateOptions,
   ImperativeHandle,
   PlayerOptions,
-} from "./type";
+  UpdateOptions,
+  VimeoPlayerOptions,
+} from './type'
+// custom
+import { getInitialPlayerOptions, getPlayerEventHandlers } from './utils'
 
-export type { VimeoPlayerOptions, ImperativeHandle };
+export type { ImperativeHandle, VimeoPlayerOptions }
+
+export { VIMEO_PLAYER_EVENTS }
 
 /**
  * Vimeo core wrapper for vimeo player
@@ -22,27 +23,27 @@ export class VimeoPlayer {
   /**
    * Vimeo player proxied instance
    */
-  _player: Player;
+  _player: Player
 
   /**
    * Parse framework props to vimeo's player initial options
    */
-  static getInitialOptions = getInitialPlayerOptions;
+  static getInitialOptions = getInitialPlayerOptions
 
   /**
    * Vimeo player events
    */
-  static events = VIMEO_PLAYER_EVENTS;
+  static events = VIMEO_PLAYER_EVENTS
 
   /**
    * Vimeo customisable config
    */
-  static config = VIMEO_CONFIGS;
+  static config = VIMEO_CONFIGS
 
   /**
    * Vimeo player events
    */
-  static getEventHandlers = getPlayerEventHandlers;
+  static getEventHandlers = getPlayerEventHandlers
 
   /**
    * constructor for Vimeo player. At the moment its same as official package.
@@ -51,14 +52,14 @@ export class VimeoPlayer {
     element: HTMLIFrameElement | HTMLElement | string,
     options?: Options
   ) {
-    this._player = new Player(element, options);
+    this._player = new Player(element, options)
   }
 
   /**
    * It returns vimeo player instance
    */
   get instance(): Player {
-    return this._player;
+    return this._player
   }
 
   /**
@@ -71,23 +72,23 @@ export class VimeoPlayer {
     eventHandlers: EventHandlersObj = {}
   ) {
     // create instance
-    const player = new VimeoPlayer(element, options);
+    const player = new VimeoPlayer(element, options)
     // add player handler
-    player.addEventHandlers(eventHandlers);
+    player.addEventHandlers(eventHandlers)
     // Check if player is ready or there is some error
-    await player.instance.ready().catch((err) => eventHandlers?.onError(err));
+    await player.instance.ready().catch((err) => eventHandlers.onError(err))
 
     // add default volume
-    if (typeof options.volume === "number") {
-      player.update(VIMEO_CONFIGS.VOLUME, options.volume);
+    if (typeof options.volume === 'number') {
+      player.update(VIMEO_CONFIGS.VOLUME, options.volume)
     }
 
     // add default start time
-    if (typeof options.start === "number") {
-      player.instance.setCurrentTime(options.start);
+    if (typeof options.start === 'number') {
+      player.instance.setCurrentTime(options.start)
     }
 
-    return player;
+    return player
   }
 
   static imperativeHandle(vimeoPlayer: VimeoPlayer): ImperativeHandle {
@@ -100,82 +101,82 @@ export class VimeoPlayer {
       seekTo: (seconds: number) => vimeoPlayer.instance.setCurrentTime(seconds),
       addCuePoint: (time: number, data: VimeoCuePointData) =>
         vimeoPlayer.instance.addCuePoint(time, data),
-    };
+    }
   }
 
   /**
    * It updates video configs
    */
   update(name: string, value: any, options: UpdateOptions = {}) {
-    console.log("[[ UPDATED ]]", name, value);
+    console.log('[[ UPDATED ]]', name, value)
     switch (name) {
       // pause and unpause video
       case VIMEO_CONFIGS.PAUSED: {
         this._player.getPaused().then((paused) => {
           if (value && !paused) {
-            this._player.pause();
+            this._player.pause()
           } else if (!value && paused) {
-            this._player.play();
+            this._player.play()
           }
-        });
-        break;
+        })
+        break
       }
       // update video id and load from starting time value
       case VIMEO_CONFIGS.VIDEO: {
         if (value) {
-          const loaded = this._player.loadVideo(value);
-          if (typeof options.start === "number") {
+          const loaded = this._player.loadVideo(value)
+          if (typeof options.start === 'number') {
             loaded.then(() => {
-              this._player.setCurrentTime(options.start as number);
-            });
+              this._player.setCurrentTime(options.start as number)
+            })
           }
         } else {
-          this._player.unload();
+          this._player.unload()
         }
-        break;
+        break
       }
       // updates color
       case VIMEO_CONFIGS.COLOR: {
-        this._player.setColor(value);
-        break;
+        this._player.setColor(value)
+        break
       }
       // set auto pause
       case VIMEO_CONFIGS.AUTO_PAUSE: {
-        this._player.setAutopause(value);
-        break;
+        this._player.setAutopause(value)
+        break
       }
       // update loop setting
       case VIMEO_CONFIGS.LOOP: {
-        this._player.setLoop(value);
-        break;
+        this._player.setLoop(value)
+        break
       }
       // update video volume
       case VIMEO_CONFIGS.VOLUME: {
-        this._player.setVolume(value);
-        break;
+        this._player.setVolume(value)
+        break
       }
       // mute or umute video
       case VIMEO_CONFIGS.MUTED: {
-        this._player.setVolume(value ? 0 : (options.volume as number));
-        break;
+        this._player.setVolume(value ? 0 : (options.volume as number))
+        break
       }
       case VIMEO_CONFIGS.HEIGHT: {
         //@ts-ignore missing in type
-        this._player.height = value;
-        break;
+        this._player.height = value
+        break
       }
       case VIMEO_CONFIGS.WIDTH: {
         //@ts-ignore missing in type
-        this._player.width = value;
-        break;
+        this._player.width = value
+        break
       }
       case VIMEO_CONFIGS.QUALITY: {
         //@ts-ignore TODO: inform team about missing type
-        this._player.setQuality(value);
-        break;
+        this._player.setQuality(value)
+        break
       }
       default:
-        null;
+        null
     }
   }
 
@@ -185,9 +186,9 @@ export class VimeoPlayer {
   addEventHandlers(handlers: EventHandlersObj) {
     Object.entries(VIMEO_PLAYER_EVENTS).forEach(([event, handlerName]) => {
       this._player.on(event, (event) => {
-        const eventHandlers = handlers[handlerName];
-        eventHandlers?.(event);
-      });
-    });
+        const eventHandlers = handlers[handlerName]
+        eventHandlers(event)
+      })
+    })
   }
 }

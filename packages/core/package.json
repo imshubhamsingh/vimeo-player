@@ -8,7 +8,7 @@
   "description": "vimeo player core",
   "author": "Shubham Singh <hello@shubham.sh>",
   "license": "MIT",
-  "dependencies": {
+  "peerDependencies": {
     "@vimeo/player": "^2.16.2"
   },
   "devDependencies": {
@@ -29,7 +29,7 @@
   "scripts": {
     "build": "rollup --c ./rollup.config.js --environment production",
     "build:dev": "rollup --c ./rollup.config.js --environment development",
-    "yalc:publish": "yarn publish"
+    "yalc:publish": "yalc publish"
   },
   "bugs": {
     "url": "https://github.com/imshubhamsingh/vimeo-player/issues"

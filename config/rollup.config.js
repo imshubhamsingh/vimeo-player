@@ -1,54 +1,53 @@
-import typescript from "@rollup/plugin-typescript";
-import { resolve as resolvePath } from "path";
-import resolve from "@rollup/plugin-node-resolve";
-import babel from "@rollup/plugin-babel";
-import commonjs from '@rollup/plugin-commonjs';
-import externals from "rollup-plugin-node-externals";
-import del from "rollup-plugin-delete";
-import { terser } from "rollup-plugin-terser";
-import dts from "rollup-plugin-dts";
+import babel from '@rollup/plugin-babel'
+import commonjs from '@rollup/plugin-commonjs'
+import resolve from '@rollup/plugin-node-resolve'
+import typescript from '@rollup/plugin-typescript'
+import { resolve as resolvePath } from 'path'
+import del from 'rollup-plugin-delete'
+import dts from 'rollup-plugin-dts'
+import externals from 'rollup-plugin-node-externals'
+import { terser } from 'rollup-plugin-terser'
 
-const isProduction = (env) => env === "production";
+const isProduction = (env) => env === 'production'
 
 export const configuration = (options) => {
-  const { input, pkg, path, typeFileName } = options;
-  console.log(__dirname)
+  const { input, pkg, path, typeFileName } = options
   /**
    * @type {import('rollup').RollupOptions}
    */
   return function (args) {
-    process.env.NODE_ENV = args.environment;
+    process.env.NODE_ENV = args.environment
     let config = {
       input: [input],
       output: [
         {
-          dir: "./",
-          format: "esm",
+          dir: './',
+          format: 'esm',
           entryFileNames: pkg.module,
         },
         {
-          dir: "./",
-          format: "cjs",
+          dir: './',
+          format: 'cjs',
           entryFileNames: pkg.main,
         },
       ],
       external: Object.keys(pkg.peerDependencies),
       plugins: [
         // Delete existing build files.
-        del({ targets: resolvePath(path, "./dist/*") }),
+        del({ targets: resolvePath(path, './dist/*') }),
         // Leave out third-party dependencies (listed under `package.json`'s `dependencies` option) from the bundled outputs.
         externals({ deps: true }),
         // Find third-party modules within `node_modules` with any one of the following file extensions: `.js`, `.ts` and `.tsx`.
         resolve({
-          extensions: [".js", ".ts", ".tsx"],
+          extensions: ['.js', '.ts', '.tsx'],
         }),
         commonjs(),
         typescript({
           tsconfig: options.tsconfig,
         }),
         babel({
-          babelHelpers: "runtime",
-          configFile: "../../babel.config.js",
+          babelHelpers: 'runtime',
+          configFile: '../../babel.config.js',
         }),
         ...(isProduction(process.env.NODE_ENV)
           ? [
@@ -61,18 +60,18 @@ export const configuration = (options) => {
             ]
           : []),
       ],
-    };
+    }
 
     const types = {
       // path to your declaration files root
       input: `./dist/dts/${typeFileName}.d.ts`,
-      output: [{ file: "./dist/index.d.ts", format: "es" }],
+      output: [{ file: './dist/index.d.ts', format: 'es' }],
       plugins: [
         dts(),
-        del({ hook: "buildEnd", targets: resolvePath(path, "./dist/dts") }),
+        del({ hook: 'buildEnd', targets: resolvePath(path, './dist/dts') }),
       ],
-    };
+    }
 
-    return [config, types];
-  };
-};
+    return [config, types]
+  }
+}
