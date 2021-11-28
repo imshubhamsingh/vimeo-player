@@ -1,11 +1,9 @@
-
-   
 {
-  "*.{js,json,css,md,ts,tsx}": [
+  "*.{js,json,css,md,ts,tsx,svelte}": [
     "prettier --write",
     "git add"
   ],
-  "src/**/*.{ts,tsx}": [
+  "src/**/*.{ts,tsx,svelte}": [
     "eslint"
   ]
 }
