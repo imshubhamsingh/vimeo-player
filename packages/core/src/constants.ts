@@ -1,5 +1,5 @@
 // https://github.com/vimeo/player.js/#events
-export const VIMEO_PLAYER_EVENTS = {
+export const VIMEO_PLAYER_EVENTS = Object.freeze({
   bufferend: 'onBufferEnd',
   bufferstart: 'onBufferStart',
   //TODO: streamline api for CUE POINTs
@@ -22,10 +22,10 @@ export const VIMEO_PLAYER_EVENTS = {
   texttrackchange: 'onTextTrackChange',
   timeupdate: 'onTimeUpdate',
   volumechange: 'onVolumeChange',
-}
+})
 
 // https://github.com/vimeo/player.js/#methods
-export const VIMEO_CONFIGS = {
+export const VIMEO_CONFIGS = Object.freeze({
   AUTO_PAUSE: 'autopause',
   COLOR: 'color',
   LOOP: 'loop',
@@ -36,4 +36,4 @@ export const VIMEO_CONFIGS = {
   HEIGHT: 'height',
   WIDTH: 'width',
   QUALITY: 'quality',
-}
+})

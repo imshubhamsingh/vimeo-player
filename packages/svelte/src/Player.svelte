@@ -1,8 +1,7 @@
 <script lang="ts">
-  import {
-    VimeoPlayer,
+  import { VimeoPlayer, VIMEO_PLAYER_EVENTS } from '@vimeo-player/core'
+  import type {
     VimeoPlayerEvents,
-    VIMEO_PLAYER_EVENTS,
     VimeoPlayerProperties,
   } from '@vimeo-player/core'
   import { onMount, createEventDispatcher, onDestroy } from 'svelte'
@@ -35,28 +34,33 @@
   export let video: VimeoPlayerProperties['video']
   export let volume: VimeoPlayerProperties['volume']
   export let paused: VimeoPlayerProperties['paused']
+  export let autoplay: VimeoPlayerProperties['autoplay'] = false
 
   /**************************************************** */
 
-  const eventHandlers = () => {
-    return Object.keys(VIMEO_PLAYER_EVENTS).map(
-      (event: keyof VimeoPlayerEvents) => {
-        return (...args) => dispatch(event, ...args)
+  const eventHandlers = Object.entries(VIMEO_PLAYER_EVENTS).reduce(
+    (acc, [event, value]) => {
+      acc[value] = (...args) => {
+        dispatch(event as keyof VimeoPlayerEvents, ...args)
       }
-    )
-  }
+      return acc
+    },
+    {}
+  )
 
   onMount(async () => {
     const props = {
       video,
       volume,
       paused,
+      autoplay,
     }
     player = await VimeoPlayer.create(
       container,
       VimeoPlayer.getInitialOptions(props),
       VimeoPlayer.getEventHandlers(eventHandlers)
     )
+
     // Player loaded
     if (player) dispatch('ready', player.instance)
   })

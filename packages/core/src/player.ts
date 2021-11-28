@@ -191,6 +191,7 @@ export class VimeoPlayer {
    * Add event handlers to vimeo player in bulk
    */
   addEventHandlers(handlers: EventHandlersObj) {
+    console.log(handlers)
     Object.entries(VIMEO_PLAYER_EVENTS).forEach(([event, handlerName]) => {
       this._player.on(event, (event) => {
         const eventHandlers = handlers[handlerName]
