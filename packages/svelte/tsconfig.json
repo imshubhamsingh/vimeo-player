@@ -1,17 +1,9 @@
 {
-  "extends": "@tsconfig/svelte/tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./dist",
     "types": ["node"],
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "strict": true,
-    "declarationDir": "./dist/types",
-    "esModuleInterop": true,
-    "noImplicitAny": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true
+    "declarationDir": "./dist/types"
   },
   "include": ["./src/**/*"],
   "exclude": ["./src/**/*.test.*", "./**/*.stories.*", "dist"]

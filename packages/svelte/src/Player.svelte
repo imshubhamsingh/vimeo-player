@@ -7,7 +7,7 @@
   import { onMount, createEventDispatcher, onDestroy } from 'svelte'
 
   let player: VimeoPlayer
-  let container
+  let container: HTMLDivElement
   const dispatch = createEventDispatcher<{
     bufferend: VimeoPlayerEvents['bufferend']
     bufferstart: VimeoPlayerEvents['bufferstart']
@@ -73,7 +73,8 @@
 
   const eventHandlers = Object.entries(VIMEO_PLAYER_EVENTS).reduce(
     (acc, [event, value]) => {
-      acc[value] = (...args) => {
+      // @ts-ignore
+      acc[value] = (...args: any) => {
         dispatch(event as keyof VimeoPlayerEvents, ...args)
       }
       return acc
@@ -100,13 +101,15 @@
 
   $: {
     const x = Object.values(VimeoPlayer.config)
-      .filter((name: string) => $$props[name] !== props[name])
+      .filter((name) => $$props[name] !== props[name as keyof typeof props])
       .map((name) => {
-        const prevProps = props[name]
+        const prevProps = props[name as keyof typeof props]
+        // @ts-ignore TODO check how to fix it.
         props[name] = $$props[name]
         return {
           name,
           prevProps,
+          // @ts-ignore TODO check how to fix it.
           newProps: props[name],
         }
       })

@@ -34,8 +34,8 @@
     "types:build": "tsc -p tsconfig.json",
     "start": "node ./scripts/dev & pnpm run types:dev",
     "types:dev": "tsc -w --p tsconfig.json",
-    "fix": "pnpx eslint --fix \"src/**/*.{js,svelte}\"",
-    "format": "pnpx prettier --write \"src/**/*.{js,svelte}\""
+    "fix": "pnpx eslint --fix \"src/**/*.{ts,tsx}\"",
+    "format": "pnpx prettier --write \"src/**/*.{ts,tsx}\""
   },
   "bugs": {
     "url": "https://github.com/imshubhamsingh/vimeo-player/issues"
