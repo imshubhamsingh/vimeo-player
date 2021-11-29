@@ -1,9 +1,9 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "declarationDir": "./dist/dts"
+    "declarationDir": "./dist/types"
   },
   "include": ["./src/**/*"],
-  "exclude": ["./src/**/*.test.*"]
+  "exclude": ["node_modules", "./src/**/*.test.*", "dist"]
 }

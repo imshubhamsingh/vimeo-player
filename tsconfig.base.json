@@ -4,7 +4,6 @@
     "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "skipLibCheck": true,
-    "noEmit": true,
     "jsx": "react-jsx",
     "sourceMap": false,
     "declaration": true,
@@ -17,6 +16,7 @@
     "esModuleInterop": true,
     "noImplicitAny": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "emitDeclarationOnly": true
   }
 }

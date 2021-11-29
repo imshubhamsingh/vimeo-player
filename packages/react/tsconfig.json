@@ -1,10 +1,10 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./dist",
     "types": ["node", "react"],
-    "declarationDir": "./dist/dts"
+    "declarationDir": "./dist/types"
   },
   "include": ["./src/**/*"],
-  "exclude": ["./src/**/*.test.*", "./**/*.stories.*"]
+  "exclude": ["./src/**/*.test.*", "./**/*.stories.*", "dist"]
 }
