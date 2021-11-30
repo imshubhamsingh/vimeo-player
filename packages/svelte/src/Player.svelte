@@ -1,5 +1,9 @@
 <script lang="ts">
-  import { VimeoPlayer, VIMEO_PLAYER_EVENTS } from '@vimeo-player/core'
+  import {
+    ImperativeHandle,
+    VimeoPlayer,
+    VIMEO_PLAYER_EVENTS,
+  } from '@vimeo-player/core'
   import type {
     VimeoPlayerEvents,
     VimeoPlayerProperties,
@@ -51,6 +55,8 @@
 
   /**************************************************** */
 
+  export let ref: ImperativeHandle
+
   let props = {
     video,
     volume,
@@ -89,6 +95,8 @@
       VimeoPlayer.getEventHandlers(eventHandlers)
     )
 
+    ref = VimeoPlayer.imperativeHandle(player as VimeoPlayer)
+
     // Player loaded
     if (player) dispatch('ready', player.instance)
   })
@@ -100,17 +108,18 @@
   })
 
   $: {
-    Object.values(VimeoPlayer.config)
-      .filter((name) => $$props[name] !== props[name as keyof typeof props])
-      .forEach((name: string) => {
-        // @ts-ignore
-        props[name] = $$props[name]
-        //@ts-ignore
-        player.update(name, props[name], {
-          start: start,
-          volume: volume,
+    player?.update &&
+      Object.values(VimeoPlayer.config)
+        .filter((name) => $$props[name] !== props[name as keyof typeof props])
+        .forEach((name: string) => {
+          // @ts-ignore
+          props[name] = $$props[name]
+          //@ts-ignore
+          player.update(name, props[name], {
+            start: start,
+            volume: volume,
+          })
         })
-      })
   }
 </script>
 

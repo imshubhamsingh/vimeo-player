@@ -17,13 +17,13 @@ const config = {
 			// ssr: {
 			// 	noExternal: ['@vimeo-player/svelte']
 			//   },
-			//   server: {
-			// 	  fs:{
-			// 		  allow: [
-			// 			  './.yalc'
-			// 		  ]
-			// 	  }
-			//   }
+			  server: {
+				  fs:{
+					  allow: [
+						  './.yalc'
+					  ]
+				  }
+			  }
 		}
 	}
 };
