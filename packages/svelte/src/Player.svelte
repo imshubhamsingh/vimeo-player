@@ -48,7 +48,7 @@
   export let speed: VimeoPlayerProperties['speed'] = false
   export let texttrack: VimeoPlayerProperties['texttrack'] = 'en'
   export let start: VimeoPlayerProperties['start']
-  console.log(muted)
+
   /**************************************************** */
 
   let props = {
@@ -83,7 +83,6 @@
   )
 
   onMount(async () => {
-    console.log('Mount')
     player = await VimeoPlayer.create(
       container,
       VimeoPlayer.getInitialOptions(props),
