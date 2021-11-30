@@ -13,9 +13,10 @@ module.exports = async function build({
   pkg,
   config = {},
 }) {
+  const distFoder = path.resolve(dirname, './dist')
   // Remove existing dist folder
-  if (fs.existsSync('./dist')) {
-    fs.rmSync('./dist', { recursive: true }, (e) => {
+  if (fs.existsSync(distFoder)) {
+    fs.rmSync(distFoder, { recursive: true }, (e) => {
       if (e) {
         throw e
       }
