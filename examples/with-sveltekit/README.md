@@ -36,3 +36,7 @@ npm run build
 ```
 
 > You can preview the built app with `npm run preview`, regardless of whether you installed an adapter. This should _not_ be used to serve your app in production.
+
+## Issues
+- https://github.com/pnpm/pnpm/issues/3561
+- https://github.com/vitejs/vite/issues/2579

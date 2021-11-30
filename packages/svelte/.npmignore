@@ -1,4 +1,5 @@
 rollup.config.json
 tsconfig.json
-src
+# Removed is due to used of svelte in package.json
+# src
 .storybook

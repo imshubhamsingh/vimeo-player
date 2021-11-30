@@ -29,7 +29,8 @@
   },
   "homepage": "https://github.com/imshubhamsingh/vimeo-player#readme",
   "files": [
-    "dist"
+    "dist",
+    "src/Player.svelte"
   ],
   "publishConfig": {
     "access": "public"

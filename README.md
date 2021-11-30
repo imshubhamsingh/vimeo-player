@@ -38,3 +38,4 @@ pnpm install
 - [ ] Vue.js
 - [ ] React Native
 - [ ] Flutter
+- [ ] Augular

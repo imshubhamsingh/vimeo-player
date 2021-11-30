@@ -101,26 +101,17 @@
   })
 
   $: {
-    const x = Object.values(VimeoPlayer.config)
+    Object.values(VimeoPlayer.config)
       .filter((name) => $$props[name] !== props[name as keyof typeof props])
-      .map((name) => {
-        const prevProps = props[name as keyof typeof props]
-        // @ts-ignore TODO check how to fix it.
+      .forEach((name: string) => {
+        // @ts-ignore
         props[name] = $$props[name]
-        return {
-          name,
-          prevProps,
-          // @ts-ignore TODO check how to fix it.
-          newProps: props[name],
-        }
+        //@ts-ignore
+        player.update(name, props[name], {
+          start: start,
+          volume: volume,
+        })
       })
-    // .forEach((name: string) => {
-    //   props[name] = $$props[name]
-    //   player.update(name, props[name], {
-    //     start: start,
-    //     volume: volume,
-    //   })
-    // })
   }
 </script>
 
