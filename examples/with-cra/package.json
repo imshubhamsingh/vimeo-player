@@ -21,7 +21,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "yalc:link": "yalc add @vimeo-player/core && yalc add @vimeo-player/react",
+    "yalc:link": "yalc link @vimeo-player/core && yalc link @vimeo-player/react",
     "yalc:unlink": "yalc remove @vimeo-player/core && yalc remove @vimeo-player/react"
   },
   "eslintConfig": {

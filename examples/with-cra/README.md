@@ -33,7 +33,7 @@ Follow below steps to run this project with local package build.
   ```bash
   yarn install
   yarn yalc:link
-  yarn dev
+  npx npm-check-updates -u to upgrade dependencies to latest.
   ```
 - For any update in local package run:
   ```bash

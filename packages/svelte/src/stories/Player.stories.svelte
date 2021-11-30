@@ -21,7 +21,7 @@
 />
 
 <Template let:args>
-  <!-- TODO check why on:react storybook action is not called -->
+  <!-- TODO check why on:ready storybook action is not called -->
   <Player
     {...args}
     on:timeupdate={args.onTimeUpdate}
