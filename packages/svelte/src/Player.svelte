@@ -16,7 +16,7 @@
     beforeUpdate,
   } from 'svelte'
 
-  let player: VimeoPlayer
+  // let player: VimeoPlayer
   let container: HTMLDivElement
   const dispatch = createEventDispatcher<{
     bufferend: VimeoPlayerEvents['bufferend']

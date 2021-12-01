@@ -140,16 +140,38 @@ export type VimeoPlayerProperties = {
 }
 
 export type VimeoPlayerEvents = {
+  /**
+   * Triggered when vimeo player is loaded
+   */
   ended: callbackParams
+  /**
+   * Triggered when video playback is initiated.
+   */
   play: callbackParams
+  /**
+   * Triggered when the video pauses.
+   */
   pause: callbackParams
+  /**
+   * Triggered as the currentTime of the video updates. It generally fires every 250ms, but it may vary depending on the browser.
+   */
   timeupdate: callbackParams
+  /**
+   * Triggered when the player seeks to a specific time.
+   */
   seeked: callbackParams
   /**
-   * Vimeo player instance given by `@vimeo/player`
+   * Triggered when Vimeo player is ready and returns instance given by `@vimeo/player`
    */
   ready: Player
+  /**
+   * Triggers when the video is loading. The params indicates how much data is loaded
+   * in buffer.
+   */
   progress: callbackParams
+  /**
+   * Triggers when player is resized via height and width props.
+   */
   resize: {
     /**
      * Video new width in px.
@@ -160,8 +182,17 @@ export type VimeoPlayerEvents = {
      */
     videoHeight: number
   }
+  /**
+   * Triggers when buffer end in player
+   */
   bufferend: void
+  /**
+   * Triggers when buffer end in player
+   */
   bufferstart: void
+  /**
+   * Triggered when the current time hits a registered cue point.
+   */
   cuepoint: {
     /**
      * Current time in seconds.
@@ -176,18 +207,28 @@ export type VimeoPlayerEvents = {
      */
     id: string
   }
+  /**
+   * Triggered when the playback rate of the video in the player changes.
+   *
+   */
   playbackratechange: {
     /**
      * The player playback rate which scales from 0.5 to 2.
      */
     playbackRate: number
   }
+  /**
+   * Triggered when the volume in the player changes.
+   */
   volumechange: {
     /**
      * The value is between 0 and 1 included.
      */
     volume: number
   }
+  /**
+   * Triggered when the active text track (captions/subtitles) changes.
+   */
   texttrackchange: {
     /**
      * Text track type
@@ -203,6 +244,9 @@ export type VimeoPlayerEvents = {
      */
     language: VimeoSupportedLanguages
   } | null
+  /**
+   * Triggred when chapter is changed.
+   */
   chapterchange: {
     /**
      * Start time of chapter in seconds.
@@ -218,6 +262,9 @@ export type VimeoPlayerEvents = {
      */
     index: number
   }
+  /**
+   * Triggered when some kind of error is generated in the player.
+   */
   error: {
     /**
      * Error name
@@ -232,13 +279,22 @@ export type VimeoPlayerEvents = {
      */
     method: string
   }
+  /**
+   * Triggered when a new video is loaded in the player.
+   */
   loaded: {
     /**
      * New video id
      */
     id: string
   }
+  /**
+   *Triggered when the player enters picture-in-picture.
+   */
   enterpictureinpicture: void
+  /**
+   * Triggered when the player leaves picture-in-picture.
+   */
   leavepictureinpicture: void
 }
 

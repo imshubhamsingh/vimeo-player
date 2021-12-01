@@ -4,7 +4,7 @@
   "description": "vimeo player unofficial svelte wrapper",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "typings": "dist/type/Player.d.ts",
+  "typings": "dist/types/Player.d.ts",
   "author": "Shubham Singh <hello@shubham.sh>",
   "license": "MIT",
   "svelte": "./src/Player.svelte",

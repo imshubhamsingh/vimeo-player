@@ -1,8 +1,10 @@
 <script lang="ts">
+import type { ImperativeHandle } from "@vimeo-player/core";
+
   import Player from "@vimeo-player/svelte";
   export let name: string;
   let paused = true;
-  let ref; // player ref
+  let ref: ImperativeHandle; // player ref
   async function seek(value) {
     if (!ref.getDuration) return;
     const totalTime = await ref.getDuration();
@@ -15,8 +17,8 @@
   <h1>Hello {name}!</h1>
   <Player
     video="323783503"
-    {paused}
-    bind:ref
+    paused={paused}
+    bind:ref={ref}
     on:ready={({ detail }) => console.log("ready", detail)}
     on:play={({ detail }) => console.log("play", detail)}
     on:pause={({ detail }) => console.log("pause", detail)}

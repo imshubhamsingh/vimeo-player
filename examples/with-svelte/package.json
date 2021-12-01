@@ -7,7 +7,7 @@
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "format":"pnpx prettier --write \"src/**/*.{js,svelte}\"",
+    "format": "pnpx prettier --write \"src/**/*.{js,svelte}\"",
     "yalc:link": "yalc add @vimeo-player/core --dev && yalc add @vimeo-player/svelte --dev",
     "yalc:unlink": "yalc remove @vimeo-player/core && yalc remove @vimeo-player/svelte"
   },
@@ -16,6 +16,8 @@
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-typescript": "^8.0.0",
     "@tsconfig/svelte": "^2.0.0",
+    "@vimeo-player/core": "file:.yalc/@vimeo-player/core",
+    "@vimeo-player/svelte": "file:.yalc/@vimeo-player/svelte",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
