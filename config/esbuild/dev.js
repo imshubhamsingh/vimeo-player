@@ -3,15 +3,38 @@
 const esbuild = require('esbuild')
 const path = require('path')
 
+/**
+ * Dev build
+ */
 module.exports = function devbuild({
+  /**
+   * Entry point file
+   */
   entryPoint,
+  /**
+   * Final build file
+   */
   outfile,
+  /**
+   * Ts config relative path
+   */
   tsconfigPath,
+  /**
+   * Current directory name, it is __dirname usually
+   */
   dirname,
+  /**
+   * Package.json
+   */
   pkg,
+  /**
+   * Es build config to override default one.
+   */
   config = {},
 }) {
+  // Root path of package
   const rootPath = path.resolve(dirname, '../')
+  // ESM dev build
   esbuild.build({
     entryPoints: [path.resolve(rootPath, entryPoint).toString()],
     minify: false,

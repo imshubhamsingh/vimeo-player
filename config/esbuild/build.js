@@ -4,27 +4,60 @@ const path = require('path')
 const esbuild = require('esbuild')
 const { gzip } = require('zlib')
 
+/**
+ * Production build
+ */
 module.exports = async function build({
+  /**
+   * Entry point file
+   */
   entryPoint,
+  /**
+   * Final Common.js build file
+   */
   cjsOutfile,
+  /**
+   * Final ESM build file
+   */
   esmOutfile,
+  /**
+   * Ts config relative path
+   */
   tsconfigPath,
+  /**
+   * Current directory name, it is __dirname usually
+   */
   dirname,
+  /**
+   * Package.json
+   */
   pkg,
+  /**
+   * Es build config to override default one.
+   */
   config = {},
 }) {
-  const distFoder = path.resolve(dirname, './dist')
+  /**
+   * Dist Folder Path relative to package.
+   */
+  const distFolder = path.resolve(dirname, './dist')
   // Remove existing dist folder
-  if (fs.existsSync(distFoder)) {
-    fs.rmSync(distFoder, { recursive: true }, (e) => {
+  if (fs.existsSync(distFolder)) {
+    fs.rmSync(distFolder, { recursive: true }, (e) => {
       if (e) {
         throw e
       }
     })
   }
 
+  /**
+   *  Root path of package
+   */
   const rootPath = path.resolve(dirname, '../')
 
+  /**
+   * Common build config
+   */
   const buildConfig = {
     entryPoints: [path.resolve(rootPath, entryPoint).toString()],
     minify: false,
@@ -53,15 +86,21 @@ module.exports = async function build({
       ...config,
     })
 
-    const esmSize = Object.values(esmResult.metafile.outputs).reduce(
-      (acc, { bytes }) => acc + bytes,
-      0
-    )
+    /**
+     * ESM side in KB
+     */
+    const esmSize = (
+      Object.values(esmResult.metafile.outputs).reduce(
+        (acc, { bytes }) => acc + bytes,
+        0
+      ) / 1000
+    ) // bytes to kb conversion
+      .toFixed(2)
 
     fs.readFile(path.resolve(rootPath, esmOutfile), (_err, data) => {
       gzip(data, (_err, result) => {
         console.log(
-          `✔ ${pkg.name}: Built package. ${(esmSize / 1000).toFixed(2)}kb (${(
+          `✔ ${pkg.name}: Built package. ${esmSize}kb (${(
             result.length / 1000
           ).toFixed(2)}kb minified)`
         )

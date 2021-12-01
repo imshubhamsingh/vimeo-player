@@ -8,7 +8,13 @@
     VimeoPlayerEvents,
     VimeoPlayerProperties,
   } from '@vimeo-player/core'
-  import { onMount, createEventDispatcher, onDestroy } from 'svelte'
+  import {
+    onMount,
+    createEventDispatcher,
+    onDestroy,
+    afterUpdate,
+    beforeUpdate,
+  } from 'svelte'
 
   let player: VimeoPlayer
   let container: HTMLDivElement
@@ -36,8 +42,8 @@
 
   /* ************ player properties ******************* */
   export let video: VimeoPlayerProperties['video']
-  export let volume: VimeoPlayerProperties['volume']
-  export let paused: VimeoPlayerProperties['paused']
+  export let volume: VimeoPlayerProperties['volume'] = 1
+  export let paused: VimeoPlayerProperties['paused'] = true
   export let autopause: VimeoPlayerProperties['autopause'] = false
   export let autoplay: VimeoPlayerProperties['autoplay'] = false
   export let background: VimeoPlayerProperties['background'] = false
@@ -51,7 +57,7 @@
   export let showTitle: VimeoPlayerProperties['showTitle']
   export let speed: VimeoPlayerProperties['speed'] = false
   export let texttrack: VimeoPlayerProperties['texttrack'] = 'en'
-  export let start: VimeoPlayerProperties['start']
+  export let start: VimeoPlayerProperties['start'] = 0
 
   /**************************************************** */
 
@@ -107,10 +113,15 @@
     }
   })
 
-  $: {
+  beforeUpdate(() => {
     player?.update &&
       Object.values(VimeoPlayer.config)
-        .filter((name) => $$props[name] !== props[name as keyof typeof props])
+        .filter(
+          (name) =>
+            // Prop should not be undefined.
+            $$props[name] !== undefined &&
+            $$props[name] !== props[name as keyof typeof props]
+        )
         .forEach((name: string) => {
           // @ts-ignore
           props[name] = $$props[name]
@@ -120,7 +131,7 @@
             volume: volume,
           })
         })
-  }
+  })
 </script>
 
 <div bind:this={container} />
