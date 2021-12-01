@@ -1,0 +1,35 @@
+{
+  "name": "@vime-player/vue",
+  "version": "0.0.0",
+  "description": "vimeo player unofficial vue wrapper",
+  "main": "index.js",
+  "author": "Shubham Singh <hello@shubham.sh>",
+  "license": "MIT",
+  "sideEffects": false,
+  "peerDependencies": {
+    "@vue/composition-api": "1.1.3",
+    "vue": "^2.0.0 || >=3.0.0-rc.0"
+  },
+  "peerDependenciesMeta": {
+    "@vue/composition-api": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "vue-demi": "^0.12.1"
+  },
+  "homepage": "https://github.com/imshubhamsingh/vimeo-player#readme",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imshubhamsingh/vimeo-player.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
