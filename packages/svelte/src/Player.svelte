@@ -16,29 +16,10 @@
     beforeUpdate,
   } from 'svelte'
 
-  // let player: VimeoPlayer
+  let player: VimeoPlayer
   let container: HTMLDivElement
-  const dispatch = createEventDispatcher<{
-    bufferend: VimeoPlayerEvents['bufferend']
-    bufferstart: VimeoPlayerEvents['bufferstart']
-    chapterchange: VimeoPlayerEvents['chapterchange']
-    cuepoint: VimeoPlayerEvents['cuepoint']
-    ended: VimeoPlayerEvents['ended']
-    enterpictureinpicture: VimeoPlayerEvents['enterpictureinpicture']
-    error: VimeoPlayerEvents['error']
-    leavepictureinpicture: VimeoPlayerEvents['leavepictureinpicture']
-    loaded: VimeoPlayerEvents['loaded']
-    pause: VimeoPlayerEvents['pause']
-    play: VimeoPlayerEvents['play']
-    playbackratechange: VimeoPlayerEvents['playbackratechange']
-    progress: VimeoPlayerEvents['progress']
-    ready: VimeoPlayerEvents['ready']
-    resize: VimeoPlayerEvents['resize']
-    seeked: VimeoPlayerEvents['seeked']
-    texttrackchange: VimeoPlayerEvents['texttrackchange']
-    timeupdate: VimeoPlayerEvents['timeupdate']
-    volumechange: VimeoPlayerEvents['volumechange']
-  }>()
+
+  const dispatch = createEventDispatcher<VimeoPlayerEvents>()
 
   /* ************ player properties ******************* */
   export let video: VimeoPlayerProperties['video']
@@ -83,15 +64,15 @@
     texttrack,
   }
 
+  const x = Object.entries(VIMEO_PLAYER_EVENTS)
   const eventHandlers = Object.entries(VIMEO_PLAYER_EVENTS).reduce(
     (acc, [event, value]) => {
-      // @ts-ignore
-      acc[value] = (...args: any) => {
+      acc[value as keyof VimeoPlayerEvents] = (...args: any) => {
         dispatch(event as keyof VimeoPlayerEvents, ...args)
       }
       return acc
     },
-    {}
+    {} as { [K in keyof VimeoPlayerEvents]: (...args: any) => void }
   )
 
   onMount(async () => {
@@ -118,7 +99,6 @@
       Object.values(VimeoPlayer.config)
         .filter(
           (name) =>
-            // Prop should not be undefined.
             $$props[name] !== undefined &&
             $$props[name] !== props[name as keyof typeof props]
         )

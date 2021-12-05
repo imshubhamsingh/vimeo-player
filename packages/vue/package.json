@@ -18,6 +18,9 @@
   "dependencies": {
     "vue-demi": "^0.12.1"
   },
+  "devDependencies": {
+    "vue": "^3.0.0"
+  },
   "homepage": "https://github.com/imshubhamsingh/vimeo-player#readme",
   "files": [
     "dist"
