@@ -7,6 +7,8 @@
   "license": "MIT",
   "sideEffects": false,
   "peerDependencies": {
+    "@vimeo-player/core": "^0.0.0",
+    "@vimeo/player": "^2.16.2",
     "@vue/composition-api": "1.1.3",
     "vue": "^2.0.0 || >=3.0.0-rc.0"
   },
@@ -19,6 +21,10 @@
     "vue-demi": "^0.12.1"
   },
   "devDependencies": {
+    "@storybook/vue": "^6.4.7",
+    "@vimeo-player/core": "*",
+    "@vue/eslint-config-typescript": "^9.1.0",
+    "eslint-plugin-vue": "^8.1.1",
     "vue": "^3.0.0"
   },
   "homepage": "https://github.com/imshubhamsingh/vimeo-player#readme",
@@ -33,6 +39,9 @@
     "url": "git+https://github.com/imshubhamsingh/vimeo-player.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "fix": "pnpx eslint --fix \"src/**/*.{js,vue}\"",
+    "format": "pnpx prettier --write \"src/**/*.{js,vue}\""
   }
 }
