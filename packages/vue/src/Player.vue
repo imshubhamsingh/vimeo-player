@@ -1,7 +1,9 @@
+<template>
+  <div ref="container" />
+</template>
 <script lang="ts">
 import {
   defineComponent,
-  h,
   onMounted,
   ref,
   watch,
@@ -119,11 +121,6 @@ export default defineComponent({
     return {
       container,
     }
-  },
-  render() {
-    return h('div', {
-      ref: 'container',
-    })
   },
 })
 </script>

@@ -116,6 +116,7 @@ importers:
       '@storybook/vue3': ^6.4.8
       '@vimeo-player/core': '*'
       '@vue/eslint-config-typescript': ^9.1.0
+      esbuild-plugin-vue3: ^0.3.0
       eslint-plugin-vue: ^8.1.1
       vue: ^3.0.0
       vue-demi: ^0.12.1
@@ -125,6 +126,7 @@ importers:
       '@storybook/vue3': 6.4.8_312f674c69cd86ed55ff85c2fed790c1
       '@vimeo-player/core': link:../core
       '@vue/eslint-config-typescript': 9.1.0_4740869c9bb1a26728eeab6a8add620f
+      esbuild-plugin-vue3: 0.3.0
       eslint-plugin-vue: 8.1.1_eslint@8.3.0
       vue: 3.2.23
 
@@ -8957,6 +8959,28 @@ packages:
     dev: true
     optional: true
 
+  /esbuild-plugin-vue3/0.3.0:
+    resolution: {integrity: sha512-b8ypadGLuxJ02cPUXn/2yKhwMsEQ/JZMO3lN871X12ZKigXymZStBCexVI4C7lr7lguxa+IpU94pRQ/BtInMsQ==}
+    peerDependencies:
+      cheerio: ^1.0.0-rc.10
+      html-minifier: ^4.0.0
+      pug: ^3.0.2
+      sass: ^1.35.2
+    peerDependenciesMeta:
+      cheerio:
+        optional: true
+      html-minifier:
+        optional: true
+      pug:
+        optional: true
+      sass:
+        optional: true
+    dependencies:
+      '@vue/compiler-core': 3.2.23
+      '@vue/compiler-sfc': 3.2.23
+      esbuild: 0.12.29
+    dev: true
+
   /esbuild-sunos-64/0.14.0:
     resolution: {integrity: sha512-TkMQOSiSU3fHLV3M+OKUgLZt5L7TpcBcMRvtFw1cTxAnX8eT+1qkWVLiDM8ow1C3P7PW3bkGY3LW8vOs8o/jBA==}
     cpu: [x64]
@@ -8997,6 +9021,12 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /esbuild/0.12.29:
+    resolution: {integrity: sha512-w/XuoBCSwepyiZtIRsKsetiLDUVGPVw1E/R3VTFSecIy8UR7Cq3SOtwKHJMFoVqqVG36aGkzh4e8BvpO1Fdc7g==}
+    hasBin: true
+    requiresBuild: true
+    dev: true
 
   /esbuild/0.14.0:
     resolution: {integrity: sha512-UOnSKRAyZondxdLrOXnI/mesUmU/GvDTcajCvxoIaObzMeQcn0HyoGtvbfATnazlx799ZqFSyIZGLXFszkjy3A==}

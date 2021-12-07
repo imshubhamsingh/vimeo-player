@@ -2,7 +2,8 @@
   "name": "@vime-player/vue",
   "version": "0.0.0",
   "description": "vimeo player unofficial vue wrapper",
-  "main": "index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "author": "Shubham Singh <hello@shubham.sh>",
   "license": "MIT",
   "sideEffects": false,
@@ -24,6 +25,7 @@
     "@storybook/vue3": "^6.4.8",
     "@vimeo-player/core": "*",
     "@vue/eslint-config-typescript": "^9.1.0",
+    "esbuild-plugin-vue3": "^0.3.0",
     "eslint-plugin-vue": "^8.1.1",
     "vue": "^3.0.0"
   },
@@ -42,6 +44,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "fix": "pnpx eslint --fix \"src/**/*.{js,vue}\"",
-    "format": "pnpx prettier --write \"src/**/*.{js,vue}\""
+    "format": "pnpx prettier --write \"src/**/*.{js,vue}\"",
+    "types:dev": "tsc -w --p tsconfig.json",
+    "start": "node ./scripts/dev"
   }
 }

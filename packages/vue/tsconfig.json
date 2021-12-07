@@ -5,6 +5,6 @@
     "types": ["node"],
     "declarationDir": "./dist/types"
   },
-  "include": ["src/**/*.ts", "src/**/*.vue", "shims.vue.d.ts"],
+  "include": ["src/**/*.ts", "src/**/*.vue", "shime.vue.d.ts"],
   "exclude": ["./src/**/*.test.*", "./**/*.stories.*", "dist"]
 }
