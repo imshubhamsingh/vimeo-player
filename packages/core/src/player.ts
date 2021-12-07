@@ -78,6 +78,7 @@ export class VimeoPlayer {
     options: PlayerOptions = {},
     eventHandlers: EventHandlersObj = {}
   ) {
+    console.log(element, options)
     // create instance
     const player = new VimeoPlayer(element, options)
     // add player handler

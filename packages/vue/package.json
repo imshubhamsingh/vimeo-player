@@ -21,7 +21,7 @@
     "vue-demi": "^0.12.1"
   },
   "devDependencies": {
-    "@storybook/vue": "^6.4.7",
+    "@storybook/vue3": "^6.4.8",
     "@vimeo-player/core": "*",
     "@vue/eslint-config-typescript": "^9.1.0",
     "eslint-plugin-vue": "^8.1.1",

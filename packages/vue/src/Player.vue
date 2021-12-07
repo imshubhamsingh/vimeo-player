@@ -1,5 +1,13 @@
 <script lang="ts">
-import { defineComponent, h, onMounted, ref, watch, PropType } from 'vue-demi'
+import {
+  defineComponent,
+  h,
+  onMounted,
+  ref,
+  watch,
+  PropType,
+  onBeforeUnmount,
+} from 'vue-demi'
 import {
   VimeoPlayer,
   VimeoPlayerEvents,
@@ -77,8 +85,8 @@ export default defineComponent({
   },
   emits: [...Object.keys(VIMEO_PLAYER_EVENTS)],
   setup(props, { emit }) {
-    const player = ref(null)
-
+    const container = ref(null)
+    let player = null
     const eventHandlers = Object.entries(VIMEO_PLAYER_EVENTS).reduce(
       (acc, [event, value]) => {
         acc[value as keyof VimeoPlayerEvents] = (...args: any) => {
@@ -93,12 +101,24 @@ export default defineComponent({
     }
     watch(props, callback, { deep: true, immediate: true })
     onMounted(async () => {
-      const player = await VimeoPlayer.create(
-        this.$refs.container as HTMLDivElement,
+      player = await VimeoPlayer.create(
+        container.value as HTMLDivElement,
         VimeoPlayer.getInitialOptions(props),
         VimeoPlayer.getEventHandlers(eventHandlers)
       )
+      // Player loaded
+      if (player) emit('ready', player.instance)
     })
+
+    onBeforeUnmount(() => {
+      if (player) {
+        player.instance.destroy()
+      }
+    })
+
+    return {
+      container,
+    }
   },
   render() {
     return h('div', {
