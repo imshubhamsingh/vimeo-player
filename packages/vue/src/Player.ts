@@ -1,7 +1,3 @@
-<template>
-  <div ref="container" />
-</template>
-<script lang="ts">
 import {
   defineComponent,
   onMounted,
@@ -9,6 +5,8 @@ import {
   watch,
   PropType,
   onBeforeUnmount,
+  isVue2,
+  h,
 } from 'vue-demi'
 import {
   VimeoPlayer,
@@ -17,7 +15,7 @@ import {
   VIMEO_PLAYER_EVENTS,
 } from '@vimeo-player/core'
 
-export default defineComponent({
+export const Player = defineComponent({
   name: 'VimeoPlayer',
   props: {
     video: {
@@ -84,11 +82,17 @@ export default defineComponent({
       type: Number as PropType<VimeoPlayerProperties['start']>,
       default: 0,
     },
+    volume: {
+      type: Number as PropType<VimeoPlayerProperties['volume']>,
+      default: 1,
+    },
   },
   emits: [...Object.keys(VIMEO_PLAYER_EVENTS)],
-  setup(props, { emit }) {
-    const container = ref(null)
-    let player = null
+  // @ts-ignore
+  setup(props, { emit, refs }) {
+    const container = ref<HTMLDivElement>()
+
+    const player = ref<VimeoPlayer>()
     const eventHandlers = Object.entries(VIMEO_PLAYER_EVENTS).reduce(
       (acc, [event, value]) => {
         acc[value as keyof VimeoPlayerEvents] = (...args: any) => {
@@ -98,29 +102,45 @@ export default defineComponent({
       },
       {} as { [K in keyof VimeoPlayerEvents]: (...args: any) => void }
     )
-    const callback = () => {
-      console.log('change')
-    }
-    watch(props, callback, { deep: true, immediate: true })
+
+    watch(
+      props,
+      (newValue, oldValue) => {
+        Object.values(VimeoPlayer.config)
+          .filter(
+            (name) =>
+              newValue[name as keyof typeof props] !==
+              oldValue?.[name as keyof typeof props]
+          )
+          .forEach((name: string) => {
+            player.value?.update(name, newValue[name as keyof typeof props], {
+              start: props.start,
+              volume: props.volume,
+            })
+          })
+      },
+      { deep: true, immediate: true }
+    )
     onMounted(async () => {
-      player = await VimeoPlayer.create(
-        container.value as HTMLDivElement,
+      player.value = await VimeoPlayer.create(
+        isVue2 ? refs['container'] : container.value,
         VimeoPlayer.getInitialOptions(props),
         VimeoPlayer.getEventHandlers(eventHandlers)
       )
+      emit('ref', VimeoPlayer.imperativeHandle(player.value))
       // Player loaded
-      if (player) emit('ready', player.instance)
+      if (player) emit('ready', player.value.instance)
     })
 
     onBeforeUnmount(() => {
-      if (player) {
-        player.instance.destroy()
+      if (player.value?.instance) {
+        player.value.instance.destroy()
       }
     })
-
-    return {
-      container,
+    return () => {
+      return h('div', {
+        ref: isVue2 ? 'container' : container,
+      })
     }
   },
 })
-</script>

@@ -3,7 +3,7 @@ import {
   playerEvents,
   playerProperties,
 } from '../../../../config/storybook/player'
-import { Player as VimeoPlayer } from '../index'
+import { Player as VimeoPlayer } from '../Player'
 
 export default {
   title: 'Vue Vimeo Player',

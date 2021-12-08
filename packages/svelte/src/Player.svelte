@@ -12,7 +12,6 @@
     onMount,
     createEventDispatcher,
     onDestroy,
-    afterUpdate,
     beforeUpdate,
   } from 'svelte'
 

@@ -2,7 +2,7 @@
   <div class="hello">
     <img alt="Vue logo" src="../assets/logo.png" />
     <h1>{{ msg }}</h1>
-    <vimeo-player video="323783503" @ready="onReady" @ref="playerRef" />
+    <vimeo-player ref="playerRef" video="323783503" @ready="onReady" @play="onPlay" />
   </div>
 </template>
 
@@ -11,19 +11,22 @@ import { Player } from '@vimeo-player/vue'
 
 export default {
   name: 'HelloWorld',
+  props: {
+    msg: String,
+  },
   components: {
     VimeoPlayer: Player,
   },
-  data: {
-    playerRef: {}
+  mounted() {
+    console.log(this.$refs.playerRef)
   },
   methods: {
     onReady: (inst) => {
       console.log('ready now', inst)
     },
-  },
-  props: {
-    msg: String,
+    onPlay: () => {
+      console.log('play')
+    },
   },
 }
 </script>

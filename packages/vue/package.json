@@ -1,5 +1,5 @@
 {
-  "name": "@vime-player/vue",
+  "name": "@vimeo-player/vue",
   "version": "0.0.0",
   "description": "vimeo player unofficial vue wrapper",
   "main": "dist/cjs/index.js",
@@ -25,7 +25,6 @@
     "@storybook/vue3": "^6.4.8",
     "@vimeo-player/core": "*",
     "@vue/eslint-config-typescript": "^9.1.0",
-    "esbuild-plugin-vue3": "^0.3.0",
     "eslint-plugin-vue": "^8.1.1",
     "vue": "^3.0.0"
   },

@@ -6,7 +6,7 @@ const vuePlugin = require('esbuild-plugin-vue3')
 build({
   pkg,
   dirname: __dirname,
-  entryPoint: './src/Player.svelte',
+  entryPoint: './src/index.ts',
   esmOutfile: pkg.module,
   cjsOutfile: pkg.main,
   tsconfigPath: './tsconfig.json',
