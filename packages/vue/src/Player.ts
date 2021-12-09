@@ -88,6 +88,7 @@ export const Player = defineComponent({
     },
   },
   emits: [...Object.keys(VIMEO_PLAYER_EVENTS)],
+
   // @ts-ignore
   setup(props, { emit, refs }) {
     const container = ref<HTMLDivElement>()
