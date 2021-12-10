@@ -93,7 +93,7 @@ export const Player = defineComponent({
   setup(props, { emit, refs }) {
     const container = ref<HTMLDivElement>()
 
-    const player = ref<VimeoPlayer>()
+    let player: VimeoPlayer | null = null
     const eventHandlers = Object.entries(VIMEO_PLAYER_EVENTS).reduce(
       (acc, [event, value]) => {
         acc[value as keyof VimeoPlayerEvents] = (...args: any) => {
@@ -114,7 +114,7 @@ export const Player = defineComponent({
               oldValue?.[name as keyof typeof props]
           )
           .forEach((name: string) => {
-            player.value?.update(name, newValue[name as keyof typeof props], {
+            player?.update(name, newValue[name as keyof typeof props], {
               start: props.start,
               volume: props.volume,
             })
@@ -123,19 +123,20 @@ export const Player = defineComponent({
       { deep: true, immediate: true }
     )
     onMounted(async () => {
-      player.value = await VimeoPlayer.create(
+      player = await VimeoPlayer.create(
         isVue2 ? refs['container'] : container.value,
         VimeoPlayer.getInitialOptions(props),
         VimeoPlayer.getEventHandlers(eventHandlers)
       )
-      emit('ref', VimeoPlayer.imperativeHandle(player.value))
+      console.log(VimeoPlayer.imperativeHandle(player).getDuration())
+      emit('ref', VimeoPlayer.imperativeHandle(player))
       // Player loaded
-      if (player) emit('ready', player.value.instance)
+      if (player) emit('ready', player.instance)
     })
 
     onBeforeUnmount(() => {
-      if (player.value?.instance) {
-        player.value.instance.destroy()
+      if (player?.instance) {
+        player.instance.destroy()
       }
     })
     return () => {

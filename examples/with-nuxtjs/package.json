@@ -3,9 +3,16 @@
   "scripts": {
     "dev": "nuxi dev",
     "build": "nuxi build",
-    "start": "node .output/server/index.mjs"
+    "start": "node .output/server/index.mjs",
+    "yalc:link": "yalc add @vimeo-player/core --dev && yalc add @vimeo-player/vue --dev",
+    "yalc:unlink": "yalc remove @vimeo-player/core && yalc remove @vimeo-player/vue"
   },
   "devDependencies": {
+    "@vimeo-player/core": "file:.yalc/@vimeo-player/core",
+    "@vimeo-player/vue": "file:.yalc/@vimeo-player/vue",
     "nuxt3": "latest"
+  },
+  "dependencies": {
+    "vue-demi": "^0.12.1"
   }
 }

@@ -4,8 +4,15 @@ importers:
 
   .:
     specifiers:
+      '@vimeo-player/core': file:.yalc/@vimeo-player/core
+      '@vimeo-player/vue': file:.yalc/@vimeo-player/vue
       nuxt3: latest
+      vue-demi: ^0.12.1
+    dependencies:
+      vue-demi: 0.12.1
     devDependencies:
+      '@vimeo-player/core': link:.yalc/@vimeo-player/core
+      '@vimeo-player/vue': link:.yalc/@vimeo-player/vue
       nuxt3: 3.0.0-27313139.1c88580
 
 packages:
@@ -5582,6 +5589,19 @@ packages:
     dependencies:
       bundle-runner: 0.0.1
     dev: true
+
+  /vue-demi/0.12.1:
+    resolution: {integrity: sha512-QL3ny+wX8c6Xm1/EZylbgzdoDolye+VpCXRhI2hug9dJTP3OUJ3lmiKN3CsVV3mOJKwFi0nsstbgob0vG7aoIw==}
+    engines: {node: '>=12'}
+    hasBin: true
+    requiresBuild: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dev: false
 
   /vue-loader/16.8.3_webpack@5.65.0:
     resolution: {integrity: sha512-7vKN45IxsKxe5GcVCbc2qFU5aWzyiLrYJyUuMz4BQLKctCj/fmCa0w6fGiiQ2cLFetNcek1ppGJQDCup0c1hpA==}
