@@ -8,3 +8,4 @@ Checkout below examples for its usage
 
 - [With Create React App](https://github.com/imshubhamsingh/vimeo-player/tree/main/examples/with-cra)
 - [With Next.js](https://github.com/imshubhamsingh/vimeo-player/tree/main/examples/with-nextjs)
+- [With Preact](https://github.com/imshubhamsingh/vimeo-player/tree/main/examples/with-preact)

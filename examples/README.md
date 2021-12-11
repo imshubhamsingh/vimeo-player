@@ -4,6 +4,7 @@ Below are the sample example project to integration `@vimeo-player` to your repe
 
 - [Create React App](/examples/with-cra)
 - [Next.js](/examples/with-nextjs)
+- [Preact](/examples/with-preact)
 - [Svelte](/examples/with-svelte)
 - [Sveltekit](/examples/with-sveltekit)
 - [Vue2](/examples/with-vue2)

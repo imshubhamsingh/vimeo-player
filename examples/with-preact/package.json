@@ -1,0 +1,21 @@
+{
+  "name": "preact-vite",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "yalc:link": "yalc add @vimeo-player/core && yalc add @vimeo-player/react",
+    "yalc:unlink": "yalc add @vimeo-player/core && yalc remove @vimeo-player/react"
+  },
+  "dependencies": {
+    "@vimeo-player/core": "file:.yalc/@vimeo-player/core",
+    "@vimeo-player/react": "file:.yalc/@vimeo-player/react",
+    "@vimeo/player": "^2.16.2",
+    "preact": "^10.4.1",
+    "typescript": "next"
+  },
+  "devDependencies": {
+    "@prefresh/vite": "^0.10.0",
+    "vite": "^1.0.0-beta.3"
+  }
+}
