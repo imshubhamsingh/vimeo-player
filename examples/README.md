@@ -6,3 +6,6 @@ Below are the sample example project to integration `@vimeo-player` to your repe
 - [Next.js](/examples/with-nextjs)
 - [Svelte](/examples/with-svelte)
 - [Sveltekit](/examples/with-sveltekit)
+- [Vue2](/examples/with-vue2)
+- [Vue3](/examples/with-vue3)
+- [Nuxtjs](/examples/with-nuxtjs)

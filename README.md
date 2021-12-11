@@ -37,5 +37,4 @@ pnpm install
 - [x] Svelte.js
 - [x] Vue.js
 - [ ] React Native
-- [ ] Flutter
 - [ ] Augular
