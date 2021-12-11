@@ -1,0 +1,22 @@
+{
+  "name": "@vimeo-player/react-native",
+  "version": "0.0.0",
+  "description": "vimeo player unofficial react-native wrapper",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "author": "Shubham Singh <hello@shubham.sh>",
+  "license": "MIT",
+  "sideEffects": false,
+  "homepage": "https://github.com/imshubhamsingh/vimeo-player#readme",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imshubhamsingh/vimeo-player.git"
+  },
+  "scripts": {}
+}
