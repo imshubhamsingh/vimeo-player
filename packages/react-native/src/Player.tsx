@@ -1,8 +1,4 @@
-import {
-  ImperativeHandle,
-  VimeoPlayer,
-  VimeoPlayerOptions,
-} from '@vimeo-player/core'
+import { ImperativeHandle, VimeoPlayerOptions } from '@vimeo-player/core'
 import * as React from 'react'
 import { View } from 'react-native'
 import { WebView } from 'react-native-webview'
@@ -13,9 +9,9 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
   const { height, width } = props
   return (
     <View style={{ height, width }}>
-      <WebView />
+      <WebView source={{ uri: 'https://vimeo.com' }} />
     </View>
   )
 })
 
-export { Player }
+export default Player
