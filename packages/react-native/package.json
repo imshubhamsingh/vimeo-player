@@ -18,5 +18,16 @@
     "type": "git",
     "url": "git+https://github.com/imshubhamsingh/vimeo-player.git"
   },
-  "scripts": {}
+  "peerDependencies": {
+    "react": ">= 16.8.0",
+    "react-native": ">=0.60",
+    "react-native-webview": ">=7.0.0"
+  },
+  "scripts": {},
+  "devDependencies": {
+    "react": "17.0.2",
+    "react-native": "^0.66.4",
+    "react-native-webview": ">=7.0.0",
+    "@vimeo-player/core": "*"
+  }
 }
