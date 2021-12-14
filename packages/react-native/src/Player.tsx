@@ -2,13 +2,20 @@ import {
   ImperativeHandle,
   VimeoPlayerOptions,
   VimeoPlayerProperties,
+  VimeoPlayerEventHandlers,
+  VimeoPlayerEvents,
   VIMEO_PLAYER_EVENTS,
 } from "@vimeo-player/core";
 import * as React from "react";
 import { View } from "react-native";
-import { WebView } from "react-native-webview";
+import { WebView, WebViewMessageEvent } from "react-native-webview";
 
 import { playerScript, getPlayerProperties } from "./utils";
+
+type WebViewMessage<T> = {
+  event: keyof T;
+  data: Array<any>;
+};
 
 export type PlayerProps = VimeoPlayerOptions & {
   /**
@@ -29,10 +36,21 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
     return res;
   }, [useLocalHTML]);
 
-  const onMessage = React.useCallback((event) => {
-    const message = JSON.parse(event.nativeEvent.data);
-    console.log(message);
-  }, []);
+  const onMessage = (event: WebViewMessageEvent) => {
+    try {
+      const message: WebViewMessage<typeof VIMEO_PLAYER_EVENTS> = JSON.parse(
+        event.nativeEvent.data
+      );
+      const handler = VIMEO_PLAYER_EVENTS[
+        message.event
+      ] as keyof VimeoPlayerEventHandlers;
+      //@ts-ignore TODO: fix the type
+      props?.[handler]?.(...message.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <View style={{ height, width }}>
       <WebView source={source} onMessage={onMessage} />

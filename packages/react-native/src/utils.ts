@@ -40,8 +40,13 @@ export function playerScript(playerOptions: VimeoPlayerProperties) {
           const options = JSON.parse(urlQueryData) || {};
 
           function sendMessageToRN(msg) {
+            const msgStr = JSON.stringify(msg);
             if (window.ReactNativeWebView) {
-              window.ReactNativeWebView.postMessage(JSON.stringify(msg));
+              window.ReactNativeWebView.postMessage(msgStr);
+            } else if (window.parent) {
+              window.parent.postMessage(msgStr, "*");
+            } else {
+              window.postMessage(msgStr, "*");
             }
           }
 
@@ -49,7 +54,7 @@ export function playerScript(playerOptions: VimeoPlayerProperties) {
             VimeoPlayer.VIMEO_PLAYER_EVENTS
           ).reduce((acc, [event, value]) => {
             acc[value] = (...args) => {
-              sendMessageToRN({event, data:args});
+              sendMessageToRN({ event, data: args });
             };
             return acc;
           }, {});

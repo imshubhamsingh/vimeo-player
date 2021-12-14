@@ -94,6 +94,7 @@ importers:
       react-dom: ^17.0.2
       react-native-web: ^0.17.1
       react-native-web-webview: ^1.0.2
+      react-native-webview: ^11.15.0
     devDependencies:
       '@storybook/react': 6.4.9_76b027d8399751f33b6c512ae98fd6be
       '@types/react-native': 0.66.9
@@ -102,6 +103,7 @@ importers:
       react-dom: 17.0.2_react@17.0.2
       react-native-web: 0.17.1_react-dom@17.0.2+react@17.0.2
       react-native-web-webview: 1.0.2_react-native-web@0.17.1
+      react-native-webview: 11.15.0_react@17.0.2
 
   packages/svelte:
     specifiers:
@@ -14859,6 +14861,17 @@ packages:
       prop-types: 15.7.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
+    dev: true
+
+  /react-native-webview/11.15.0_react@17.0.2:
+    resolution: {integrity: sha512-0Wv+8qu8XuACx1xZwzc2Yfl+rOvxUouLcPxUKdkhaMVNpwoM5/ePpczCQZ3LpiRnSoEtjaUkfyQHbJQ+x4dDJQ==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+    dependencies:
+      escape-string-regexp: 2.0.0
+      invariant: 2.2.4
+      react: 17.0.2
     dev: true
 
   /react-popper-tooltip/3.1.1_react-dom@16.14.0+react@16.14.0:

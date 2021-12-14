@@ -10,6 +10,7 @@ import type {
   VimeoPlayerEvents,
   VimeoPlayerOptions,
   VimeoPlayerProperties,
+  VimeoPlayerEventHandlers,
 } from "./type";
 // custom
 import { getInitialPlayerOptions, getPlayerEventHandlers } from "./utils";
@@ -19,6 +20,7 @@ export type {
   VimeoPlayerEvents,
   VimeoPlayerOptions,
   VimeoPlayerProperties,
+  VimeoPlayerEventHandlers,
 };
 
 export { VIMEO_PLAYER_EVENTS };
