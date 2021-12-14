@@ -26,20 +26,24 @@
       <div id="player"></div>
     </div>
     <script src="https://player.vimeo.com/api/player.js"></script>
+    <script
+      src="https://vimeo-player.vercel.app/scripts/core.js"
+      type="module"
+    ></script>
     <script>
       const options = {
         id: 59777392,
         width: 640,
         loop: true,
-      }
+      };
 
-      const player = new Vimeo.Player('player', options)
+      const player = new Vimeo.Player("player", options);
 
-      player.setVolume(0)
+      player.setVolume(0);
 
-      player.on('play', function () {
-        console.log('played the video!')
-      })
+      player.on("play", function () {
+        console.log("played the video!");
+      });
     </script>
   </body>
 </html>

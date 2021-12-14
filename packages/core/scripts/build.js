@@ -8,5 +8,6 @@ build({
   entryPoint: './src/player.ts',
   esmOutfile: pkg.module,
   cjsOutfile: pkg.main,
+  browserOutfile: pkg.browser,
   tsconfigPath: './tsconfig.json',
 })

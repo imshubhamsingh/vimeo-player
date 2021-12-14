@@ -28,7 +28,7 @@ export function playerScript() {
           <div id="player"></div>
         </div>
         <script src="https://player.vimeo.com/api/player.js"></script>
-        <script src="https://vimeo-player.vercel.app/scripts/core.js></script>
+        <script src="https://vimeo-player.vercel.app/scripts/core.js"></script>
         <script>
           const options = {
             id: 59777392,
