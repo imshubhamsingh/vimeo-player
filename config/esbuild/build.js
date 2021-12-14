@@ -59,7 +59,7 @@ module.exports = async function build({
    */
   const buildConfig = {
     entryPoints: [path.resolve(rootPath, entryPoint).toString()],
-    minify: false,
+    minify: true,
     bundle: true,
     target: 'es6',
     tsconfig: path.resolve(rootPath, tsconfigPath),
