@@ -6,18 +6,6 @@ module.exports = {
   webpackFinal: (config) => {
     config.module.rules.push(
       {
-        test: /\.tsx?$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: ['babel-preset-expo'],
-            },
-          },
-        ],
-      },
-      {
         test: /postMock.html$/,
         use: {
           loader: 'file-loader',

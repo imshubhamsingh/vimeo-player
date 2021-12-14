@@ -26,24 +26,36 @@
       <div id="player"></div>
     </div>
     <script src="https://player.vimeo.com/api/player.js"></script>
-    <script
-      src="https://vimeo-player.vercel.app/scripts/core.js"
-      type="module"
-    ></script>
+    <script src="https://vimeo-player.vercel.app/scripts/core.js"></script>
     <script>
-      const options = {
-        id: 59777392,
-        width: 640,
-        loop: true,
-      };
+      const parsedUrl = new URL(window.location.href);
+      const UrlQueryData = parsedUrl.searchParams.get("data");
 
-      const player = new Vimeo.Player("player", options);
+      const Player = VimeoPlayer.VimeoPlayer;
 
-      player.setVolume(0);
+      const options = JSON.parse(UrlQueryData) || {};
 
-      player.on("play", function () {
-        console.log("played the video!");
-      });
+      function sendMessageToRN(msg) {
+        if (window.ReactNativeWebView) {
+          window.ReactNativeWebView.postMessage(JSON.stringify(msg));
+        }
+      }
+
+      const eventHandlers = Object.entries(
+        VimeoPlayer.VIMEO_PLAYER_EVENTS
+      ).reduce((acc, [event, value]) => {
+        acc[value] = (...args) => {
+          console.log(event, ...args);
+          sendMessageToRN(event, ...args);
+        };
+        return acc;
+      }, {});
+
+      const player = Player.create(
+        "player",
+        Player.getInitialOptions(options),
+        Player.getEventHandlers(eventHandlers)
+      );
     </script>
   </body>
 </html>

@@ -1,4 +1,9 @@
-export function playerScript() {
+import { VimeoPlayerProperties } from "@vimeo-player/core";
+
+export function playerScript(playerOptions: VimeoPlayerProperties) {
+  const data = JSON.stringify(playerOptions);
+  const urlEncodedJSON = encodeURI(data);
+
   const htmlString = `
     <!DOCTYPE html>
     <html>
@@ -30,25 +35,65 @@ export function playerScript() {
         <script src="https://player.vimeo.com/api/player.js"></script>
         <script src="https://vimeo-player.vercel.app/scripts/core.js"></script>
         <script>
-          const options = {
-            id: 59777392,
-            width: 640,
-            loop: true,
-          };
+          const urlQueryData = decodeURI("${urlEncodedJSON}");
+          const Player = VimeoPlayer.VimeoPlayer;
+          const options = JSON.parse(urlQueryData) || {};
 
-          const player = new Vimeo.Player("player", options);
+          function sendMessageToRN(msg) {
+            if (window.ReactNativeWebView) {
+              window.ReactNativeWebView.postMessage(JSON.stringify(msg));
+            }
+          }
 
-          player.setVolume(0);
+          const eventHandlers = Object.entries(
+            VimeoPlayer.VIMEO_PLAYER_EVENTS
+          ).reduce((acc, [event, value]) => {
+            acc[value] = (...args) => {
+              sendMessageToRN({event, data:args});
+            };
+            return acc;
+          }, {});
 
-          player.on("play", function () {
-            console.log("played the video!");
-          });
+          const player = Player.create(
+            "player",
+            Player.getInitialOptions(options),
+            Player.getEventHandlers(eventHandlers)
+          );
         </script>
       </body>
     </html>
   `;
   return {
     htmlString,
-    urlEncodedData: "",
+    urlEncodedJSON,
+  };
+}
+
+/**
+ * Get Player properties for initial load.
+ */
+export function getPlayerProperties(
+  obj: VimeoPlayerProperties
+): VimeoPlayerProperties {
+  return {
+    video: obj.video,
+    width: obj.width,
+    height: obj.height,
+    autopause: obj.autopause,
+    autoplay: obj.autoplay,
+    showByline: obj.showByline,
+    color: obj.color,
+    controls: obj.controls,
+    loop: obj.loop,
+    showPortrait: obj.showPortrait,
+    showTitle: obj.showTitle,
+    muted: obj.muted,
+    background: obj.background,
+    responsive: obj.responsive,
+    dnt: obj.dnt,
+    speed: obj.speed,
+    texttrack: obj.texttrack,
+    volume: obj.volume,
+    start: obj.start,
   };
 }
