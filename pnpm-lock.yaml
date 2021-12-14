@@ -133,6 +133,7 @@ importers:
     specifiers:
       '@storybook/vue3': ^6.4.8
       '@vimeo-player/core': '*'
+      '@vue/compiler-sfc': ^3.2.26
       '@vue/eslint-config-typescript': ^9.1.0
       eslint-plugin-vue: ^8.1.1
       vue: ^3.0.0
@@ -140,8 +141,9 @@ importers:
     dependencies:
       vue-demi: 0.12.1_vue@3.2.23
     devDependencies:
-      '@storybook/vue3': 6.4.8_312f674c69cd86ed55ff85c2fed790c1
+      '@storybook/vue3': 6.4.8_1f93c2ddeb9fc7cfde714f7d6bdb6d63
       '@vimeo-player/core': link:../core
+      '@vue/compiler-sfc': 3.2.26
       '@vue/eslint-config-typescript': 9.1.0_4740869c9bb1a26728eeab6a8add620f
       eslint-plugin-vue: 8.1.1_eslint@8.3.0
       vue: 3.2.23
@@ -6636,7 +6638,7 @@ packages:
       - '@types/react'
     dev: true
 
-  /@storybook/vue3/6.4.8_312f674c69cd86ed55ff85c2fed790c1:
+  /@storybook/vue3/6.4.8_1f93c2ddeb9fc7cfde714f7d6bdb6d63:
     resolution: {integrity: sha512-WtwbEd6IBiArAiel6vDKelh6c5WJrmhrCkeNwMyorgooDUUxYlu17UujlEzzaxTJi67hy/wXljl70cghjS/AuA==}
     engines: {node: '>=10.13.0'}
     hasBin: true
@@ -6653,6 +6655,7 @@ packages:
       '@storybook/csf': 0.0.2--canary.87bc651.0
       '@storybook/store': 6.4.8_react-dom@16.14.0+react@16.14.0
       '@types/webpack-env': 1.16.3
+      '@vue/compiler-sfc': 3.2.26
       babel-loader: 8.1.0_@babel+core@7.16.0
       core-js: 3.19.1
       global: 4.4.0
@@ -7020,11 +7023,27 @@ packages:
       source-map: 0.6.1
     dev: true
 
+  /@vue/compiler-core/3.2.26:
+    resolution: {integrity: sha512-N5XNBobZbaASdzY9Lga2D9Lul5vdCIOXvUMd6ThcN8zgqQhPKfCV+wfAJNNJKQkSHudnYRO2gEB+lp0iN3g2Tw==}
+    dependencies:
+      '@babel/parser': 7.16.4
+      '@vue/shared': 3.2.26
+      estree-walker: 2.0.2
+      source-map: 0.6.1
+    dev: true
+
   /@vue/compiler-dom/3.2.23:
     resolution: {integrity: sha512-X2Nw8QFc5lgoK3kio5ktM95nqmLUH+q+N/PbV4kCHzF1avqv/EGLnAhaaF0Iu4bewNvHJAAhhwPZFeoV/22nbw==}
     dependencies:
       '@vue/compiler-core': 3.2.23
       '@vue/shared': 3.2.23
+    dev: true
+
+  /@vue/compiler-dom/3.2.26:
+    resolution: {integrity: sha512-smBfaOW6mQDxcT3p9TKT6mE22vjxjJL50GFVJiI0chXYGU/xzC05QRGrW3HHVuJrmLTLx5zBhsZ2dIATERbarg==}
+    dependencies:
+      '@vue/compiler-core': 3.2.26
+      '@vue/shared': 3.2.26
     dev: true
 
   /@vue/compiler-sfc/3.2.23:
@@ -7042,11 +7061,33 @@ packages:
       source-map: 0.6.1
     dev: true
 
+  /@vue/compiler-sfc/3.2.26:
+    resolution: {integrity: sha512-ePpnfktV90UcLdsDQUh2JdiTuhV0Skv2iYXxfNMOK/F3Q+2BO0AulcVcfoksOpTJGmhhfosWfMyEaEf0UaWpIw==}
+    dependencies:
+      '@babel/parser': 7.16.4
+      '@vue/compiler-core': 3.2.26
+      '@vue/compiler-dom': 3.2.26
+      '@vue/compiler-ssr': 3.2.26
+      '@vue/reactivity-transform': 3.2.26
+      '@vue/shared': 3.2.26
+      estree-walker: 2.0.2
+      magic-string: 0.25.7
+      postcss: 8.4.4
+      source-map: 0.6.1
+    dev: true
+
   /@vue/compiler-ssr/3.2.23:
     resolution: {integrity: sha512-Bqzn4jFyXPK1Ehqiq7e/czS8n62gtYF1Zfeu0DrR5uv+SBllh7LIvZjZU6+c8qbocAd3/T3I3gn2cZGmnDb6zg==}
     dependencies:
       '@vue/compiler-dom': 3.2.23
       '@vue/shared': 3.2.23
+    dev: true
+
+  /@vue/compiler-ssr/3.2.26:
+    resolution: {integrity: sha512-2mywLX0ODc4Zn8qBoA2PDCsLEZfpUGZcyoFRLSOjyGGK6wDy2/5kyDOWtf0S0UvtoyVq95OTSGIALjZ4k2q/ag==}
+    dependencies:
+      '@vue/compiler-dom': 3.2.26
+      '@vue/shared': 3.2.26
     dev: true
 
   /@vue/eslint-config-typescript/9.1.0_4740869c9bb1a26728eeab6a8add620f:
@@ -7065,6 +7106,16 @@ packages:
       vue-eslint-parser: 8.0.1_eslint@8.3.0
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@vue/reactivity-transform/3.2.26:
+    resolution: {integrity: sha512-XKMyuCmzNA7nvFlYhdKwD78rcnmPb7q46uoR00zkX6yZrUmcCQ5OikiwUEVbvNhL5hBJuvbSO95jB5zkUon+eQ==}
+    dependencies:
+      '@babel/parser': 7.16.4
+      '@vue/compiler-core': 3.2.26
+      '@vue/shared': 3.2.26
+      estree-walker: 2.0.2
+      magic-string: 0.25.7
     dev: true
 
   /@vue/reactivity/3.2.23:
@@ -7110,6 +7161,10 @@ packages:
 
   /@vue/shared/3.2.23:
     resolution: {integrity: sha512-U+/Jefa0QfXUF2qVy9Dqlrb6HKJSr9/wJcM66wXmWcTOoqg7hOWzF4qruDle51pyF4x3wMn6TSH54UdjKjCKMA==}
+    dev: true
+
+  /@vue/shared/3.2.26:
+    resolution: {integrity: sha512-vPV6Cq+NIWbH5pZu+V+2QHE9y1qfuTq49uNWw4f7FDEeZaDU2H2cx5jcUZOAKW7qTrUS4k6qZPbMy1x4N96nbA==}
     dev: true
 
   /@webassemblyjs/ast/1.9.0:
@@ -17350,8 +17405,8 @@ packages:
     dependencies:
       '@babel/parser': 7.16.4
       '@babel/types': 7.16.0
-      '@vue/compiler-dom': 3.2.23
-      '@vue/compiler-sfc': 3.2.23
+      '@vue/compiler-dom': 3.2.26
+      '@vue/compiler-sfc': 3.2.26
       ast-types: 0.14.2
       hash-sum: 1.0.2
       lru-cache: 4.1.5

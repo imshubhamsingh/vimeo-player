@@ -1,45 +1,46 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { ImperativeHandle } from '@vimeo-player/core'
-import React from 'react'
+import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ImperativeHandle } from "@vimeo-player/core";
+import React from "react";
 
 import {
   playerEvents,
   playerProperties,
-} from '../../../../config/storybook/player'
-import { Player } from '../Player'
+} from "../../../../config/storybook/player";
+import Player, { PlayerProps } from "../Player";
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'React Vimeo Player',
+  title: "React Vimeo Player",
   component: Player,
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     ...playerEvents,
     ...playerProperties,
   },
-} as ComponentMeta<typeof Player>
+} as ComponentMeta<typeof Player>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Player> = ({
-  //@ts-ignore
+const Template = ({
   hideControls = false,
   ...args
-}) => {
-  const ref = React.useRef<ImperativeHandle>(null)
+}: {
+  hideControls: boolean;
+} & PlayerProps) => {
+  const ref = React.useRef<ImperativeHandle>(null);
   async function seek(value: number) {
-    if (!ref.current) return
-    const totalTime = await ref.current.getDuration()
-    const getCurrentTime = await ref.current.getCurrentTime()
-    ref.current.seekTo(Math.min(Math.max(getCurrentTime + value, 0), totalTime))
+    if (!ref.current) return;
+    const totalTime = await ref.current.getDuration();
+    const getCurrentTime = await ref.current.getCurrentTime();
+    ref.current.seekTo(
+      Math.min(Math.max(getCurrentTime + value, 0), totalTime)
+    );
   }
   return (
     <>
+      {/** @ts-ignore */}
       <Player {...args} ref={ref} />
       <div
         style={{
-          display: 'flex',
+          display: "flex",
           marginTop: 16,
-          justifyContent: 'space-evenly',
+          justifyContent: "space-evenly",
         }}
       >
         {!hideControls && (
@@ -52,17 +53,17 @@ const Template: ComponentStory<typeof Player> = ({
         )}
       </div>
     </>
-  )
-}
+  );
+};
 
-export const TestPlayer = Template.bind({})
+export const TestPlayer = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 TestPlayer.args = {
-  video: '323783503',
+  video: "323783503",
   muted: true,
-  quality: '360p',
+  quality: "360p",
   // autoplay: true,
-}
+};
 
 TestPlayer.parameters = {
   docs: {
@@ -106,24 +107,24 @@ function Container() {
 `,
     },
   },
-}
+};
 
-export const LoopCoverPlayer = Template.bind({})
+export const LoopCoverPlayer = Template.bind({});
 
 LoopCoverPlayer.args = {
-  video: '59777392',
+  video: "59777392",
   loop: true,
   background: true,
   volume: 0,
   //@ts-ignore
   hideControls: true,
-}
+};
 
 LoopCoverPlayer.parameters = {
   controls: { disabled: true },
   docs: {
     description: {
-      story: 'This is usefull when using vimeo videos as cover',
+      story: "This is usefull when using vimeo videos as cover",
     },
     source: {
       code: `
@@ -135,24 +136,23 @@ LoopCoverPlayer.parameters = {
     `,
     },
   },
-}
+};
 
-export const VerticalPlayer = Template.bind({})
+export const VerticalPlayer = Template.bind({});
 
 VerticalPlayer.args = {
-  video: '351594821',
-  //@ts-ignore
+  video: "351594821",
   hideControls: true,
-}
+};
 
 export const CuePoints: ComponentStory<typeof Player> = ({ ...args }) => {
-  const ref = React.useRef<ImperativeHandle>(null)
-  const [playerReady, setPlayerReady] = React.useState(false)
+  const ref = React.useRef<ImperativeHandle>(null);
+  const [playerReady, setPlayerReady] = React.useState(false);
   React.useEffect(() => {
-    ;(async () => {
-      if (!playerReady) return
-      const totalTime = (await ref.current?.getDuration()) || 0
-      const cuePoints = 6
+    (async () => {
+      if (!playerReady) return;
+      const totalTime = (await ref.current?.getDuration()) || 0;
+      const cuePoints = 6;
       Array(6)
         .fill(1)
         .map((el, idx) =>
@@ -162,37 +162,39 @@ export const CuePoints: ComponentStory<typeof Player> = ({ ...args }) => {
               2
             )}% of video`,
           })
-        )
-    })()
-  }, [playerReady])
+        );
+    })();
+  }, [playerReady]);
   return (
     <>
+      {/** @ts-ignore */}
       <Player
         {...args}
+        // @ts-ignore
         ref={ref}
         onCuePoint={(props) => console.log(props)}
         onReady={(player) => {
-          console.log(player)
-          setPlayerReady(true)
+          console.log(player);
+          setPlayerReady(true);
         }}
       />
     </>
-  )
-}
+  );
+};
 
 CuePoints.args = {
-  video: '279121663',
+  video: "279121663",
   showByline: false,
   showTitle: false,
   volume: 0,
   showPortrait: false,
-}
+};
 
 CuePoints.parameters = {
   controls: { disabled: true },
   docs: {
     description: {
-      story: 'This is usefull for adding cue points',
+      story: "This is usefull for adding cue points",
     },
     source: {
       code: `
@@ -235,4 +237,4 @@ function Container() {
     `,
     },
   },
-}
+};

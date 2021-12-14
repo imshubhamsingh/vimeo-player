@@ -4,10 +4,10 @@
   "overrides": [
     {
       "files": ["**/*.svelte"],
-      "processor": "svelte3/svelte3" // Processor for Svelte Component
+      "processor": "svelte3/svelte3"
     }
   ],
   "settings": {
-    "svelte3/typescript": true // load TypeScript as peer dependency
+    "svelte3/typescript": true
   }
 }

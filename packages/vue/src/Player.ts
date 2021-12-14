@@ -7,83 +7,83 @@ import {
   onBeforeUnmount,
   isVue2,
   h,
-} from 'vue-demi'
+} from "vue-demi";
 import {
   VimeoPlayer,
   VimeoPlayerEvents,
   VimeoPlayerProperties,
   VIMEO_PLAYER_EVENTS,
-} from '@vimeo-player/core'
+} from "@vimeo-player/core";
 
-export const Player = defineComponent({
-  name: 'VimeoPlayer',
+export default defineComponent({
+  name: "VimeoPlayer",
   props: {
     video: {
-      type: String as PropType<VimeoPlayerProperties['video']>,
+      type: String as PropType<VimeoPlayerProperties["video"]>,
       required: true,
     },
     paused: {
-      type: Boolean as PropType<VimeoPlayerProperties['paused']>,
+      type: Boolean as PropType<VimeoPlayerProperties["paused"]>,
       default: true,
     },
     autopause: {
-      type: Boolean as PropType<VimeoPlayerProperties['autopause']>,
+      type: Boolean as PropType<VimeoPlayerProperties["autopause"]>,
       default: false,
     },
     autoplay: {
-      type: Boolean as PropType<VimeoPlayerProperties['autoplay']>,
+      type: Boolean as PropType<VimeoPlayerProperties["autoplay"]>,
       default: false,
     },
     background: {
-      type: Boolean as PropType<VimeoPlayerProperties['background']>,
+      type: Boolean as PropType<VimeoPlayerProperties["background"]>,
       default: false,
     },
     controls: {
-      type: Boolean as PropType<VimeoPlayerProperties['controls']>,
+      type: Boolean as PropType<VimeoPlayerProperties["controls"]>,
       default: false,
     },
     dnt: {
-      type: Boolean as PropType<VimeoPlayerProperties['dnt']>,
+      type: Boolean as PropType<VimeoPlayerProperties["dnt"]>,
       default: false,
     },
     loop: {
-      type: Boolean as PropType<VimeoPlayerProperties['loop']>,
+      type: Boolean as PropType<VimeoPlayerProperties["loop"]>,
       default: false,
     },
     muted: {
-      type: Boolean as PropType<VimeoPlayerProperties['muted']>,
+      type: Boolean as PropType<VimeoPlayerProperties["muted"]>,
       default: false,
     },
     responsive: {
-      type: Boolean as PropType<VimeoPlayerProperties['responsive']>,
+      type: Boolean as PropType<VimeoPlayerProperties["responsive"]>,
       default: true,
     },
     showByline: {
-      type: Boolean as PropType<VimeoPlayerProperties['showByline']>,
+      type: Boolean as PropType<VimeoPlayerProperties["showByline"]>,
       default: false,
     },
     showPortrait: {
-      type: Boolean as PropType<VimeoPlayerProperties['showPortrait']>,
+      type: Boolean as PropType<VimeoPlayerProperties["showPortrait"]>,
       default: false,
     },
     showTitle: {
-      type: Boolean as PropType<VimeoPlayerProperties['showTitle']>,
+      type: Boolean as PropType<VimeoPlayerProperties["showTitle"]>,
       default: false,
     },
     speed: {
-      type: Boolean as PropType<VimeoPlayerProperties['speed']>,
+      type: Boolean as PropType<VimeoPlayerProperties["speed"]>,
       default: false,
     },
     texttrack: {
-      type: String as PropType<VimeoPlayerProperties['texttrack']>,
-      default: 'en',
+      type: String as PropType<VimeoPlayerProperties["texttrack"]>,
+      default: "en",
     },
     start: {
-      type: Number as PropType<VimeoPlayerProperties['start']>,
+      type: Number as PropType<VimeoPlayerProperties["start"]>,
       default: 0,
     },
     volume: {
-      type: Number as PropType<VimeoPlayerProperties['volume']>,
+      type: Number as PropType<VimeoPlayerProperties["volume"]>,
       default: 1,
     },
   },
@@ -91,18 +91,18 @@ export const Player = defineComponent({
 
   // @ts-ignore
   setup(props, { emit, refs }) {
-    const container = ref<HTMLDivElement>()
+    const container = ref<HTMLDivElement>();
 
-    let player: VimeoPlayer | null = null
+    let player: VimeoPlayer | null = null;
     const eventHandlers = Object.entries(VIMEO_PLAYER_EVENTS).reduce(
       (acc, [event, value]) => {
         acc[value as keyof VimeoPlayerEvents] = (...args: any) => {
-          emit(event as keyof VimeoPlayerEvents, ...args)
-        }
-        return acc
+          emit(event as keyof VimeoPlayerEvents, ...args);
+        };
+        return acc;
       },
       {} as { [K in keyof VimeoPlayerEvents]: (...args: any) => void }
-    )
+    );
 
     watch(
       props,
@@ -117,32 +117,32 @@ export const Player = defineComponent({
             player?.update(name, newValue[name as keyof typeof props], {
               start: props.start,
               volume: props.volume,
-            })
-          })
+            });
+          });
       },
       { deep: true, immediate: true }
-    )
+    );
     onMounted(async () => {
       player = await VimeoPlayer.create(
-        isVue2 ? refs['container'] : container.value,
+        isVue2 ? refs["container"] : container.value,
         VimeoPlayer.getInitialOptions(props),
         VimeoPlayer.getEventHandlers(eventHandlers)
-      )
-      console.log(VimeoPlayer.imperativeHandle(player).getDuration())
-      emit('ref', VimeoPlayer.imperativeHandle(player))
+      );
+      console.log(VimeoPlayer.imperativeHandle(player).getDuration());
+      emit("ref", VimeoPlayer.imperativeHandle(player));
       // Player loaded
-      if (player) emit('ready', player.instance)
-    })
+      if (player) emit("ready", player.instance);
+    });
 
     onBeforeUnmount(() => {
       if (player?.instance) {
-        player.instance.destroy()
+        player.instance.destroy();
       }
-    })
+    });
     return () => {
-      return h('div', {
-        ref: isVue2 ? 'container' : container,
-      })
-    }
+      return h("div", {
+        ref: isVue2 ? "container" : container,
+      });
+    };
   },
-})
+});

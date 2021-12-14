@@ -24,11 +24,12 @@
   "devDependencies": {
     "@storybook/vue3": "^6.4.8",
     "@vimeo-player/core": "*",
+    "@vue/compiler-sfc": "^3.2.26",
     "@vue/eslint-config-typescript": "^9.1.0",
     "eslint-plugin-vue": "^8.1.1",
     "vue": "^3.0.0"
   },
-  "homepage": "https://github.com/imshubhamsingh/vimeo-player#readme",
+  "homepage": "https://github.com/imshubhamsingh/vimeo-player/tree/packages/vue#readme",
   "files": [
     "dist"
   ],
@@ -45,6 +46,8 @@
     "fix": "pnpx eslint --fix \"src/**/*.{js,vue}\"",
     "format": "pnpx prettier --write \"src/**/*.{js,vue}\"",
     "types:dev": "tsc -w --p tsconfig.json",
-    "start": "node ./scripts/dev"
+    "types:build": "tsc -p tsconfig.json",
+    "build": "node scripts/build & pnpm run types:build",
+    "start": "node ./scripts/dev & pnpm run types:dev"
   }
 }

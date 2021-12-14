@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const fs = require('fs')
-const path = require('path')
-const esbuild = require('esbuild')
-const { gzip } = require('zlib')
+const fs = require('fs');
+const path = require('path');
+const esbuild = require('esbuild');
+const { gzip } = require('zlib');
 
 /**
  * Production build
@@ -40,20 +39,20 @@ module.exports = async function build({
   /**
    * Dist Folder Path relative to package.
    */
-  const distFolder = path.resolve(dirname, './dist')
+  const distFolder = path.resolve(dirname, './dist');
   // Remove existing dist folder
   if (fs.existsSync(distFolder)) {
     fs.rmSync(distFolder, { recursive: true }, (e) => {
       if (e) {
-        throw e
+        throw e;
       }
-    })
+    });
   }
 
   /**
    *  Root path of package
    */
-  const rootPath = path.resolve(dirname, '../')
+  const rootPath = path.resolve(dirname, '../');
 
   /**
    * Common build config
@@ -69,7 +68,7 @@ module.exports = async function build({
     ),
     metafile: true,
     sourcemap: true,
-  }
+  };
 
   try {
     await esbuild.build({
@@ -77,14 +76,14 @@ module.exports = async function build({
       outfile: path.resolve(rootPath, cjsOutfile),
       format: 'cjs',
       ...config,
-    })
+    });
 
     const esmResult = await esbuild.build({
       ...buildConfig,
       outfile: path.resolve(rootPath, esmOutfile),
       format: 'esm',
       ...config,
-    })
+    });
 
     /**
      * ESM side in KB
@@ -95,7 +94,7 @@ module.exports = async function build({
         0
       ) / 1000
     ) // bytes to kb conversion
-      .toFixed(2)
+      .toFixed(2);
 
     fs.readFile(path.resolve(rootPath, esmOutfile), (_err, data) => {
       gzip(data, (_err, result) => {
@@ -103,11 +102,11 @@ module.exports = async function build({
           `✔ ${pkg.name}: Built package. ${esmSize}kb (${(
             result.length / 1000
           ).toFixed(2)}kb minified)`
-        )
-      })
-    })
+        );
+      });
+    });
   } catch (e) {
-    console.log(`× ${pkg.name}: Build failed due to an error.`)
-    console.log(e)
+    console.log(`× ${pkg.name}: Build failed due to an error.`);
+    console.log(e);
   }
-}
+};

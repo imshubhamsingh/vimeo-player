@@ -1,7 +1,5 @@
-/* eslint-disable */
-
-const esbuild = require('esbuild')
-const path = require('path')
+const esbuild = require('esbuild');
+const path = require('path');
 
 /**
  * Dev build
@@ -33,7 +31,7 @@ module.exports = function devbuild({
   config = {},
 }) {
   // Root path of package
-  const rootPath = path.resolve(dirname, '../')
+  const rootPath = path.resolve(dirname, '../');
   // ESM dev build
   esbuild.build({
     entryPoints: [path.resolve(rootPath, entryPoint).toString()],
@@ -51,12 +49,12 @@ module.exports = function devbuild({
     watch: {
       onRebuild(error) {
         if (error) {
-          console.log(`× ${pkg.name}: An error in prevented the rebuild.`)
-          return
+          console.log(`× ${pkg.name}: An error in prevented the rebuild.`);
+          return;
         }
-        console.log(`✔ ${pkg.name}: Rebuilt.`)
+        console.log(`✔ ${pkg.name}: Rebuilt.`);
       },
     },
     ...config,
-  })
-}
+  });
+};

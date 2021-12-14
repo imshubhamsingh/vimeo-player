@@ -1,4 +1,4 @@
 module.exports = {
-  ...require('../../.prettierrc.json'),
-  plugins: ['prettier-plugin-svelte'],
-}
+  extends: "../../.prettierrc.json",
+  plugins: ["prettier-plugin-svelte"],
+};
