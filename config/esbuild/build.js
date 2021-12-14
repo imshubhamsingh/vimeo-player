@@ -31,11 +31,7 @@ module.exports = async function build({
    * Package.json
    */
   pkg,
-  /**
-   * Esbuil browser iife file output
-   */
-  browserOutfile = false,
-  /**
+  /*
    * Es build config to override default one.
    */
   config = {},
@@ -81,15 +77,6 @@ module.exports = async function build({
       format: 'cjs',
       ...config,
     });
-
-    if (browserOutfile) {
-      await esbuild.build({
-        ...buildConfig,
-        outfile: path.resolve(rootPath, browserOutfile),
-        format: 'iife',
-        ...config,
-      });
-    }
 
     const esmResult = await esbuild.build({
       ...buildConfig,
