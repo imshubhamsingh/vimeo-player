@@ -1,4 +1,39 @@
 import { VimeoPlayerProperties } from "@vimeo-player/core";
+import { EventEmitter } from "events";
+import { WebView } from "react-native-webview";
+
+export const player = {
+  getDuration: () =>
+    `sendMessageToRN({ event: 'getDuration', data: player.instance.getDuration() })`,
+  paused: (pausedValue: boolean) =>
+    `player.instance.update('paused', ${pausedValue})`,
+};
+
+export function recievedOnce(
+  webViewRef: WebView | null,
+  eventEmitter: EventEmitter,
+  type: keyof typeof player,
+  ...args: Array<any>
+) {
+  if (!player[type]) Promise.reject("Unknown method");
+  //@ts-ignore
+  webViewRef?.injectJavaScript?.(player[type](...args));
+  return new Promise((resolve) => {
+    eventEmitter.once(type, resolve);
+  });
+}
+
+export function playerUpdate(
+  webViewRef: WebView | null,
+  type: keyof typeof player,
+  ...args: any
+) {
+  if (!player[type]) Promise.reject("Unknown property update");
+  console.log(webViewRef, type);
+  //@ts-ignore
+  webViewRef?.injectJavaScript?.(player[type](...args));
+  Promise.resolve();
+}
 
 export function playerScript(playerOptions: VimeoPlayerProperties) {
   const data = JSON.stringify(playerOptions);

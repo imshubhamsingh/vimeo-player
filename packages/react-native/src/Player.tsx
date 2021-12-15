@@ -1,34 +1,71 @@
 import {
-  ImperativeHandle,
+  VimeoPlayer,
   VimeoPlayerOptions,
   VimeoPlayerProperties,
   VimeoPlayerEventHandlers,
-  VimeoPlayerEvents,
   VIMEO_PLAYER_EVENTS,
 } from "@vimeo-player/core";
 import * as React from "react";
 import { View } from "react-native";
-import { WebView, WebViewMessageEvent } from "react-native-webview";
+import {
+  WebView,
+  WebViewMessageEvent,
+  WebViewProps,
+} from "react-native-webview";
+import { EventEmitter } from "events";
 
-import { playerScript, getPlayerProperties } from "./utils";
-
-type WebViewMessage<T> = {
-  event: keyof T;
-  data: Array<any>;
-};
+import {
+  playerScript,
+  getPlayerProperties,
+  recievedOnce,
+  playerUpdate,
+} from "./utils";
 
 export type PlayerProps = VimeoPlayerOptions & {
   /**
    * To directly use local html
    */
   useLocalHTML?: boolean;
+  /**
+   *
+   */
+  webViewProps?: Omit<WebViewProps, "ref" | "source" | "onMessage">;
 };
 
-const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
-  const { height, width, useLocalHTML } = props;
+const Player = React.forwardRef<any, PlayerProps>((props, ref) => {
+  const {
+    height,
+    width,
+    useLocalHTML,
+    webViewProps,
+    autopause,
+    color,
+    loop,
+    muted,
+    paused,
+    video,
+    volume,
+    quality,
+    start,
+  } = props;
   const initialPlayerParamsRef = React.useRef<VimeoPlayerProperties>(
     getPlayerProperties(props)
   );
+
+  const mounted = React.useRef<boolean>(false);
+
+  const webViewRef = React.useRef<WebView>(null);
+  const eventEmitter = React.useRef(new EventEmitter());
+  const prevProps = React.useRef({
+    autopause,
+    color,
+    loop,
+    muted,
+    paused,
+    video,
+    volume,
+    quality,
+  });
 
   const source = React.useMemo(() => {
     const vimeoScript = playerScript(initialPlayerParamsRef.current);
@@ -36,13 +73,20 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
     return res;
   }, [useLocalHTML]);
 
+  React.useImperativeHandle(
+    ref,
+    () => ({
+      getDuration: () =>
+        recievedOnce(webViewRef.current, eventEmitter.current, "getDuration"),
+    }),
+    []
+  );
+
   const onMessage = (event: WebViewMessageEvent) => {
     try {
-      const message: WebViewMessage<typeof VIMEO_PLAYER_EVENTS> = JSON.parse(
-        event.nativeEvent.data
-      );
+      const message = JSON.parse(event.nativeEvent.data);
       const handler = VIMEO_PLAYER_EVENTS[
-        message.event
+        message.event as keyof typeof VIMEO_PLAYER_EVENTS
       ] as keyof VimeoPlayerEventHandlers;
       //@ts-ignore TODO: fix the type
       props?.[handler]?.(...message.data);
@@ -51,9 +95,52 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
     }
   };
 
+  React.useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+    } else {
+      Object.values(VimeoPlayer.config)
+        .filter(
+          (name: string) =>
+            props[name as keyof typeof prevProps.current] !==
+            prevProps.current[name as keyof typeof prevProps.current]
+        )
+        .forEach((name: string) => {
+          //@ts-ignore TODO check how tslint error can be fix
+          prevProps.current[name] =
+            props[name as keyof typeof prevProps.current];
+          playerUpdate(
+            webViewRef.current,
+            name as keyof Pick<VimeoPlayerProperties, "paused">,
+            props[name as keyof typeof prevProps.current],
+            {
+              start: start,
+              volume: volume,
+            }
+          );
+        });
+    }
+  }, [
+    autopause,
+    color,
+    loop,
+    muted,
+    paused,
+    video,
+    volume,
+    height,
+    width,
+    quality,
+  ]);
+
   return (
     <View style={{ height, width }}>
-      <WebView source={source} onMessage={onMessage} />
+      <WebView
+        {...webViewProps}
+        source={source}
+        onMessage={onMessage}
+        ref={webViewRef}
+      />
     </View>
   );
 });
