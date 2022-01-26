@@ -39,6 +39,7 @@ export function playerScript(playerOptions: VimeoPlayerProperties) {
   const data = JSON.stringify(playerOptions);
   const urlEncodedJSON = encodeURI(data);
 
+
   const htmlString = `
     <!DOCTYPE html>
     <html>
@@ -65,40 +66,87 @@ export function playerScript(playerOptions: VimeoPlayerProperties) {
       </head>
       <body>
         <div class="container">
-          <div id="player"></div>
         </div>
+        <script src="https://f.vimeocdn.com/js/froogaloop2.min.js"></script>
         <script src="https://player.vimeo.com/api/player.js"></script>
-        <script src="https://vimeo-player.vercel.app/scripts/core.js"></script>
         <script>
           const urlQueryData = decodeURI("${urlEncodedJSON}");
-          const Player = VimeoPlayer.VimeoPlayer;
           const options = JSON.parse(urlQueryData) || {};
+          const options = JSON.parse(UrlQueryData) || {};
+          const queryString = (params = {}) =>
+            Object.keys(params)
+              .map((key) => key + "=" + params[key])
+              .join("&");
+          function getVimeoUrl(options = {}) {
+            const url =
+              options.video === "number"
+                ? "https://player.vimeo.com/video/"
+                : options.video;
+            const params = {
+              api: 1,
+              autoplay: options.autoplay,
+              loop: options.loop,
+              controls: options.controls,
+              speed: options.speed,
+              player_id: "player",
+              muted: options.muted,
+            };
+            const hash = {
+              t: options.start,
+            };
+            return \`\${url}?\${queryString(params)}#\${queryString(hash)}\`;
+          }
+          let iframe;
+          iframe = document.createElement("iframe");
+          iframe.src = getVimeoUrl(options);
+          iframe.width = "100%";
+          iframe.height = "100%";
+          iframe.frameBorder = "0";
+          iframe.webkitallowfullscreen = true;
+          iframe.allowfullscreen = true;
+          iframe.mozallowfullscreen = true;
+          iframe.allow = "autoplay;fullscreen";
+          iframe.id = "player";
+          document.body.appendChild(iframe);
+          const player = $f(iframe);
 
           function sendMessageToRN(msg) {
-            const msgStr = JSON.stringify(msg);
             if (window.ReactNativeWebView) {
-              window.ReactNativeWebView.postMessage(msgStr);
-            } else if (window.parent) {
-              window.parent.postMessage(msgStr, "*");
-            } else {
-              window.postMessage(msgStr, "*");
+              window.ReactNativeWebView.postMessage(JSON.stringify(msg));
             }
           }
 
-          const eventHandlers = Object.entries(
-            VimeoPlayer.VIMEO_PLAYER_EVENTS
-          ).reduce((acc, [event, value]) => {
-            acc[value] = (...args) => {
-              sendMessageToRN({ event, data: args });
-            };
-            return acc;
-          }, {});
+          const VIMEO_PLAYER_EVENTS = Object.freeze({
+            bufferend: "onBufferEnd",
+            bufferstart: "onBufferStart",
+            chapterchange: "onChapterChange",
+            cuepoint: "onCuePoint",
+            ended: "onEnd",
+            enterpictureinpicture: "onEnterPictureinPicture",
+            error: "onError",
+            leavepictureinpicture: "onLeavePictureinPicture",
+            loaded: "onLoaded",
+            pause: "onPause",
+            play: "onPlay",
+            playbackratechange: "onPlaybackRateChange",
+            progress: "onProgress",
+            ready: "onReady",
+            resize: "onResize",
+            seeked: "onSeeked",
+            texttrackchange: "onTextTrackChange",
+            timeupdate: "onTimeUpdate",
+            volumechange: "onVolumeChange",
+          });
 
-          const player = Player.create(
-            "player",
-            Player.getInitialOptions(options),
-            Player.getEventHandlers(eventHandlers)
-          );
+          const eventHandlers = () =>
+            Object.entries(VIMEO_PLAYER_EVENTS).forEach(([event, value]) => {
+              player.addEvent(event, (data) => {
+                console.log(event, ...args);
+                sendMessageToRN(event, {callback: value, ...args});
+              });
+            });
+          
+          eventHandlers();
         </script>
       </body>
     </html>

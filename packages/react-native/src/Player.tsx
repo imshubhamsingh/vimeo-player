@@ -1,10 +1,14 @@
-import {
-  VimeoPlayer,
+import type {
   VimeoPlayerOptions,
   VimeoPlayerProperties,
   VimeoPlayerEventHandlers,
-  VIMEO_PLAYER_EVENTS,
 } from "@vimeo-player/core";
+
+// Need better core package segmentation
+import {
+  VIMEO_CONFIGS,
+  VIMEO_PLAYER_EVENTS,
+} from "@vimeo-player/core/src/constants";
 import * as React from "react";
 import { View } from "react-native";
 import {
@@ -21,16 +25,26 @@ import {
   playerUpdate,
 } from "./utils";
 
-export type PlayerProps = VimeoPlayerOptions & {
-  /**
-   * To directly use local html
-   */
-  useLocalHTML?: boolean;
-  /**
-   *
-   */
-  webViewProps?: Omit<WebViewProps, "ref" | "source" | "onMessage">;
-};
+type NativeProps = {
+    /**
+     * To directly use local html
+     */
+    useLocalHTML?: boolean;
+    /**
+     * WebView props
+     */
+    webViewProps?: Omit<WebViewProps, "ref" | "source" | "onMessage">;
+    /**
+     * Player View Height
+     */
+    height: number
+    /**
+     * Player View Width
+     */
+    width: number
+}
+
+export type PlayerProps = VimeoPlayerOptions & NativeProps;
 
 const Player = React.forwardRef<any, PlayerProps>((props, ref) => {
   const {
@@ -99,7 +113,7 @@ const Player = React.forwardRef<any, PlayerProps>((props, ref) => {
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      Object.values(VimeoPlayer.config)
+      Object.values(VIMEO_CONFIGS)
         .filter(
           (name: string) =>
             props[name as keyof typeof prevProps.current] !==
@@ -147,12 +161,13 @@ const Player = React.forwardRef<any, PlayerProps>((props, ref) => {
 
 Player.defaultProps = {
   autopause: true,
-  autoplay: false,
+  autoplay: true,
   background: false,
   controls: false,
   dnt: false,
   loop: false,
-  muted: false,
+  start: 0,
+  muted: true,
   responsive: true,
   showByline: true,
   showPortrait: false,

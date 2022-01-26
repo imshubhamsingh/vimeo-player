@@ -5,15 +5,19 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "yalc:link": "yalc add @vimeo-player/react-native",
+    "yalc:unlink": "yalc remove @vimeo-player/react-natives"
   },
   "dependencies": {
+    "@vimeo-player/react-native": "file:.yalc/@vimeo-player/react-native",
     "expo": "~44.0.0",
     "expo-status-bar": "~1.2.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
-    "react-native-web": "0.17.1"
+    "react-native-web": "0.17.1",
+    "react-native-webview": "11.17.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

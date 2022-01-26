@@ -23,7 +23,7 @@ export type {
   VimeoPlayerEventHandlers,
 };
 
-export { VIMEO_PLAYER_EVENTS };
+export { VIMEO_PLAYER_EVENTS, VIMEO_CONFIGS };
 
 /**
  * Vimeo core wrapper for vimeo player
