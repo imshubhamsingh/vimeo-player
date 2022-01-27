@@ -5,7 +5,7 @@ import type {
   ImperativeHandle,
 } from "@vimeo-player/core";
 // Need better core package segmentation
-import { VIMEO_PLAYER_EVENTS } from "@vimeo-player/core/src/constants";
+import { VIMEO_PLAYER_EVENTS } from "@vimeo-player/core";
 import * as React from "react";
 import { View } from "react-native";
 import {
@@ -43,7 +43,7 @@ type NativeProps = {
 
 export type PlayerProps = VimeoPlayerOptions & NativeProps;
 
-const Player = React.forwardRef<any, PlayerProps>((props, ref) => {
+const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
   const {
     height,
     width,

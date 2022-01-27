@@ -5,6 +5,11 @@
     "declarationDir": "./dist/types",
     "types": ["react-native"]
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "node_modules/@vimeo-player/core",
+    "node_modules/@vimeo/player",
+    "node_modules/@types/vimeo__player"
+  ],
   "exclude": ["**/*.stories.tsx"]
 }
