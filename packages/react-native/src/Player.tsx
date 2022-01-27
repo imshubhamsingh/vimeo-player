@@ -4,10 +4,7 @@ import type {
   VimeoPlayerEventHandlers,
 } from "@vimeo-player/core";
 // Need better core package segmentation
-import {
-  VIMEO_CONFIGS,
-  VIMEO_PLAYER_EVENTS,
-} from "@vimeo-player/core/src/constants";
+import { VIMEO_PLAYER_EVENTS } from "@vimeo-player/core/src/constants";
 import * as React from "react";
 import { View } from "react-native";
 import {
@@ -91,6 +88,30 @@ const Player = React.forwardRef<any, PlayerProps>((props, ref) => {
     () => ({
       getDuration: () =>
         recievedOnce(webViewRef.current, eventEmitter.current, "getDuration"),
+      getCurrentTime: () =>
+        recievedOnce(
+          webViewRef.current,
+          eventEmitter.current,
+          "getCurrentTime"
+        ),
+      isMuted: () =>
+        recievedOnce(webViewRef.current, eventEmitter.current, "isMuted"),
+      getVolume: () =>
+        recievedOnce(webViewRef.current, eventEmitter.current, "getVolume"),
+      getPlaybackRate: () =>
+        recievedOnce(
+          webViewRef.current,
+          eventEmitter.current,
+          "getPlaybackRate"
+        ),
+      seekTo: (seconds: number) =>
+        recievedOnce(
+          webViewRef.current,
+          eventEmitter.current,
+          "seekTo",
+          false,
+          seconds
+        ),
     }),
     []
   );
@@ -101,8 +122,11 @@ const Player = React.forwardRef<any, PlayerProps>((props, ref) => {
       const handler = VIMEO_PLAYER_EVENTS[
         message.event as keyof typeof VIMEO_PLAYER_EVENTS
       ] as keyof VimeoPlayerEventHandlers;
-      //@ts-ignore TODO: fix the type
-      props?.[handler]?.(...message.data);
+      if (handler) {
+        props?.[handler]?.(message.data);
+      } else {
+        eventEmitter.current.emit(message.event, message.data);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -112,7 +136,7 @@ const Player = React.forwardRef<any, PlayerProps>((props, ref) => {
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      Object.values(VIMEO_CONFIGS)
+      Object.keys(prevProps.current)
         .filter(
           (name: string) =>
             props[name as keyof typeof prevProps.current] !==

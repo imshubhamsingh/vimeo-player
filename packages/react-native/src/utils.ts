@@ -2,41 +2,71 @@ import { VimeoPlayerProperties } from "@vimeo-player/core";
 import { EventEmitter } from "events";
 import { WebView } from "react-native-webview";
 
+const asyncFn = (str: string) => `(async()=>{${str}})()`;
 
-
-export const player = {
+const playerHandlers = {
   getDuration: () =>
-    `sendMessageToRN({ event: 'getDuration', data: player.instance.getDuration() })`,
-  paused: (pausedValue: boolean) =>
-    `console.log("paused -----", ${pausedValue})
-    player.update('paused', ${pausedValue})
-    `,
+    asyncFn(
+      `sendMessageToRN({ event: 'getDuration', data: await player.instance.getDuration() })`
+    ),
+  getCurrentTime: () =>
+    asyncFn(
+      `sendMessageToRN({ event: 'getCurrentTime', data: await player.instance.getCurrentTime() })`
+    ),
+  isMuted: () =>
+    asyncFn(
+      `sendMessageToRN({ event: 'isMuted', data: await player.instance.getMuted() })`
+    ),
+  getVolume: () =>
+    asyncFn(
+      `async()sendMessageToRN({ event: 'getVolume', data: await player.instance.getVolume() })`
+    ),
+  getPlaybackRate: () =>
+    asyncFn(
+      `sendMessageToRN({ event: 'getPlaybackRate', data: player.instance.getPlaybackRate() })`
+    ),
+  seekTo: (seconds: number) => `player.instance.setCurrentTime(${seconds})`,
+};
+
+const playerProps = {
+  paused: (pausedValue: boolean) => `player.update('paused', ${pausedValue})`,
+  color: (color: string) => `player.update('color', ${color})`,
+  autopause: (autopause: boolean) => `player.update('autopause', ${autopause})`,
+  loop: (loop: boolean) => `player.update('loop', ${loop})`,
+  volume: (volume: number) => `player.update('volume', ${volume})`,
+  muted: (muted: boolean, { volume }: { volume: number }) =>
+    `player.update('muted', ${muted}, {volume: ${volume}})`,
+  quality: (quality: number) => `player.update('quality', ${quality})`,
 };
 
 export function recievedOnce(
   webViewRef: WebView | null,
   eventEmitter: EventEmitter,
-  type: keyof typeof player,
+  type: keyof typeof playerHandlers,
+  callback: boolean = true,
   ...args: Array<any>
 ) {
-  if (!player[type]) Promise.reject("Unknown method");
+  if (!playerHandlers[type]) Promise.reject("Unknown method");
   //@ts-ignore
-  webViewRef?.injectJavaScript?.(player[type](...args));
-  return new Promise((resolve) => {
-    eventEmitter.once(type, resolve);
-  });
+  const injectedJs = playerHandlers[type](...args);
+  webViewRef?.injectJavaScript?.(injectedJs);
+  if (callback) {
+    return new Promise((resolve) => {
+      eventEmitter.once(type, resolve);
+    });
+  }
 }
 
 export function playerUpdate(
   webViewRef: WebView | null,
-  type: keyof typeof player,
+  type: keyof typeof playerProps,
   ...args: any
 ) {
-  if (!player[type]) {
+  if (!playerProps[type]) {
     console.log("Unknown property update", type);
   } else {
     //@ts-ignore
-    webViewRef?.injectJavaScript?.(player[type](...args));
+    webViewRef?.injectJavaScript?.(playerProps[type](...args));
   }
   Promise.resolve();
 }
@@ -83,15 +113,15 @@ export function playerScript(playerOptions: VimeoPlayerProperties) {
           const eventHandlers = Object.entries(
             VimeoPlayer.VIMEO_PLAYER_EVENTS
           ).reduce((acc, [event, value]) => {
-            acc[value] = (...args) => {
-              console.log(event, ...args);
-              sendMessageToRN(event, ...args);
+            acc[value] = (args) => {
+              sendMessageToRN({event, data: args});
             };
             return acc;
           }, {});
 
           function sendMessageToRN(msg) {
             if (window.ReactNativeWebView) {
+              console.log("rn-message", msg)
               window.ReactNativeWebView.postMessage(JSON.stringify(msg));
             }
           }
