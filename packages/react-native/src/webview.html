@@ -27,11 +27,12 @@
     </div>
     <script src="https://f.vimeocdn.com/js/froogaloop2.min.js"></script>
     <script src="https://player.vimeo.com/api/player.js"></script>
+    <script src="https://vimeo-player.vercel.app/scripts/core.js"></script>
     <script>
       const parsedUrl = new URL(window.location.href);
-      const UrlQueryData = parsedUrl.searchParams.get("data");
+      const urlQueryData = parsedUrl.searchParams.get("data");
 
-      const options = JSON.parse(UrlQueryData) || {};
+      const options = JSON.parse(urlQueryData) || {};
 
       const queryString = (params = {}) =>
         Object.keys(params)

@@ -3,7 +3,6 @@ import type {
   VimeoPlayerProperties,
   VimeoPlayerEventHandlers,
 } from "@vimeo-player/core";
-
 // Need better core package segmentation
 import {
   VIMEO_CONFIGS,
@@ -26,23 +25,23 @@ import {
 } from "./utils";
 
 type NativeProps = {
-    /**
-     * To directly use local html
-     */
-    useLocalHTML?: boolean;
-    /**
-     * WebView props
-     */
-    webViewProps?: Omit<WebViewProps, "ref" | "source" | "onMessage">;
-    /**
-     * Player View Height
-     */
-    height: number
-    /**
-     * Player View Width
-     */
-    width: number
-}
+  /**
+   * To directly use local html
+   */
+  useLocalHTML?: boolean;
+  /**
+   * WebView props
+   */
+  webViewProps?: Omit<WebViewProps, "ref" | "source" | "onMessage">;
+  /**
+   * Player View Height
+   */
+  height: number;
+  /**
+   * Player View Width
+   */
+  width: number;
+};
 
 export type PlayerProps = VimeoPlayerOptions & NativeProps;
 
@@ -134,18 +133,7 @@ const Player = React.forwardRef<any, PlayerProps>((props, ref) => {
           );
         });
     }
-  }, [
-    autopause,
-    color,
-    loop,
-    muted,
-    paused,
-    video,
-    volume,
-    height,
-    width,
-    quality,
-  ]);
+  }, [autopause, color, loop, muted, paused, video, volume, quality]);
 
   return (
     <View style={{ height, width }}>
@@ -160,18 +148,18 @@ const Player = React.forwardRef<any, PlayerProps>((props, ref) => {
 });
 
 Player.defaultProps = {
-  autopause: true,
+  autopause: false,
   autoplay: true,
   background: false,
-  controls: false,
+  controls: true,
   dnt: false,
   loop: false,
   start: 0,
   muted: true,
   responsive: true,
-  showByline: true,
+  showByline: false,
   showPortrait: false,
-  showTitle: true,
+  showTitle: false,
   speed: true,
   volume: 1,
   texttrack: "en",

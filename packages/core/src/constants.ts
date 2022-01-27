@@ -36,4 +36,5 @@ export const VIMEO_CONFIGS = Object.freeze({
   HEIGHT: 'height',
   WIDTH: 'width',
   QUALITY: 'quality',
+  HASH: 'h'
 })

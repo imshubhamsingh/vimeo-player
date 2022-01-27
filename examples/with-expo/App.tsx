@@ -8,7 +8,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Open up App.tsx to start working on your app!</Text>
-      <Player video="59777392" paused={paused} height={'50%'} width={'100%'} autopause={false} autoplay={true}/>
+      <Player video="59777392" paused={paused.toString()} height={'50%'} width={'100%'} />
       <View style={{height: 100}}>
         <Text>
          {paused? 'paused': 'play'}
