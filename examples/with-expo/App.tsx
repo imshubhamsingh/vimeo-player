@@ -1,11 +1,11 @@
 // import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import Player from '@vimeo-player/react-native';
+import Player, { ImperativeHandle } from '@vimeo-player/react-native';
 
 export default function App() {
   const [paused, setPaused] = React.useState<boolean>(false);
-  const ref = React.useRef(null);
+  const ref = React.useRef<ImperativeHandle>(null);
 
   async function seek(value: number) {
     if (!ref.current) return;

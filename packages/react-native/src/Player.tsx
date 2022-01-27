@@ -2,6 +2,7 @@ import type {
   VimeoPlayerOptions,
   VimeoPlayerProperties,
   VimeoPlayerEventHandlers,
+  ImperativeHandle,
 } from "@vimeo-player/core";
 // Need better core package segmentation
 import { VIMEO_PLAYER_EVENTS } from "@vimeo-player/core/src/constants";
@@ -190,3 +191,5 @@ Player.defaultProps = {
 };
 
 export default Player;
+
+export { ImperativeHandle };
