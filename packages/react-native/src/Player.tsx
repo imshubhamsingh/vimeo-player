@@ -3,11 +3,10 @@ import type {
   VimeoPlayerProperties,
   VimeoPlayerEventHandlers,
   ImperativeHandle,
-} from "@vimeo-player/core";
-// Need better core package segmentation
-import { VIMEO_PLAYER_EVENTS } from "@vimeo-player/core";
+} from "./type";
+import { VIMEO_PLAYER_EVENTS, CUSTOM_USER_AGENT } from "./constants";
 import * as React from "react";
-import { View } from "react-native";
+import { View, Platform } from "react-native";
 import {
   WebView,
   WebViewMessageEvent,
@@ -52,6 +51,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
     autopause,
     color,
     loop,
+    autoplay,
     muted,
     paused,
     video,
@@ -69,6 +69,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
   const eventEmitter = React.useRef(new EventEmitter());
   const prevProps = React.useRef({
     autopause,
+    autoplay,
     color,
     loop,
     muted,
@@ -88,25 +89,37 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
     ref,
     () => ({
       getDuration: () =>
-        recievedOnce(webViewRef.current, eventEmitter.current, "getDuration"),
+        recievedOnce<number>(
+          webViewRef.current,
+          eventEmitter.current,
+          "getDuration"
+        ),
       getCurrentTime: () =>
-        recievedOnce(
+        recievedOnce<number>(
           webViewRef.current,
           eventEmitter.current,
           "getCurrentTime"
         ),
       isMuted: () =>
-        recievedOnce(webViewRef.current, eventEmitter.current, "isMuted"),
+        recievedOnce<boolean>(
+          webViewRef.current,
+          eventEmitter.current,
+          "isMuted"
+        ),
       getVolume: () =>
-        recievedOnce(webViewRef.current, eventEmitter.current, "getVolume"),
+        recievedOnce<number>(
+          webViewRef.current,
+          eventEmitter.current,
+          "getVolume"
+        ),
       getPlaybackRate: () =>
-        recievedOnce(
+        recievedOnce<number>(
           webViewRef.current,
           eventEmitter.current,
           "getPlaybackRate"
         ),
       seekTo: (seconds: number) =>
-        recievedOnce(
+        recievedOnce<void>(
           webViewRef.current,
           eventEmitter.current,
           "seekTo",
@@ -158,11 +171,16 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
           );
         });
     }
-  }, [autopause, color, loop, muted, paused, video, volume, quality]);
+  }, [autopause, color, loop, muted, paused, video, volume, quality, autoplay]);
 
   return (
     <View style={{ height, width }}>
       <WebView
+        userAgent={
+          autoplay
+            ? Platform.select({ android: CUSTOM_USER_AGENT, ios: "" })
+            : ""
+        }
         {...webViewProps}
         source={source}
         onMessage={onMessage}

@@ -1,4 +1,4 @@
-import { VimeoPlayerProperties } from "@vimeo-player/core";
+import { VimeoPlayerProperties } from "./type";
 import { EventEmitter } from "events";
 import { WebView } from "react-native-webview";
 
@@ -39,13 +39,13 @@ const playerProps = {
   quality: (quality: number) => `player.update('quality', ${quality})`,
 };
 
-export function recievedOnce(
+export function recievedOnce<T>(
   webViewRef: WebView | null,
   eventEmitter: EventEmitter,
   type: keyof typeof playerHandlers,
   callback: boolean = true,
   ...args: Array<any>
-) {
+): Promise<T extends void ? void : T> {
   if (!playerHandlers[type]) Promise.reject("Unknown method");
   //@ts-ignore
   const injectedJs = playerHandlers[type](...args);
@@ -55,6 +55,8 @@ export function recievedOnce(
       eventEmitter.once(type, resolve);
     });
   }
+  // @ts-ignore
+  return Promise.resolve();
 }
 
 export function playerUpdate(
