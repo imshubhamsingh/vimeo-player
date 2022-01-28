@@ -40,9 +40,13 @@ export type PlayerOptions = Options & {
 
 export type VimeoPlayerProperties = {
   /**
-   * Vimeo video id or url with hash if its private.
+   * Vimeo video id
    */
   video: string
+  /**
+   * Video hash - Used on privately listed videos
+   */
+  hash?: string
   /**
    * Show tile of video.
    */

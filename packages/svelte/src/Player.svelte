@@ -22,6 +22,7 @@
 
   /* ************ player properties ******************* */
   export let video: VimeoPlayerProperties["video"];
+  export let hash: VimeoPlayerProperties["hash"];
   export let volume: VimeoPlayerProperties["volume"] = 1;
   export let paused: VimeoPlayerProperties["paused"] = true;
   export let autopause: VimeoPlayerProperties["autopause"] = false;
@@ -45,6 +46,7 @@
 
   let props = {
     video,
+    hash,
     volume,
     paused,
     autopause,

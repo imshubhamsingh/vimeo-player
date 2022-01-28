@@ -154,7 +154,9 @@ export function playerScript(playerOptions: VimeoPlayerProperties) {
 export function getPlayerProperties(
   obj: VimeoPlayerProperties
 ): VimeoPlayerProperties {
+  
   return {
+    hash: obj.hash,
     video: obj.video,
     width: obj.width,
     height: obj.height,

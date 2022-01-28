@@ -68,6 +68,10 @@ export type VimeoPlayerProperties = {
    */
   video: string;
   /**
+   * Video hash - Used on privately listed videos
+   */
+  hash?: string;
+  /**
    * Show tile of video.
    */
   showTitle?: boolean;

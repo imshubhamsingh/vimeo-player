@@ -59,7 +59,8 @@ const Template = ({
 export const TestPlayer = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 TestPlayer.args = {
-  video: "323783503",
+  video: "667853716",
+  hash: '52ee7f61cb',
   muted: true,
   quality: "360p",
   // autoplay: true,

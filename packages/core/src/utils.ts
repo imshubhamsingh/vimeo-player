@@ -1,8 +1,8 @@
-import { VIMEO_PLAYER_EVENTS } from './constants'
-import { EventHandlersObj, PlayerOptions, VimeoPlayerProperties } from './type'
+import { VIMEO_PLAYER_EVENTS } from "./constants";
+import { EventHandlersObj, PlayerOptions, VimeoPlayerProperties } from "./type";
 
 // Empty function
-const noop = () => console.log
+const noop = () => console.log;
 
 /**
  * It forms Vimeo player options params
@@ -10,8 +10,17 @@ const noop = () => console.log
 export function getInitialPlayerOptions(
   obj: VimeoPlayerProperties
 ): PlayerOptions {
+  const videoDetails: { url?: string; id?: number } = {};
+  if (obj.hash) {
+    // Unlisted videos
+    videoDetails.url = `https://player.vimeo.com/video/${+obj.video}?h=${
+      obj.hash
+    }`;
+  } else {
+    videoDetails.id = +obj.video;
+  }
   return {
-    id: +obj.video,
+    ...videoDetails,
     width: obj.width,
     height: obj.height,
     autopause: obj.autopause,
@@ -30,16 +39,16 @@ export function getInitialPlayerOptions(
     texttrack: obj.texttrack,
     volume: obj.volume,
     start: obj.start,
-  }
+  };
 }
 
 /**
  * It forms event handlers for vimeo player
  */
 export function getPlayerEventHandlers(obj: any): EventHandlersObj {
-  const handlers: EventHandlersObj = {}
+  const handlers: EventHandlersObj = {};
   Object.values(VIMEO_PLAYER_EVENTS).map((events) => {
-    handlers[events] = obj[events] ? obj[events] : noop
-  })
-  return handlers
+    handlers[events] = obj[events] ? obj[events] : noop;
+  });
+  return handlers;
 }

@@ -22,6 +22,9 @@ export default defineComponent({
       type: String as PropType<VimeoPlayerProperties["video"]>,
       required: true,
     },
+    hash: {
+      type: String as PropType<VimeoPlayerProperties["hash"]>,
+    },
     paused: {
       type: Boolean as PropType<VimeoPlayerProperties["paused"]>,
       default: true,

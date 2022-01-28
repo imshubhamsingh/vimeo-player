@@ -192,7 +192,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
 
 Player.defaultProps = {
   autopause: false,
-  autoplay: true,
+  autoplay: false,
   background: false,
   controls: true,
   dnt: false,
@@ -200,9 +200,9 @@ Player.defaultProps = {
   start: 0,
   muted: true,
   responsive: true,
-  showByline: false,
-  showPortrait: false,
-  showTitle: false,
+  showByline: true,
+  showPortrait: true,
+  showTitle: true,
   speed: true,
   volume: 1,
   texttrack: "en",
