@@ -6,7 +6,7 @@ import type {
 } from "./type";
 import { VIMEO_PLAYER_EVENTS, CUSTOM_USER_AGENT } from "./constants";
 import * as React from "react";
-import { View, Platform } from "react-native";
+import { View, Platform, StyleSheet, StyleProp, ViewStyle } from "react-native";
 import {
   WebView,
   WebViewMessageEvent,
@@ -38,6 +38,10 @@ type NativeProps = {
    * Player View Width
    */
   width: number;
+  /**
+   * 
+   */
+   webViewStyle?: StyleProp<ViewStyle>
 };
 
 export type PlayerProps = VimeoPlayerOptions & NativeProps;
@@ -58,6 +62,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
     volume,
     quality,
     start,
+    webViewStyle
   } = props;
   const initialPlayerParamsRef = React.useRef<VimeoPlayerProperties>(
     getPlayerProperties(props)
@@ -176,6 +181,10 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
   return (
     <View style={{ height, width }}>
       <WebView
+      bounces={false}
+      originWhitelist={['*']}
+      allowsInlineMediaPlayback
+       style={[styles.webView, webViewStyle]}
         userAgent={
           autoplay
             ? Platform.select({ android: CUSTOM_USER_AGENT, ios: "" })
@@ -188,6 +197,10 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
       />
     </View>
   );
+});
+
+const styles = StyleSheet.create({
+  webView: {backgroundColor: 'transparent'},
 });
 
 Player.defaultProps = {

@@ -123,7 +123,6 @@ export function playerScript(playerOptions: VimeoPlayerProperties) {
 
           function sendMessageToRN(msg) {
             if (window.ReactNativeWebView) {
-              console.log("rn-message", msg)
               window.ReactNativeWebView.postMessage(JSON.stringify(msg));
             }
           }
@@ -135,7 +134,6 @@ export function playerScript(playerOptions: VimeoPlayerProperties) {
             Player.getInitialOptions(options),
             Player.getEventHandlers(eventHandlers)
           ).then((p) => {
-            console.log(p)
             player = p;
           });
         </script>

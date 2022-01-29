@@ -25,51 +25,21 @@
     <div class="container">
       <div id="player"></div>
     </div>
-    <script src="https://f.vimeocdn.com/js/froogaloop2.min.js"></script>
     <script src="https://player.vimeo.com/api/player.js"></script>
     <script src="https://vimeo-player.vercel.app/scripts/core.js"></script>
     <script>
       const parsedUrl = new URL(window.location.href);
       const urlQueryData = parsedUrl.searchParams.get("data");
 
-      const options = JSON.parse(urlQueryData) || {};
-
-      const queryString = (params = {}) =>
-        Object.keys(params)
-          .map((key) => key + "=" + params[key])
-          .join("&");
-      function getVimeoUrl(options = {}) {
-        const url =
-          options.video === "number"
-            ? "https://player.vimeo.com/video/"
-            : options.video;
-        const params = {
-          api: 1,
-          autoplay: options.autoplay,
-          loop: options.loop,
-          controls: options.controls,
-          speed: options.speed,
-          player_id: "player",
-          muted: options.muted,
+      const Player = VimeoPlayer.VimeoPlayer;
+      const eventHandlers = Object.entries(
+        VimeoPlayer.VIMEO_PLAYER_EVENTS
+      ).reduce((acc, [event, value]) => {
+        acc[value] = (args) => {
+          sendMessageToRN({ event, data: args });
         };
-        const hash = {
-          t: options.start,
-        };
-        return `${url}?${queryString(params)}#${queryString(hash)}`;
-      }
-      let iframe;
-      iframe = document.createElement("iframe");
-      iframe.src = getVimeoUrl(options);
-      iframe.width = "100%";
-      iframe.height = "100%";
-      iframe.frameBorder = "0";
-      iframe.webkitallowfullscreen = true;
-      iframe.allowfullscreen = true;
-      iframe.mozallowfullscreen = true;
-      iframe.allow = "autoplay;fullscreen";
-      iframe.id = "player";
-      document.body.appendChild(iframe);
-      const player = $f(iframe);
+        return acc;
+      }, {});
 
       function sendMessageToRN(msg) {
         if (window.ReactNativeWebView) {
@@ -77,37 +47,15 @@
         }
       }
 
-      const VIMEO_PLAYER_EVENTS = Object.freeze({
-        bufferend: "onBufferEnd",
-        bufferstart: "onBufferStart",
-        chapterchange: "onChapterChange",
-        cuepoint: "onCuePoint",
-        ended: "onEnd",
-        enterpictureinpicture: "onEnterPictureinPicture",
-        error: "onError",
-        leavepictureinpicture: "onLeavePictureinPicture",
-        loaded: "onLoaded",
-        pause: "onPause",
-        play: "onPlay",
-        playbackratechange: "onPlaybackRateChange",
-        progress: "onProgress",
-        ready: "onReady",
-        resize: "onResize",
-        seeked: "onSeeked",
-        texttrackchange: "onTextTrackChange",
-        timeupdate: "onTimeUpdate",
-        volumechange: "onVolumeChange",
+      let player;
+
+      Player.create(
+        "player",
+        Player.getInitialOptions(options),
+        Player.getEventHandlers(eventHandlers)
+      ).then((p) => {
+        player = p;
       });
-
-      const eventHandlers = () =>
-        Object.entries(VIMEO_PLAYER_EVENTS).forEach(([event, value]) => {
-          player.addEvent(event, (data) => {
-            console.log(event, ...args);
-            sendMessageToRN(event, ...args);
-          });
-        });
-
-      eventHandlers();
     </script>
   </body>
 </html>
