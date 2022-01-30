@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "remix-app-template",
-  "description": "",
-  "license": "",
+  "name": "@vimeo-player/docs",
+  "description": "Docs for Vimeo player wrappers",
+  "license": "MIT",
   "scripts": {
     "build": "remix build",
     "dev": "remix dev",
