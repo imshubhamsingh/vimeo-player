@@ -106,7 +106,7 @@ export function playerScript(playerOptions: VimeoPlayerProperties) {
           <div id="player"></div>
         </div>
         <script src="https://player.vimeo.com/api/player.js"></script>
-        <script src="https://vimeo-player.vercel.app/scripts/core.js"></script>
+        <script src="https://unpkg.com/@vimeo-player/core@0.0.0/dist/browser/player.js"></script>
         <script>
           const urlQueryData = decodeURI("${urlEncodedJSON}");
           const options = JSON.parse(urlQueryData) || {};

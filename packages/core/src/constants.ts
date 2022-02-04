@@ -22,6 +22,7 @@ export const VIMEO_PLAYER_EVENTS = Object.freeze({
   texttrackchange: 'onTextTrackChange',
   timeupdate: 'onTimeUpdate',
   volumechange: 'onVolumeChange',
+  fullscreenchange: 'onFullScreenChange'
 })
 
 // https://github.com/vimeo/player.js/#methods
