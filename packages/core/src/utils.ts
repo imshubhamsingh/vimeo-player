@@ -4,6 +4,15 @@ import { EventHandlersObj, PlayerOptions, VimeoPlayerProperties } from "./type";
 // Empty function
 const noop = () => console.log;
 
+export function getVimeoUrl(id: string): number;
+export function getVimeoUrl(id: string, hash?: string): string;
+export function getVimeoUrl(id: string, hash?: string) {
+  if (hash) {
+    return `https://player.vimeo.com/video/${+id}?h=${hash}`;
+  }
+  return +id;
+}
+
 /**
  * It forms Vimeo player options params
  */
@@ -13,11 +22,9 @@ export function getInitialPlayerOptions(
   const videoDetails: { url?: string; id?: number } = {};
   if (obj.hash) {
     // Unlisted videos
-    videoDetails.url = `https://player.vimeo.com/video/${+obj.video}?h=${
-      obj.hash
-    }`;
+    videoDetails.url = getVimeoUrl(obj.video, obj.hash);
   } else {
-    videoDetails.id = +obj.video;
+    videoDetails.id = getVimeoUrl(obj.video);
   }
   return {
     ...videoDetails,

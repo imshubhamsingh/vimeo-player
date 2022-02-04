@@ -13,7 +13,11 @@ import type {
   VimeoPlayerEventHandlers,
 } from "./type";
 // custom
-import { getInitialPlayerOptions, getPlayerEventHandlers } from "./utils";
+import {
+  getInitialPlayerOptions,
+  getPlayerEventHandlers,
+  getVimeoUrl,
+} from "./utils";
 
 export type {
   ImperativeHandle,
@@ -132,7 +136,10 @@ export class VimeoPlayer {
       // update video id and load from starting time value
       case VIMEO_CONFIGS.VIDEO: {
         if (value) {
-          const loaded = this._player.loadVideo(value);
+          const loaded = this._player.loadVideo(
+            // @ts-ignore Vimeo type should fix this to also take string
+            getVimeoUrl(value, options.hash)
+          );
           if (typeof options.start === "number") {
             loaded.then(() => {
               this._player.setCurrentTime(options.start as number);
