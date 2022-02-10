@@ -145,91 +145,38 @@ export type VimeoPlayerProperties = {
 
 export type VimeoPlayerEvents = {
   /**
-   * Triggered when vimeo player is loaded
-   */
-  ended: callbackParams;
-  /**
    * Triggered when video playback is initiated.
    */
   play: callbackParams;
+  /**
+   * Triggered when the video starts playing.
+   */
+  playing: callbackParams;
   /**
    * Triggered when the video pauses.
    */
   pause: callbackParams;
   /**
+   * Triggered when vimeo player is loaded
+   */
+  ended: callbackParams;
+  /**
    * Triggered as the currentTime of the video updates. It generally fires every 250ms, but it may vary depending on the browser.
    */
   timeupdate: callbackParams;
-  /**
-   * Triggered when the player seeks to a specific time.
-   */
-  seeked: callbackParams;
-  /**
-   * Triggered when Vimeo player is ready and returns instance given by `@vimeo/player`
-   */
-  ready: Player;
   /**
    * Triggers when the video is loading. The params indicates how much data is loaded
    * in buffer.
    */
   progress: callbackParams;
   /**
-   * Triggers when player is resized via height and width props.
+   * Triggered when the player starts seeking to a specific time. A timeupdate event will also be fired at the same time.
    */
-  resize: {
-    /**
-     * Video new width in px.
-     */
-    videoWidth: number;
-    /**
-     * Video new height in px.
-     */
-    videoHeight: number;
-  };
+  seeking: callbackParams;
   /**
-   * Triggers when buffer end in player
+   * Triggered when the player seeks to a specific time.
    */
-  bufferend: void;
-  /**
-   * Triggers when buffer end in player
-   */
-  bufferstart: void;
-  /**
-   * Triggered when the current time hits a registered cue point.
-   */
-  cuepoint: {
-    /**
-     * Current time in seconds.
-     */
-    time: number;
-    /**
-     * Data provided during addition of cue.
-     */
-    data: VimeoCuePointData;
-    /**
-     * Cue id
-     */
-    id: string;
-  };
-  /**
-   * Triggered when the playback rate of the video in the player changes.
-   *
-   */
-  playbackratechange: {
-    /**
-     * The player playback rate which scales from 0.5 to 2.
-     */
-    playbackRate: number;
-  };
-  /**
-   * Triggered when the volume in the player changes.
-   */
-  volumechange: {
-    /**
-     * The value is between 0 and 1 included.
-     */
-    volume: number;
-  };
+  seeked: callbackParams;
   /**
    * Triggered when the active text track (captions/subtitles) changes.
    */
@@ -267,6 +214,51 @@ export type VimeoPlayerEvents = {
     index: number;
   };
   /**
+   * Triggered when the current time hits a registered cue point.
+   */
+  cuepoint: {
+    /**
+     * Current time in seconds.
+     */
+    time: number;
+    /**
+     * Data provided during addition of cue.
+     */
+    data: VimeoCuePointData;
+    /**
+     * Cue id
+     */
+    id: string;
+  };
+  /**
+   * Triggered when the volume in the player changes.
+   */
+  volumechange: {
+    /**
+     * The value is between 0 and 1 included.
+     */
+    volume: number;
+  };
+  /**
+   * Triggered when the playback rate of the video in the player changes.
+   *
+   */
+  playbackratechange: {
+    /**
+     * The player playback rate which scales from 0.5 to 2.
+     */
+    playbackRate: number;
+  };
+  /**
+   * Triggers when buffer end in player
+   */
+  bufferstart: void;
+  /**
+   * Triggers when buffer end in player
+   */
+  bufferend: void;
+
+  /**
    * Triggered when some kind of error is generated in the player.
    */
   error: {
@@ -293,14 +285,6 @@ export type VimeoPlayerEvents = {
     id: string;
   };
   /**
-   *Triggered when the player enters picture-in-picture.
-   */
-  enterpictureinpicture: void;
-  /**
-   * Triggered when the player leaves picture-in-picture.
-   */
-  leavepictureinpicture: void;
-  /**
    * Triggered when the player enters or exits fullscreen.
    */
   fullscreenchange: {
@@ -309,70 +293,77 @@ export type VimeoPlayerEvents = {
      */
     fullscreen: boolean;
   };
+  /**
+   * Triggered when the set quality changes.
+   */
+  qualitychange: {
+    /**
+     * Vimeo player current quality
+     */
+    quality: VimeoVideoQuality;
+  };
+  /**
+   * Triggers when player is resized via height and width props.
+   */
+  resize: {
+    /**
+     * Video new width in px.
+     */
+    videoWidth: number;
+    /**
+     * Video new height in px.
+     */
+    videoHeight: number;
+  };
+  /**
+   *Triggered when the player enters picture-in-picture.
+   */
+  enterpictureinpicture: void;
+  /**
+   * Triggered when the player leaves picture-in-picture.
+   */
+  leavepictureinpicture: void;
+
+  /**
+   * Triggered when Vimeo player is ready and returns instance given by `@vimeo/player`
+   */
+  ready: Player;
 };
 
 export type VimeoPlayerEventHandlers = {
-  /**
-   * Triggered any time the video playback reaches the end. Note: when loop is set to true, the ended event will not fire.
-   */
-  onEnd?: (props: VimeoPlayerEvents["ended"]) => void;
   /**
    * Triggered when video playback is initiated.
    */
   onPlay?: (props: VimeoPlayerEvents["play"]) => void;
   /**
+   * Triggered when the video starts playing.
+   */
+  onPlaying?: (props: VimeoPlayerEvents["playing"]) => void;
+  /**
    * Triggered when the video pauses.
    */
   onPause?: (props: VimeoPlayerEvents["pause"]) => void;
   /**
+   * Triggered any time the video playback reaches the end. Note: when loop is set to true, the ended event will not fire.
+   */
+  onEnd?: (props: VimeoPlayerEvents["ended"]) => void;
+  /**
    * Triggered as the currentTime of the video updates. It generally fires every 250ms, but it may vary depending on the browser.
    */
   onTimeUpdate?: (props: VimeoPlayerEvents["timeupdate"]) => void;
-  /**
-   * Triggered when the player seeks to a specific time. `onTimeupdate` props will also be fired at the same time.
-   */
-  onSeeked?: (props: VimeoPlayerEvents["seeked"]) => void;
-  /**
-   * Called when vimeo player is loaded
-   */
-  onReady?: (player: VimeoPlayerEvents["ready"]) => void;
   /**
    * Triggers when the video is loading. The params indicates how much data is loaded
    * in buffer. This is not equivalent to `onTimeUpdate` which shows current time.
    */
   onProgress?: (props: VimeoPlayerEvents["progress"]) => void;
   /**
-   * Called when vimeo player is resized via height and width props.
+   * Triggered when the player starts seeking to a specific time. A timeupdate event will also be fired at the same time.
    */
-  onResize?: (props: VimeoPlayerEvents["resize"]) => void;
+  onSeeking?: (props: VimeoPlayerEvents["seeking"]) => void;
   /**
-   * Triggere when buffer starts in player
+   * Triggered when the player seeks to a specific time. `onTimeupdate` props will also be fired at the same time.
    */
-  onBufferStart?: () => void;
-  /**
-   * Triggers when buffer end in player
-   */
-  onBufferEnd?: () => void;
-  /**
-   * Triggered when the current time hits a registered cue point.
-   */
-  onCuePoint?: (props: VimeoPlayerEvents["cuepoint"]) => void;
-  /**
-   * Triggered when the playback rate of the video in the player changes.
-   *
-   * NOTE: The ability to change rate can be disabled by the creator and the
-   * event will not fire for those videos.
-   */
-  onPlaybackRateChange?: (
-    props: VimeoPlayerEvents["playbackratechange"]
-  ) => void;
-  /**
-   * Triggered when the volume in the player changes.
-   * NOTE: Some devices do not support setting the volume of
-   * the video independently from the system volume, so this event
-   * will never fire on those devices.
-   */
-  onVolumeChange?: (props: VimeoPlayerEvents["volumechange"]) => void;
+  onSeeked?: (props: VimeoPlayerEvents["seeked"]) => void;
   /**
    * Triggered when the active text track (captions/subtitles) changes.
    * The values will be null if text tracks are turned off.
@@ -383,6 +374,34 @@ export type VimeoPlayerEventHandlers = {
    */
   onChapterChange?: (props: VimeoPlayerEvents["chapterchange"]) => void;
   /**
+   * Triggered when the current time hits a registered cue point.
+   */
+  onCuePoint?: (props: VimeoPlayerEvents["cuepoint"]) => void;
+  /**
+   * Triggered when the volume in the player changes.
+   * NOTE: Some devices do not support setting the volume of
+   * the video independently from the system volume, so this event
+   * will never fire on those devices.
+   */
+  onVolumeChange?: (props: VimeoPlayerEvents["volumechange"]) => void;
+  /**
+   * Triggered when the playback rate of the video in the player changes.
+   *
+   * NOTE: The ability to change rate can be disabled by the creator and the
+   * event will not fire for those videos.
+   */
+  onPlaybackRateChange?: (
+    props: VimeoPlayerEvents["playbackratechange"]
+  ) => void;
+  /**
+   * Triggere when buffer starts in player
+   */
+  onBufferStart?: () => void;
+  /**
+   * Triggers when buffer end in player
+   */
+  onBufferEnd?: () => void;
+  /**
    * Triggered when some kind of error is generated in the player.
    */
   onError?: (props: VimeoPlayerEvents["error"]) => void;
@@ -390,6 +409,18 @@ export type VimeoPlayerEventHandlers = {
    * Triggered when a new video is loaded in the player.
    */
   onLoaded?: (props: VimeoPlayerEvents["loaded"]) => void;
+  /**
+   * Triggered when the player changes between full screen and normal mode
+   */
+  onFullScreenChange?: (props: VimeoPlayerEvents["fullscreenchange"]) => void;
+  /**
+   * Triggered when the set quality changes.
+   */
+  onQualityChange?: (props: VimeoPlayerEvents["qualitychange"]) => void;
+  /**
+   * Called when vimeo player is resized via height and width props.
+   */
+  onResize?: (props: VimeoPlayerEvents["resize"]) => void;
   /**
    *Triggered when the player enters picture-in-picture.
    */
@@ -399,9 +430,9 @@ export type VimeoPlayerEventHandlers = {
    */
   onLeavePictureInPicture?: () => void;
   /**
-   * Triggered when the player changes between full screen and normal mode
+   * Called when vimeo player is loaded
    */
-  onFullScreenChange?: (props: VimeoPlayerEvents["fullscreenchange"]) => void;
+  onReady?: (player: VimeoPlayerEvents["ready"]) => void;
 };
 
 export type VimeoPlayerOptions = VimeoPlayerProperties &
