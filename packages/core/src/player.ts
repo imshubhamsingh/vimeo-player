@@ -17,6 +17,7 @@ import {
   getInitialPlayerOptions,
   getPlayerEventHandlers,
   getVimeoUrl,
+  getVideoDetails,
 } from "./utils";
 
 export type {
@@ -27,7 +28,7 @@ export type {
   VimeoPlayerEventHandlers,
 };
 
-export { VIMEO_PLAYER_EVENTS, VIMEO_CONFIGS };
+export { VIMEO_PLAYER_EVENTS, VIMEO_CONFIGS, getVideoDetails };
 
 /**
  * Vimeo core wrapper for vimeo player

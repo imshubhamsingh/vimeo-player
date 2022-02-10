@@ -1,5 +1,10 @@
 import { VIMEO_PLAYER_EVENTS } from "./constants";
-import { EventHandlersObj, PlayerOptions, VimeoPlayerProperties } from "./type";
+import {
+  EventHandlersObj,
+  PlayerOptions,
+  VimeoPlayerProperties,
+  VimeoEmbede,
+} from "./type";
 
 // Empty function
 const noop = () => console.log;
@@ -58,4 +63,30 @@ export function getPlayerEventHandlers(obj: any): EventHandlersObj {
     handlers[events] = obj[events] ? obj[events] : noop;
   });
   return handlers;
+}
+
+/**
+ * It returns video details
+ */
+export async function getVideoDetails(
+  id: string,
+  hash?: string
+): Promise<VimeoEmbede | {}> {
+  let details = {};
+  try {
+    const vimeoUrl = `https://player.vimeo.com/video/${+id}${
+      hash ? `/${hash}` : ""
+    }`;
+    const res = await fetch(
+      `https://vimeo.com/api/oembed.json?url=${vimeoUrl}`
+    );
+    if (res.ok) {
+      const data: VimeoEmbede = await res.json();
+      details = {
+        ...data,
+      };
+    }
+  } catch (err) {}
+
+  return details;
 }
