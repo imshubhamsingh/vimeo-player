@@ -125,7 +125,6 @@ function App() {
 | onFullScreenChange | function |  | Triggered when the player changes between full screen and normal mode. |
 | onQualityChange | function |  | Triggered when the set quality changes. |
 | onResize | function |  | Called when vimeo player is resized via height and width props. |
-| onResize | function |  | Called when vimeo player is resized via height and width props. |
 | onEnterPictureInPicture | function |  | Triggered when the player enters picture-in-picture |
 | onLeavePictureInPicture | function |  | Triggered when the player leaves picture-in-picture. |
 | onReady | function |  | Called when vimeo player is loaded. |

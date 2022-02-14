@@ -20,49 +20,41 @@
 
   const dispatch = createEventDispatcher<VimeoPlayerEvents>();
 
-  /* ************ player properties ******************* */
+  /* ************ player properties which have default value or used when props updates ******************* */
   export let video: VimeoPlayerProperties["video"];
   export let hash: VimeoPlayerProperties["hash"];
-  export let volume: VimeoPlayerProperties["volume"] = 1;
-  export let paused: VimeoPlayerProperties["paused"] = true;
-  export let autopause: VimeoPlayerProperties["autopause"] = false;
   export let autoplay: VimeoPlayerProperties["autoplay"] = false;
+  export let autopause: VimeoPlayerProperties["autopause"] = true;
   export let background: VimeoPlayerProperties["background"] = false;
+  export let showByline: VimeoPlayerProperties["showByline"] = true;
+  export let color: VimeoPlayerProperties["color"];
   export let controls: VimeoPlayerProperties["controls"] = false;
   export let dnt: VimeoPlayerProperties["dnt"] = false;
   export let loop: VimeoPlayerProperties["loop"] = false;
   export let muted: VimeoPlayerProperties["muted"] = false;
   export let responsive: VimeoPlayerProperties["responsive"] = true;
-  export let showByline: VimeoPlayerProperties["showByline"] = true;
   export let showPortrait: VimeoPlayerProperties["showPortrait"] = false;
-  export let showTitle: VimeoPlayerProperties["showTitle"];
   export let speed: VimeoPlayerProperties["speed"] = false;
-  export let texttrack: VimeoPlayerProperties["texttrack"] = "en";
+  export let showTitle: VimeoPlayerProperties["showTitle"] = true;
   export let start: VimeoPlayerProperties["start"] = 0;
+  export let volume: VimeoPlayerProperties["volume"] = 1;
+  export let paused: VimeoPlayerProperties["paused"] = true;
+  export let quality: VimeoPlayerProperties["quality"];
 
   /**************************************************** */
 
   export let ref: ImperativeHandle;
 
   let props = {
-    video,
     hash,
-    volume,
-    paused,
     autopause,
-    autoplay,
-    background,
-    controls,
-    dnt,
+    color,
     loop,
-    responsive,
     muted,
-    showByline,
-    showPortrait,
-    showTitle,
-    speed,
-    start,
-    texttrack,
+    paused,
+    video,
+    volume,
+    quality,
   };
 
   const eventHandlers = Object.entries(VIMEO_PLAYER_EVENTS).reduce(
@@ -78,7 +70,23 @@
   onMount(async () => {
     player = await VimeoPlayer.create(
       container,
-      VimeoPlayer.getInitialOptions(props),
+      VimeoPlayer.getInitialOptions({
+        ...$$props,
+        autopause: true,
+        autoplay,
+        background,
+        controls,
+        dnt,
+        loop,
+        start,
+        muted,
+        responsive,
+        showByline,
+        showPortrait,
+        showTitle,
+        speed,
+        volume,
+      } as VimeoPlayerProperties),
       VimeoPlayer.getEventHandlers(eventHandlers)
     );
 
@@ -107,8 +115,9 @@
           props[name] = $$props[name];
           //@ts-ignore
           player.update(name, props[name], {
-            start: start,
-            volume: volume,
+            start,
+            volume,
+            hash,
           });
         });
   });
