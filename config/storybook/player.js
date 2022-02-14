@@ -6,47 +6,29 @@ export const playerProperties = {
     options: ['4K', '2K', '1080p', '720p', '540p', '360p', '240p'],
     control: { type: 'radio' },
   },
-}
+};
 
 export const playerEvents = {
-  onCueChange: {
-    action: 'cuechange',
+  onPlay: {
+    action: 'play',
   },
-  onCuePoint: {
-    action: 'cuepoint',
-  },
-  onEnd: {
-    action: 'ended',
-  },
-  onEnterPictureinPicture: {
-    action: 'enterpictureinpicture',
-  },
-  onError: {
-    action: 'error',
-  },
-  onLeavePictureinPicture: {
-    action: 'leavepictureinpicture',
-  },
-  onLoaded: {
-    action: 'loaded',
+  onPlaying: {
+    action: 'playing',
   },
   onPause: {
     action: 'pause',
   },
-  onPlay: {
-    action: 'play',
+  onEnd: {
+    action: 'ended',
   },
-  onPlaybackRateChange: {
-    action: 'playbackratechange',
+  onTimeUpdate: {
+    action: 'timeupdate',
   },
   onProgress: {
     action: 'progress',
   },
-  onReady: {
-    action: 'ready',
-  },
-  onResize: {
-    action: 'resize',
+  onSeeking: {
+    action: 'seeking',
   },
   onSeeked: {
     action: 'seeked',
@@ -54,10 +36,49 @@ export const playerEvents = {
   onTextTrackChange: {
     action: 'texttrackchange',
   },
-  onTimeUpdate: {
-    action: 'timeupdate',
+  onChapterChange: {
+    action: 'chapterchange',
+  },
+  // onCueChange: {
+  //   action: 'cuechange',
+  // },
+  onCuePoint: {
+    action: 'cuepoint',
   },
   onVolumeChange: {
     action: 'volumechange',
   },
-}
+  onPlaybackRateChange: {
+    action: 'playbackratechange',
+  },
+  onBufferStart: {
+    action: 'bufferstart',
+  },
+  onBufferEnd: {
+    action: 'bufferend',
+  },
+  onError: {
+    action: 'error',
+  },
+  onLoaded: {
+    action: 'loaded',
+  },
+  onFullScreenChange: {
+    action: 'fullscreenchange',
+  },
+  onQualityChange: {
+    action: 'qualitychange',
+  },
+  onResize: {
+    action: 'resize',
+  },
+  onEnterPictureinPicture: {
+    action: 'enterpictureinpicture',
+  },
+  onLeavePictureinPicture: {
+    action: 'leavepictureinpicture',
+  },
+  onReady: {
+    action: 'ready',
+  },
+};

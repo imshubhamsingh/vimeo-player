@@ -46,6 +46,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
     height,
     width,
     quality,
+    hash,
   } = props;
   const container = React.useRef<HTMLElement | null>(null);
   const player = React.useRef<VimeoPlayer | null>(null);
@@ -106,6 +107,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
             {
               start: start,
               volume: volume,
+              hash: hash,
             }
           );
         });
