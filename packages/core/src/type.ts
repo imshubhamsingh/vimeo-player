@@ -48,44 +48,6 @@ export type VimeoPlayerProperties = {
    */
   hash?: string;
   /**
-   * Show tile of video.
-   */
-  showTitle?: boolean;
-  /**
-   * Show user's profile pic beside title
-   */
-  showPortrait?: boolean;
-  /**
-   * Show Bylines (Owner info) below video title
-   */
-  showByline?: boolean;
-  /**
-   * Controls Start time of video.
-   */
-  start?: number;
-  /**
-   * Controls the volume of video between 0 and 1.
-   */
-  volume?: number;
-  /**
-   * Controls the pause function of video.
-   */
-  paused?: boolean;
-  /**
-   * Height of Video iframe in px. Aspect ratio is mantained. If `responsive` is set to true, height value
-   * is not respected. Also for arbitrary values Aspect ratio is mantained.
-   */
-  height?: number;
-  /**
-   * Width of Video iframe in px. If `responsive` is set to true, width value
-   * is not respected. Also for arbitrary values Aspect ratio is mantained.
-   */
-  width?: number;
-  /**
-   * Controls the language of text track captions/subtitle
-   */
-  texttrack?: VimeoSupportedLanguages;
-  /**
    * Automatically start playback of the video. Ensure that `muted` is set to true for it to work.
    * This is done to meet browser's auto play policy.
    * More details here: https://help.vimeo.com/hc/en-us/articles/115004485728-Autoplaying-and-looping-embedded-videos
@@ -102,6 +64,34 @@ export type VimeoPlayerProperties = {
    */
   background?: boolean;
   /**
+   * Show Bylines (Owner info) below video title
+   */
+  showByline?: boolean;
+  /**
+   * Control the color of video color. If color is already set in preferences,
+   * it will be overridden.
+   */
+  color?: string;
+  /**
+   * Hide all element in player. Available to PRO and above users.
+   */
+  controls?: boolean;
+  /**
+   * Block your player from tracking any video watch. Helpfull when dealing with
+   * security regulation like GDPR etc.
+   */
+  dnt?: boolean;
+  /**
+   * Height of Video iframe in px. Aspect ratio is mantained. If `responsive` is set to true, height value
+   * is not respected. Also for arbitrary values Aspect ratio is mantained.
+   */
+  height?: number;
+  /**
+   * Allows for keyboard input to trigger player events.
+   * If false, will ignore keyboard input. Tabbing will still be supported in either mode.
+   */
+  keyboard?: boolean;
+  /**
    * Loops the video when it reaches the end. If this is set to true;
    * `onEnd` will not be ever called.
    */
@@ -111,36 +101,60 @@ export type VimeoPlayerProperties = {
    */
   muted?: boolean;
   /**
-   * Quality of the video can be set if it is enabled for the video by Vimeo Plus member and higher.
-   * More details: https://vimeo.zendesk.com/hc/en-us/articles/224983008-Setting-default-quality-for-embedded-videos
+   * Show the picture-in-picture button in the controlbar and enable the picture-in-picture API.
    */
-  quality?: VimeoVideoQuality;
+  pip?: boolean;
   /**
    * Plays video in inline mode.
    */
   playsinline?: boolean;
   /**
-   * Control the visibility of speed control in player. To use this feature, video owner mush be PRO or above user.
+   * Show user's profile pic beside title
    */
-  speed?: boolean;
+  showPortrait?: boolean;
   /**
-   * Block your player from tracking any video watch. Helpfull when dealing with
-   * security regulation like GDPR etc.
+   * Quality of the video can be set if it is enabled for the video by Vimeo Plus member and higher.
+   * More details: https://vimeo.zendesk.com/hc/en-us/articles/224983008-Setting-default-quality-for-embedded-videos
    */
-  dnt?: boolean;
+  quality?: VimeoVideoQuality;
   /**
    * Rezies the player container accoding to parent container.
    */
   responsive?: boolean;
   /**
-   * Hide all element in player. Available to PRO and above users.
+   * Control the visibility of speed control in player. To use this feature, video owner mush be PRO or above user.
    */
-  controls?: boolean;
+  speed?: boolean;
   /**
-   * Control the color of video color. If color is already set in preferences,
-   * it will be overridden.
+   * Controls the language of text track captions/subtitle
    */
-  color?: string;
+  texttrack?: VimeoSupportedLanguages;
+  /**
+   * Show tile of video.
+   */
+  showTitle?: boolean;
+  /**
+   * The responsive player and transparent background are enabled
+   * by default, to disable set this parameter to false.
+   */
+  transparent?: boolean;
+  /**
+   * Width of Video iframe in px. If `responsive` is set to true, width value
+   * is not respected. Also for arbitrary values Aspect ratio is mantained.
+   */
+  width?: number;
+  /**
+   * Controls Start time of video.
+   */
+  start?: number;
+  /**
+   * Controls the volume of video between 0 and 1.
+   */
+  volume?: number;
+  /**
+   * Controls the pause function of video.
+   */
+  paused?: boolean;
 };
 
 export type VimeoPlayerEvents = {
@@ -394,7 +408,7 @@ export type VimeoPlayerEventHandlers = {
     props: VimeoPlayerEvents["playbackratechange"]
   ) => void;
   /**
-   * Triggere when buffer starts in player
+   * Triggers when buffer starts in player
    */
   onBufferStart?: () => void;
   /**
@@ -422,7 +436,7 @@ export type VimeoPlayerEventHandlers = {
    */
   onResize?: (props: VimeoPlayerEvents["resize"]) => void;
   /**
-   *Triggered when the player enters picture-in-picture.
+   * Triggered when the player enters picture-in-picture.
    */
   onEnterPictureInPicture?: () => void;
   /**
@@ -497,7 +511,6 @@ export type ImperativeHandle = {
   ) => VimeoPromise<string, UnsupportedError | Error | RangeError>;
 };
 
-
 /**
  * Vimeo oEembede Response
  */
@@ -523,4 +536,4 @@ export type VimeoEmbede = {
   upload_date: string;
   video_id: number;
   uri: string;
-} 
+};

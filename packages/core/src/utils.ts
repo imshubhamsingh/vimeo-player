@@ -9,9 +9,9 @@ import {
 // Empty function
 const noop = () => console.log;
 
-export function getVimeoUrl(id: string): number;
-export function getVimeoUrl(id: string, hash?: string): string;
-export function getVimeoUrl(id: string, hash?: string) {
+export function getVimeoUrl(id: string | number): number;
+export function getVimeoUrl(id: string | number, hash?: string): string;
+export function getVimeoUrl(id: string | number, hash?: string) {
   if (hash) {
     return `https://player.vimeo.com/video/${+id}?h=${hash}`;
   }
@@ -51,6 +51,8 @@ export function getInitialPlayerOptions(
     texttrack: obj.texttrack,
     volume: obj.volume,
     start: obj.start,
+    //@ts-ignore Missing type from Vimeo
+    pip: obj.pip
   };
 }
 
