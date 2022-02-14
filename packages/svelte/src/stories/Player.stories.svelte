@@ -1,10 +1,10 @@
 <script>
-  import { Meta, Template, Story } from '@storybook/addon-svelte-csf'
+  import { Meta, Template, Story } from "@storybook/addon-svelte-csf";
   import {
     playerEvents,
     playerProperties,
-  } from '../../../../config/storybook/player'
-  import Player from '../Player.svelte'
+  } from "../../../../config/storybook/player";
+  import Player from "../Player.svelte";
 </script>
 
 <Meta
@@ -24,22 +24,41 @@
   <!-- TODO check why on:ready storybook action is not called -->
   <Player
     {...args}
-    on:timeupdate={args.onTimeUpdate}
     on:play={args.onPlay}
+    on:playing={args.onPlaying}
     on:pause={args.onPause}
-    on:seeked={args.seeked}
+    on:ended={args.onEnd}
+    on:timeupdate={args.onTimeUpdate}
+    on:progress={args.onProgress}
+    on:seeking={args.onSeeking}
+    on:seeked={args.onSeeked}
+    on:texttrackchange={args.onTextTrackChange}
+    on:chapterchange={args.onChapterChange}
+    on:cuepoint={args.onCuePoint}
+    on:volumechange={args.onVolumeChange}
+    on:playbackratechange={args.onPlaybackRateChange}
+    on:bufferstart={args.onBufferStart}
+    on:bufferend={args.onBufferEnd}
+    on:error={args.onError}
+    on:loaded={args.onLoaded}
+    on:fullscreenchange={args.onFullScreenChange}
+    on:qualitychange={args.onQualityChange}
+    on:resize={args.onResize}
+    on:enterpictureinpicture={args.onEnterPictureinPicture}
+    on:leavepictureinpicture={args.onLeavePictureinPicture}
+    on:ready={args.onReady}
   />
 </Template>
 
 <Story
   name="Test Player"
-  args={{ video: '323783503', muted: true, quality: '360p' }}
+  args={{ video: "323783503", muted: true, quality: "360p" }}
 />
 
 <Story
   name="Loop Cover Player"
   args={{
-    video: '59777392',
+    video: "59777392",
     loop: true,
     background: true,
     volume: 0,
