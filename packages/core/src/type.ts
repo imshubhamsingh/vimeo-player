@@ -42,7 +42,7 @@ export type VimeoPlayerProperties = {
   /**
    * Vimeo video id
    */
-  video: string;
+  video: string | number;
   /**
    * Video hash - Used on privately listed videos
    */
@@ -60,11 +60,11 @@ export type VimeoPlayerProperties = {
    */
   showByline?: boolean;
   /**
-   * Controls Start timev of video.
+   * Controls Start time of video.
    */
   start?: number;
   /**
-   * Controls the volume of video.
+   * Controls the volume of video between 0 and 1.
    */
   volume?: number;
   /**
@@ -72,12 +72,12 @@ export type VimeoPlayerProperties = {
    */
   paused?: boolean;
   /**
-   * Height of Video iframe. Aspect ratio is mantained. If `responsive` is set to true, height value
+   * Height of Video iframe in px. Aspect ratio is mantained. If `responsive` is set to true, height value
    * is not respected. Also for arbitrary values Aspect ratio is mantained.
    */
   height?: number;
   /**
-   * Width of Video iframe. If `responsive` is set to true, width value
+   * Width of Video iframe in px. If `responsive` is set to true, width value
    * is not respected. Also for arbitrary values Aspect ratio is mantained.
    */
   width?: number;
