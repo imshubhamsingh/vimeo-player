@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "dist/cjs/player.js",
   "module": "dist/esm/player.js",
-  "browser": "dist/browser/player.js",
+  "unpkg": "dist/browser/player.js",
   "typings": "dist/types/player.d.ts",
   "sideEffects": false,
   "description": "vimeo player core",

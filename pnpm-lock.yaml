@@ -81,9 +81,11 @@ importers:
     specifiers:
       '@storybook/react': ^6.3.12
       '@vimeo-player/core': '*'
+      '@vimeo/player': ^2.16.2
     devDependencies:
       '@storybook/react': 6.4.0_76b027d8399751f33b6c512ae98fd6be
       '@vimeo-player/core': link:../core
+      '@vimeo/player': 2.16.2
 
   packages/react-native:
     specifiers:
