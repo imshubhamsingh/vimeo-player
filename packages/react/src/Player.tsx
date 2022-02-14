@@ -54,6 +54,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
   const [loaded, setLoaded] = React.useState<boolean>(false);
 
   const prevProps = React.useRef({
+    hash,
     autopause,
     color,
     loop,
@@ -113,6 +114,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
         });
     }
   }, [
+    hash,
     autopause,
     color,
     loop,
@@ -141,7 +143,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
 });
 
 Player.defaultProps = {
-  autopause: false,
+  autopause: true,
   autoplay: false,
   background: false,
   controls: true,
@@ -149,13 +151,12 @@ Player.defaultProps = {
   loop: false,
   start: 0,
   muted: true,
-  responsive: true,
+  responsive: false,
   showByline: true,
   showPortrait: true,
   showTitle: true,
-  speed: true,
+  speed: false,
   volume: 1,
-  texttrack: "en",
 };
 
 export default Player;

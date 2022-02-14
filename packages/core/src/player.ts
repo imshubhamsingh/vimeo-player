@@ -135,6 +135,7 @@ export class VimeoPlayer {
         break;
       }
       // update video id and load from starting time value
+      case VIMEO_CONFIGS.HASH:
       case VIMEO_CONFIGS.VIDEO: {
         if (value) {
           const loaded = this._player.loadVideo(
