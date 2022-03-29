@@ -1,3 +1,5 @@
+export const DEFAULT_BASE_URL = "https://vimeo-player.vercel.app/";
+
 export const VIMEO_PLAYER_EVENTS = Object.freeze({
   bufferend: "onBufferEnd",
   bufferstart: "onBufferStart",

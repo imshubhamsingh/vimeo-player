@@ -4,7 +4,11 @@ import type {
   VimeoPlayerEventHandlers,
   ImperativeHandle,
 } from "./type";
-import { VIMEO_PLAYER_EVENTS, CUSTOM_USER_AGENT } from "./constants";
+import {
+  VIMEO_PLAYER_EVENTS,
+  CUSTOM_USER_AGENT,
+  DEFAULT_BASE_URL,
+} from "./constants";
 import * as React from "react";
 import { View, Platform, StyleSheet, StyleProp, ViewStyle } from "react-native";
 import {
@@ -39,9 +43,13 @@ type NativeProps = {
    */
   width: number;
   /**
-   * 
+   *
    */
-   webViewStyle?: StyleProp<ViewStyle>
+  webViewStyle?: StyleProp<ViewStyle>;
+  /**
+   *
+   */
+  baseUrlOverride?: string;
 };
 
 export type PlayerProps = VimeoPlayerOptions & NativeProps;
@@ -62,7 +70,8 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
     volume,
     quality,
     start,
-    webViewStyle
+    webViewStyle,
+    baseUrlOverride,
   } = props;
   const initialPlayerParamsRef = React.useRef<VimeoPlayerProperties>(
     getPlayerProperties(props)
@@ -86,8 +95,20 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
 
   const source = React.useMemo(() => {
     const vimeoScript = playerScript(initialPlayerParamsRef.current);
-    const res = { html: vimeoScript.htmlString };
-    return res;
+    if (useLocalHTML) {
+      const res: { html: string; baseUrl?: string } = {
+        html: vimeoScript.htmlString,
+      };
+      if (baseUrlOverride) {
+        res.baseUrl = baseUrlOverride;
+      }
+      return res;
+    }
+
+    const base = baseUrlOverride || DEFAULT_BASE_URL;
+    const data = vimeoScript.urlEncodedJSON;
+
+    return { uri: base + "?data=" + data };
   }, [useLocalHTML]);
 
   React.useImperativeHandle(
@@ -181,10 +202,10 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
   return (
     <View style={{ height, width }}>
       <WebView
-      bounces={false}
-      originWhitelist={['*']}
-      allowsInlineMediaPlayback
-       style={[styles.webView, webViewStyle]}
+        bounces={false}
+        originWhitelist={["*"]}
+        allowsInlineMediaPlayback
+        style={[styles.webView, webViewStyle]}
         userAgent={
           autoplay
             ? Platform.select({ android: CUSTOM_USER_AGENT, ios: "" })
@@ -200,7 +221,7 @@ const Player = React.forwardRef<ImperativeHandle, PlayerProps>((props, ref) => {
 });
 
 const styles = StyleSheet.create({
-  webView: {backgroundColor: 'transparent'},
+  webView: { backgroundColor: "transparent" },
 });
 
 Player.defaultProps = {
